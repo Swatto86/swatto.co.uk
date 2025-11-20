@@ -1,6 +1,6 @@
 # Custom site configuration - no remote theme
-title: "WinRDP - Windows RDP Connection Manager"
-description: "A simple RDP connection manager for Windows. Built with AI assistance and directed by Swatto. Written in pure C using Windows API. Open source with complete 30-chapter educational book."
-author: "Directed by Swatto • Built with AI"
+title: "QuickRDP - Modern RDP Connection Manager"
+description: "A modern, cross-platform RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight. Open source with complete documentation."
+author: "Swatto"
 url: "https://swatto.co.uk"
-keywords: "WinRDP, RDP manager, Windows RDP, remote desktop, C programming, Windows API, AI-assisted development, open source"
+keywords: "QuickRDP, RDP manager, Rust, Tauri, cross-platform, remote desktop, modern RDP, secure RDP, open source"
