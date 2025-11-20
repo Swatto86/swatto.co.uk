@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickRDP - Modern RDP Connection Manager</title>
-    <meta name="description" content="A modern, cross-platform RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight. Open source and free.">
-    <meta name="keywords" content="RDP manager, QuickRDP, remote desktop, Rust, Tauri, cross-platform, RDP connection, secure RDP, modern RDP manager, Swatto">
+    <title>QuickRDP - Modern Windows RDP Connection Manager</title>
+    <meta name="description" content="A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight. Open source and free.">
+    <meta name="keywords" content="RDP manager, QuickRDP, remote desktop, Rust, Tauri, Windows, RDP connection, secure RDP, modern RDP manager, Swatto">
     <meta name="author" content="Swatto">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://swatto.co.uk/">
@@ -17,15 +17,15 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://swatto.co.uk/">
-    <meta property="og:title" content="QuickRDP - Modern RDP Connection Manager">
-    <meta property="og:description" content="A modern, cross-platform RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight. Open source and free.">
+    <meta property="og:title" content="QuickRDP - Modern Windows RDP Connection Manager">
+    <meta property="og:description" content="A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight. Open source and free.">
     <meta property="og:site_name" content="Swatto">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://swatto.co.uk/">
-    <meta name="twitter:title" content="QuickRDP - Modern RDP Connection Manager">
-    <meta name="twitter:description" content="A modern, cross-platform RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight. Open source and free.">
+    <meta name="twitter:title" content="QuickRDP - Modern Windows RDP Connection Manager">
+    <meta name="twitter:description" content="A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight. Open source and free.">
     <style>
         * {
             margin: 0;
@@ -299,13 +299,13 @@
       "@type": "SoftwareApplication",
       "name": "QuickRDP",
       "applicationCategory": "UtilityApplication",
-      "operatingSystem": ["Windows", "macOS", "Linux"],
+      "operatingSystem": "Windows",
       "offers": {
         "@type": "Offer",
         "price": "0",
         "priceCurrency": "USD"
       },
-      "description": "A modern, cross-platform RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight with a beautiful interface.",
+      "description": "A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight with a beautiful interface.",
       "url": "https://swatto.co.uk/",
       "author": {
         "@type": "Person",
@@ -315,9 +315,9 @@
       "softwareVersion": "1.0.0",
       "screenshot": "https://swatto.co.uk/",
       "featureList": [
-        "Cross-platform support (Windows, macOS, Linux)",
+        "Native Windows application",
         "Modern, intuitive UI built with web technologies",
-        "Secure credential storage with OS keychain integration",
+        "Secure credential storage with Windows Credential Manager",
         "Fast RDP connections with session management",
         "Real-time connection monitoring",
         "Import/export connection profiles",
@@ -342,9 +342,9 @@
     <header>
         <div class="container">
             <h1>⚡ QuickRDP</h1>
-            <p>A modern, cross-platform RDP connection manager</p>
+            <p>A modern Windows RDP connection manager</p>
             <div class="tagline">
-                Built with Rust & Tauri • Cross-platform • Open source
+                Built with Rust & Tauri • Native Windows App • Open source
             </div>
         </div>
     </header>
@@ -356,10 +356,10 @@
                 QuickRDP is a next-generation RDP connection manager that combines the power of Rust with the elegance of modern UI frameworks. Whether you're managing a few servers or hundreds, QuickRDP makes it fast and effortless.
             </p>
             <ul style="line-height: 2.2; font-size: 1.05em;">
-                <li>✓ <strong>Cross-platform</strong> - works seamlessly on Windows, macOS, and Linux</li>
+                <li>✓ <strong>Native Windows app</strong> - designed specifically for Windows with full OS integration</li>
                 <li>✓ <strong>Lightning fast</strong> - built with Rust for uncompromising performance</li>
                 <li>✓ <strong>Beautiful UI</strong> - modern interface powered by Tauri and web technologies</li>
-                <li>✓ <strong>Secure by default</strong> - OS keychain integration keeps your credentials safe</li>
+                <li>✓ <strong>Secure by default</strong> - Windows Credential Manager keeps your credentials safe</li>
                 <li>✓ <strong>Smart organization</strong> - organize connections with tags and favorites</li>
                 <li>✓ <strong>Quick access</strong> - keyboard shortcuts and system tray for instant access</li>
                 <li>✓ <strong>Lightweight</strong> - small binary size, minimal resource usage</li>
@@ -371,20 +371,14 @@
         
         <div class="download-section">
             <h2 style="margin: 0 0 20px 0; color: #e0e0e0;">📥 Download</h2>
-            <p style="font-size: 1.1em; margin-bottom: 20px;">Get QuickRDP for your platform</p>
+            <p style="font-size: 1.1em; margin-bottom: 20px;">Get QuickRDP for Windows</p>
             <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 20px 0;">
                 <a href="https://github.com/Swatto86/QuickRDP/releases/latest" class="download-button">
-                    🪟 Windows
-                </a>
-                <a href="https://github.com/Swatto86/QuickRDP/releases/latest" class="download-button">
-                    🍎 macOS
-                </a>
-                <a href="https://github.com/Swatto86/QuickRDP/releases/latest" class="download-button">
-                    🐧 Linux
+                    🪟 Download for Windows
                 </a>
             </div>
             <div class="version-info">
-                Cross-platform • Small binary size • Auto-updates<br>
+                Native Windows App • Small binary size • Auto-updates<br>
                 <span style="color: #f97316; font-weight: 600;">✨ Version 1.0.0 - Now Available!</span>
             </div>
         </div>
@@ -406,7 +400,7 @@
             <div style="background: #1e3a1e; border-left: 4px solid #f97316; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
                 <p style="margin: 0; color: #4ade80;"><strong>🔒 Security First:</strong></p>
                 <ul style="margin: 10px 0 0 20px; color: #4ade80;">
-                    <li><strong>🔐 OS keychain integration</strong> - credentials stored securely in your system keychain</li>
+                    <li><strong>🔐 Windows Credential Manager</strong> - credentials stored securely in Windows Credential Manager</li>
                     <li><strong>🛡️ Memory safety</strong> - Rust guarantees prevent common security vulnerabilities</li>
                     <li><strong>🔒 Encrypted profiles</strong> - connection profiles are encrypted at rest</li>
                     <li><strong>🚫 No cloud dependencies</strong> - all data stays on your machine</li>
@@ -427,7 +421,7 @@
             <div class="info-card">
                 <h3>🔐 Secure</h3>
                 <ul>
-                    <li>OS keychain integration</li>
+                    <li>Windows Credential Manager</li>
                     <li>Encrypted connection profiles</li>
                     <li>Memory-safe Rust code</li>
                     <li>Per-connection credentials</li>
@@ -449,14 +443,14 @@
             </div>
             
             <div class="info-card">
-                <h3>🌍 Cross-Platform</h3>
+                <h3>🪟 Windows Native</h3>
                 <ul>
-                    <li>Windows support</li>
-                    <li>macOS support</li>
-                    <li>Linux support</li>
-                    <li>Consistent UI everywhere</li>
-                    <li>Same features on all platforms</li>
-                    <li>Native look and feel</li>
+                    <li>Native Windows application</li>
+                    <li>Windows Credential Manager</li>
+                    <li>System tray integration</li>
+                    <li>Windows look and feel</li>
+                    <li>Native RDP protocol support</li>
+                    <li>Windows 10/11 optimized</li>
                 </ul>
             </div>
             
@@ -494,7 +488,7 @@
                 <h4 style="color: #93c5fd; margin: 0 0 15px 0;">⚡ Why Tauri?</h4>
                 <ul style="margin: 0; line-height: 1.8;">
                     <li><strong>Tiny binaries</strong> - significantly smaller than Electron apps (3-5 MB vs 100+ MB)</li>
-                    <li><strong>Native webview</strong> - uses OS webview instead of bundling Chromium</li>
+                    <li><strong>Native webview</strong> - uses Windows Edge WebView2 instead of bundling Chromium</li>
                     <li><strong>Better performance</strong> - less memory usage, faster startup</li>
                     <li><strong>Modern web UI</strong> - build UIs with any web framework you like</li>
                     <li><strong>Security by default</strong> - sandboxed architecture with explicit permissions</li>
@@ -538,16 +532,14 @@
                 <div>
                     <h3 style="color: #f97316; margin-bottom: 15px;">🔒 Security</h3>
                     <ul>
-                        <li>OS keychain integration</li>
-                        <li>Windows: Credential Manager</li>
-                        <li>macOS: Keychain Access</li>
-                        <li>Linux: Secret Service API</li>
+                        <li>Windows Credential Manager</li>
                         <li>Encrypted connection profiles</li>
+                        <li>Memory-safe Rust code</li>
                         <li>Per-connection credentials</li>
-                        <li>Global credential defaults</li>
+                        <li>No cloud dependencies</li>
                         <li>Secure password storage</li>
-                        <li>No cloud sync required</li>
-                        <li>Memory-safe code (Rust)</li>
+                        <li>Global credential defaults</li>
+                        <li>Local-only storage</li>
                     </ul>
                 </div>
                 <div>
@@ -568,7 +560,7 @@
                 <div>
                     <h3 style="color: #f97316; margin-bottom: 15px;">⚙️ Advanced</h3>
                     <ul>
-                        <li>Cross-platform support</li>
+                        <li>Native Windows integration</li>
                         <li>Auto-update functionality</li>
                         <li>Native RDP client integration</li>
                         <li>Custom RDP parameters</li>
@@ -589,7 +581,7 @@
         <div class="section">
             <h2>🤖 Modern Development Approach</h2>
             <p style="margin-bottom: 20px; font-size: 1.05em; color: #ccc;">
-                QuickRDP represents a modern approach to desktop application development, combining the best of native performance with contemporary development practices.
+                QuickRDP represents a modern approach to Windows desktop application development, combining the best of native performance with contemporary development practices.
             </p>
             
             <div style="background: #2d2a1e; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
@@ -597,8 +589,8 @@
                 <ul style="margin: 0; line-height: 1.8;">
                     <li><strong>Rust safety guarantees</strong> - eliminates entire classes of bugs at compile time</li>
                     <li><strong>Tauri efficiency</strong> - tiny binaries (3-5 MB) compared to Electron (100+ MB)</li>
-                    <li><strong>Native performance</strong> - uses OS webview instead of bundling Chromium</li>
-                    <li><strong>Cross-platform by design</strong> - write once, run everywhere with native feel</li>
+                    <li><strong>Native performance</strong> - uses Windows Edge WebView2 for optimal integration</li>
+                    <li><strong>Windows optimized</strong> - built specifically for Windows with full OS integration</li>
                     <li><strong>Modern tooling</strong> - cargo, hot reload, and excellent developer experience</li>
                 </ul>
             </div>
@@ -608,7 +600,7 @@
             </p>
             
             <div style="padding: 20px; background: #1e3040; border-radius: 8px; border-left: 4px solid #f97316;">
-                <p style="margin: 0;"><strong>The result?</strong> A modern desktop application that's fast, secure, small, and beautiful. Native performance meets modern UI, all while using safe, maintainable Rust code.</p>
+                <p style="margin: 0;"><strong>The result?</strong> A modern Windows desktop application that's fast, secure, small, and beautiful. Native performance meets modern UI, all while using safe, maintainable Rust code.</p>
             </div>
         </div>
         
@@ -621,7 +613,7 @@
                 View on GitHub
             </a>
             <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9em;">
-                MIT License • Written in Rust • Built with Tauri • Cross-platform
+                MIT License • Written in Rust • Built with Tauri • Windows
             </p>
         </div>
         
@@ -661,7 +653,7 @@
                     TypeScript, Modern Web APIs, Responsive CSS, Component Architecture<br><br>
                     
                     <strong style="color: #fbbf24;">Security:</strong><br>
-                    OS Keychain Integration, Encrypted Profiles, Memory Safety (Rust), Sandboxed Architecture<br><br>
+                    Windows Credential Manager, Encrypted Profiles, Memory Safety (Rust), Sandboxed Architecture<br><br>
                     
                     <strong style="color: #fbbf24;">Build & Deploy:</strong><br>
                     Cargo, Tauri CLI, GitHub Actions, Cross-platform Compilation, Auto-Updates
