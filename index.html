@@ -12,13 +12,16 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="any" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://swatto.co.uk/">
     <meta property="og:title" content="QuickRDP - Modern Windows RDP Connection Manager">
     <meta property="og:description" content="A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight. Open source and free.">
+    <meta property="og:image" content="https://swatto.co.uk/icon.png">
     <meta property="og:site_name" content="Swatto">
     
     <!-- Twitter -->
@@ -26,6 +29,7 @@
     <meta name="twitter:url" content="https://swatto.co.uk/">
     <meta name="twitter:title" content="QuickRDP - Modern Windows RDP Connection Manager">
     <meta name="twitter:description" content="A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight. Open source and free.">
+    <meta name="twitter:image" content="https://swatto.co.uk/icon.png">
     <style>
         * {
             margin: 0;
@@ -47,7 +51,7 @@
         }
         
         header {
-            background: linear-gradient(135deg, #f97316 0%, #dc2626 50%, #991b1b 100%);
+            background: linear-gradient(135deg, #003d7a 0%, #0066cc 50%, #0088ff 100%);
             color: white;
             padding: 60px 0;
             text-align: center;
@@ -64,7 +68,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(249, 115, 22, 0.3) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.3) 0%, transparent 70%);
             animation: pulse 15s ease-in-out infinite;
         }
         
@@ -107,7 +111,7 @@
         
         .download-button {
             display: inline-block;
-            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            background: linear-gradient(135deg, #003d7a 0%, #0088ff 100%);
             color: white;
             padding: 18px 50px;
             border-radius: 8px;
@@ -115,13 +119,13 @@
             font-size: 1.2em;
             font-weight: 600;
             margin: 20px 0;
-            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.5);
             transition: transform 0.2s, box-shadow 0.2s;
         }
         
         .download-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.6);
+            box-shadow: 0 6px 20px rgba(0, 136, 255, 0.6);
         }
         
         .version-info {
@@ -146,7 +150,7 @@
         }
         
         .info-card h3 {
-            color: #f97316;
+            color: #0066ff;
             margin-bottom: 15px;
             font-size: 1.3em;
         }
@@ -167,7 +171,7 @@
         
         .info-card li:before {
             content: "✓ ";
-            color: #f97316;
+            color: #0066ff;
             font-weight: bold;
             margin-right: 8px;
         }
@@ -182,10 +186,10 @@
         }
         
         .section h2 {
-            color: #f97316;
+            color: #0066ff;
             margin-bottom: 20px;
             font-size: 2em;
-            border-bottom: 3px solid #f97316;
+            border-bottom: 3px solid #0066ff;
             padding-bottom: 10px;
         }
         
@@ -209,32 +213,32 @@
         }
         
         .tech-tag:hover {
-            background: #f97316;
+            background: #0066ff;
             color: white;
-            border-color: #f97316;
+            border-color: #0066ff;
             transform: translateY(-2px);
         }
         
         .tech-tag.primary {
-            background: #f97316;
+            background: #0066ff;
             color: white;
-            border-color: #f97316;
+            border-color: #0066ff;
         }
         
         .github-section {
-            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            background: linear-gradient(135deg, #003d7a 0%, #0088ff 100%);
             color: white;
             border-radius: 12px;
             padding: 40px;
             margin-bottom: 30px;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
         }
         
         .github-button {
             display: inline-block;
             background: white;
-            color: #ea580c;
+            color: #003d7a;
             padding: 15px 40px;
             border-radius: 8px;
             text-decoration: none;
@@ -341,7 +345,10 @@
 <body>
     <header>
         <div class="container">
-            <h1>⚡ QuickRDP</h1>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 10px;">
+                <img src="icon.png" alt="QuickRDP Icon" style="width: 80px; height: 80px; filter: brightness(0) saturate(100%) invert(47%) sepia(94%) saturate(3567%) hue-rotate(196deg) brightness(102%) contrast(104%) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));">
+                <h1 style="margin: 0;">QuickRDP</h1>
+            </div>
             <p>A modern Windows RDP connection manager</p>
             <div class="tagline">
                 Built with Rust & Tauri • Native Windows App • Open source
@@ -351,21 +358,21 @@
     
     <div class="container">
         <div class="section">
-            <h2>🚀 Built for the Modern Era</h2>
+            <h2>🚀 For Windows System Administrators</h2>
             <p style="margin-bottom: 20px; font-size: 1.1em; color: #ccc;">
-                QuickRDP is a next-generation RDP connection manager that combines the power of Rust with the elegance of modern UI frameworks. Whether you're managing a few servers or hundreds, QuickRDP makes it fast and effortless.
+                QuickRDP streamlines your daily workflow with features designed specifically for managing multiple Windows Servers efficiently and securely.
             </p>
             <ul style="line-height: 2.2; font-size: 1.05em;">
-                <li>✓ <strong>Native Windows app</strong> - designed specifically for Windows with full OS integration</li>
-                <li>✓ <strong>Lightning fast</strong> - built with Rust for uncompromising performance</li>
-                <li>✓ <strong>Beautiful UI</strong> - modern interface powered by Tauri and web technologies</li>
-                <li>✓ <strong>Secure by default</strong> - Windows Credential Manager keeps your credentials safe</li>
-                <li>✓ <strong>Smart organization</strong> - organize connections with tags and favorites</li>
-                <li>✓ <strong>Quick access</strong> - keyboard shortcuts and system tray for instant access</li>
-                <li>✓ <strong>Lightweight</strong> - small binary size, minimal resource usage</li>
+                <li>✓ <strong>Secure credential storage</strong> - Windows Credential Manager integration keeps your passwords safe</li>
+                <li>✓ <strong>Active Directory scanning</strong> - automatically discover all Windows Servers in your domain via LDAP</li>
+                <li>✓ <strong>Quick connections</strong> - one-click RDP launch with automatic authentication</li>
+                <li>✓ <strong>Per-host credentials</strong> - use different credentials for specific servers when needed</li>
+                <li>✓ <strong>CSV host management</strong> - simple file-based storage with search and filter capabilities</li>
+                <li>✓ <strong>System tray integration</strong> - always accessible from your Windows taskbar</li>
+                <li>✓ <strong>Native Windows app</strong> - built with Rust and Tauri for performance and security</li>
             </ul>
-            <p style="margin-top: 20px; padding: 15px; background: #1e3040; border-radius: 8px; border-left: 4px solid #f97316;">
-                <strong>The result?</strong> A powerful yet intuitive RDP manager that works the way you do. No complexity, no bloat, just quick connections when you need them.
+            <p style="margin-top: 20px; padding: 15px; background: #1e3040; border-radius: 8px; border-left: 4px solid #0066ff;">
+                <strong>The result?</strong> A powerful yet simple RDP manager that eliminates repetitive tasks, letting you focus on server administration instead of connection management.
             </p>
         </div>
         
@@ -379,40 +386,40 @@
             </div>
             <div class="version-info">
                 Native Windows App • Small binary size • Auto-updates<br>
-                <span style="color: #f97316; font-weight: 600;">✨ Version 1.0.0 - Now Available!</span>
+                <span style="color: #0088ff; font-weight: 600;">✨ Version 1.0.0 - Now Available!</span>
             </div>
         </div>
         
         <div class="section">
             <h2>✨ Key Features</h2>
             <p style="margin-bottom: 15px; font-size: 1.05em; color: #ccc;">
-                QuickRDP brings modern development practices and technologies to RDP connection management.
+                QuickRDP simplifies Windows Server management with powerful features designed for system administrators.
             </p>
-            <div style="background: #2d1e1e; border-left: 4px solid #f97316; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
-                <p style="margin: 0; color: #fca5a5;"><strong>🎨 Modern UI:</strong></p>
+            <div style="background: #2d1e1e; border-left: 4px solid #0066ff; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+                <p style="margin: 0; color: #fca5a5;"><strong>🔐 Secure Credentials:</strong></p>
                 <ul style="margin: 10px 0 0 20px; color: #fca5a5;">
-                    <li><strong>🌓 Theme support</strong> - automatic dark and light themes that match your OS</li>
-                    <li><strong>🎯 Intuitive design</strong> - clean interface built with modern web technologies</li>
-                    <li><strong>⚡ Smooth animations</strong> - responsive UI with natural transitions</li>
-                    <li><strong>📱 Responsive layout</strong> - adapts to any window size</li>
+                    <li><strong>Windows Credential Manager</strong> - native secure storage, no plain text passwords</li>
+                    <li><strong>Global defaults</strong> - set once, use everywhere across all servers</li>
+                    <li><strong>Per-host overrides</strong> - specific credentials for individual servers when needed</li>
+                    <li><strong>Automatic SSO</strong> - seamless single sign-on for RDP connections</li>
                 </ul>
             </div>
-            <div style="background: #1e3a1e; border-left: 4px solid #f97316; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
-                <p style="margin: 0; color: #4ade80;"><strong>🔒 Security First:</strong></p>
+            <div style="background: #1e3a1e; border-left: 4px solid #0066ff; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+                <p style="margin: 0; color: #4ade80;"><strong>📋 Active Directory Discovery:</strong></p>
                 <ul style="margin: 10px 0 0 20px; color: #4ade80;">
-                    <li><strong>🔐 Windows Credential Manager</strong> - credentials stored securely in Windows Credential Manager</li>
-                    <li><strong>🛡️ Memory safety</strong> - Rust guarantees prevent common security vulnerabilities</li>
-                    <li><strong>🔒 Encrypted profiles</strong> - connection profiles are encrypted at rest</li>
-                    <li><strong>🚫 No cloud dependencies</strong> - all data stays on your machine</li>
+                    <li><strong>LDAP scanning</strong> - authenticate and scan your entire AD domain</li>
+                    <li><strong>Auto-discovery</strong> - find all Windows Servers automatically</li>
+                    <li><strong>Bulk import</strong> - add multiple servers from scan results at once</li>
+                    <li><strong>Metadata import</strong> - pulls server descriptions from AD</li>
                 </ul>
             </div>
-            <div style="background: #1e2d3a; border-left: 4px solid #f97316; padding: 15px; border-radius: 6px;">
-                <p style="margin: 0; color: #93c5fd;"><strong>⚡ Performance:</strong></p>
+            <div style="background: #1e2d3a; border-left: 4px solid #0066ff; padding: 15px; border-radius: 6px;">
+                <p style="margin: 0; color: #93c5fd;"><strong>🖥️ Fast RDP Connections:</strong></p>
                 <ul style="margin: 10px 0 0 20px; color: #93c5fd;">
-                    <li><strong>🦀 Rust-powered</strong> - blazing fast performance with minimal memory usage</li>
-                    <li><strong>📦 Small footprint</strong> - lightweight binary thanks to Tauri</li>
-                    <li><strong>⚙️ Native performance</strong> - no Electron overhead</li>
-                    <li><strong>🔄 Instant startup</strong> - launches in milliseconds</li>
+                    <li><strong>One-click launch</strong> - instant RDP connections with saved credentials</li>
+                    <li><strong>Persistent .rdp files</strong> - saved in AppData for quick reuse</li>
+                    <li><strong>Quick search</strong> - find servers by hostname or description instantly</li>
+                    <li><strong>System tray access</strong> - always available from your taskbar</li>
                 </ul>
             </div>
         </div>
@@ -422,186 +429,174 @@
                 <h3>🔐 Secure</h3>
                 <ul>
                     <li>Windows Credential Manager</li>
-                    <li>Encrypted connection profiles</li>
+                    <li>Global credential defaults</li>
+                    <li>Per-host credential overrides</li>
+                    <li>Automatic RDP SSO</li>
+                    <li>No plain text passwords</li>
                     <li>Memory-safe Rust code</li>
-                    <li>Per-connection credentials</li>
-                    <li>No cloud dependencies</li>
-                    <li>Local-only storage</li>
                 </ul>
             </div>
             
             <div class="info-card">
                 <h3>⚡ Fast</h3>
                 <ul>
-                    <li>Built with Rust</li>
-                    <li>Tauri framework</li>
-                    <li>Instant startup</li>
-                    <li>Minimal memory usage</li>
+                    <li>One-click RDP connections</li>
+                    <li>Quick host search</li>
+                    <li>Instant system tray access</li>
+                    <li>Persistent .rdp files</li>
+                    <li>Small ~5 MB installer</li>
                     <li>Native performance</li>
-                    <li>Small binary size</li>
                 </ul>
             </div>
             
             <div class="info-card">
-                <h3>🪟 Windows Native</h3>
+                <h3>📋 Active Directory</h3>
                 <ul>
-                    <li>Native Windows application</li>
-                    <li>Windows Credential Manager</li>
+                    <li>LDAP domain scanning</li>
+                    <li>Authenticated AD queries</li>
+                    <li>Auto-discover Windows Servers</li>
+                    <li>Bulk host import</li>
+                    <li>Server descriptions from AD</li>
+                    <li>Domain credential support</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3>🎯 Easy to Use</h3>
+                <ul>
+                    <li>CSV-based host storage</li>
+                    <li>Search and filter hosts</li>
+                    <li>FQDN validation</li>
                     <li>System tray integration</li>
-                    <li>Windows look and feel</li>
-                    <li>Native RDP protocol support</li>
-                    <li>Windows 10/11 optimized</li>
-                </ul>
-            </div>
-            
-            <div class="info-card">
-                <h3>🎯 Powerful</h3>
-                <ul>
-                    <li>Quick search & filter</li>
-                    <li>Tags and favorites</li>
-                    <li>Recent connections</li>
-                    <li>Import/export profiles</li>
                     <li>Keyboard shortcuts</li>
-                    <li>System tray integration</li>
-                    <li>Auto-updates</li>
-                    <li>Custom RDP settings</li>
+                    <li>Windows startup option</li>
+                    <li>Debug logging mode</li>
+                    <li>Application reset shortcut</li>
                 </ul>
             </div>
         </div>
         
         <div class="section">
-            <h2>🦀 Built with Rust & Tauri</h2>
-            <p style="margin-bottom: 20px;">QuickRDP leverages the power of <strong>Rust</strong> and the elegance of <strong>Tauri</strong> to deliver a modern, secure, and performant RDP manager.</p>
+            <h2>🦀 Why Rust & Tauri?</h2>
+            <p style="margin-bottom: 20px;">QuickRDP leverages modern technologies to deliver a lightweight, secure, and performant application.</p>
             
-            <div style="background: #2d2a1e; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                <h4 style="color: #f59e0b; margin: 0 0 15px 0;">🦀 Why Rust?</h4>
-                <ul style="margin: 0; line-height: 1.8;">
-                    <li><strong>Memory safety</strong> - eliminates entire classes of bugs at compile time</li>
-                    <li><strong>Performance</strong> - comparable to C/C++ but with modern tooling</li>
-                    <li><strong>Concurrency</strong> - fearless concurrency without data races</li>
-                    <li><strong>Zero-cost abstractions</strong> - high-level code with low-level performance</li>
-                    <li><strong>Modern ecosystem</strong> - cargo makes dependency management effortless</li>
-                </ul>
-            </div>
-            
-            <div style="background: #1e3040; border-left: 4px solid #f97316; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                <h4 style="color: #93c5fd; margin: 0 0 15px 0;">⚡ Why Tauri?</h4>
-                <ul style="margin: 0; line-height: 1.8;">
-                    <li><strong>Tiny binaries</strong> - significantly smaller than Electron apps (3-5 MB vs 100+ MB)</li>
-                    <li><strong>Native webview</strong> - uses Windows Edge WebView2 instead of bundling Chromium</li>
-                    <li><strong>Better performance</strong> - less memory usage, faster startup</li>
-                    <li><strong>Modern web UI</strong> - build UIs with any web framework you like</li>
-                    <li><strong>Security by default</strong> - sandboxed architecture with explicit permissions</li>
-                </ul>
-            </div>
-            
-            <div class="tech-stack">
-                <span class="tech-tag primary">Rust</span>
-                <span class="tech-tag primary">Tauri</span>
-                <span class="tech-tag">TypeScript</span>
-                <span class="tech-tag">Web Technologies</span>
-                <span class="tech-tag">Native OS APIs</span>
-                <span class="tech-tag">Async Runtime</span>
-                <span class="tech-tag">System Keychain</span>
-                <span class="tech-tag">Auto-Updates</span>
-            </div>
-            
-            <p style="margin-top: 20px; padding: 15px; background: #1e3040; border-radius: 8px; border-left: 4px solid #f97316;">
-                <strong>The combination:</strong> Rust provides the performance and safety of a systems language, while Tauri gives you the flexibility of web technologies for the UI. The result is a desktop app that's fast, secure, small, and beautiful.
-            </p>
-        </div>
-        
-        <div class="section">
-            <h2>🚀 What It Does</h2>
             <div class="info-grid">
-                <div>
-                    <h3 style="color: #f97316; margin-bottom: 15px;">🌟 Core Features</h3>
+                <div class="info-card">
+                    <h3>Memory Safety</h3>
                     <ul>
-                        <li>Store unlimited RDP connections</li>
-                        <li>Quick connect with double-click</li>
-                        <li>Organize with tags & favorites</li>
-                        <li>Import/export connection profiles</li>
-                        <li>Search and filter connections</li>
-                        <li>Recent connections tracking</li>
-                        <li>Connection history</li>
-                        <li>Multi-monitor RDP support</li>
-                        <li>Custom resolution settings</li>
-                        <li>Connection presets</li>
+                        <li>No buffer overflows</li>
+                        <li>No null pointer errors</li>
+                        <li>Thread-safe by default</li>
+                        <li>Compile-time guarantees</li>
                     </ul>
                 </div>
-                <div>
-                    <h3 style="color: #f97316; margin-bottom: 15px;">🔒 Security</h3>
+                
+                <div class="info-card">
+                    <h3>Small Footprint</h3>
+                    <ul>
+                        <li>~5 MB installer</li>
+                        <li>Uses native WebView2</li>
+                        <li>No Electron overhead</li>
+                        <li>Fast startup times</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Native Integration</h3>
                     <ul>
                         <li>Windows Credential Manager</li>
-                        <li>Encrypted connection profiles</li>
-                        <li>Memory-safe Rust code</li>
-                        <li>Per-connection credentials</li>
-                        <li>No cloud dependencies</li>
-                        <li>Secure password storage</li>
-                        <li>Global credential defaults</li>
-                        <li>Local-only storage</li>
+                        <li>Registry operations</li>
+                        <li>System tray support</li>
+                        <li>Native RDP protocol</li>
                     </ul>
                 </div>
-                <div>
-                    <h3 style="color: #f97316; margin-bottom: 15px;">🎨 User Interface</h3>
+                
+                <div class="info-card">
+                    <h3>Modern Stack</h3>
                     <ul>
-                        <li>Modern, clean design</li>
-                        <li>Dark & light themes</li>
-                        <li>Auto theme switching</li>
-                        <li>Responsive layout</li>
-                        <li>Keyboard shortcuts</li>
-                        <li>System tray integration</li>
-                        <li>Quick access menu</li>
-                        <li>Customizable columns</li>
-                        <li>Grid and list views</li>
-                        <li>Connection status indicators</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 style="color: #f97316; margin-bottom: 15px;">⚙️ Advanced</h3>
-                    <ul>
-                        <li>Native Windows integration</li>
-                        <li>Auto-update functionality</li>
-                        <li>Native RDP client integration</li>
-                        <li>Custom RDP parameters</li>
-                        <li>Connection profiles backup</li>
-                        <li>Bulk operations support</li>
-                        <li>Portable mode option</li>
-                        <li>Command-line interface</li>
-                        <li>Plugin architecture</li>
-                        <li>Configuration sync</li>
+                        <li>TypeScript frontend</li>
+                        <li>Tailwind CSS + DaisyUI</li>
+                        <li>Async Rust backend</li>
+                        <li>Web-based UI flexibility</li>
                     </ul>
                 </div>
             </div>
-            <p style="margin-top: 20px; padding: 15px; background: #2d1e2a; border-radius: 8px; border-left: 4px solid #a855f7; color: #e9d5ff;">
-                <strong>💡 Quick tips:</strong> Use keyboard shortcuts for instant access. Create tags to organize your connections. Set up favorites for quick access. Export your profiles for backup or sharing across machines.
-            </p>
         </div>
         
         <div class="section">
-            <h2>🤖 Modern Development Approach</h2>
-            <p style="margin-bottom: 20px; font-size: 1.05em; color: #ccc;">
-                QuickRDP represents a modern approach to Windows desktop application development, combining the best of native performance with contemporary development practices.
-            </p>
-            
-            <div style="background: #2d2a1e; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                <h4 style="color: #f59e0b; margin: 0 0 15px 0;">Why This Approach Works</h4>
-                <ul style="margin: 0; line-height: 1.8;">
-                    <li><strong>Rust safety guarantees</strong> - eliminates entire classes of bugs at compile time</li>
-                    <li><strong>Tauri efficiency</strong> - tiny binaries (3-5 MB) compared to Electron (100+ MB)</li>
-                    <li><strong>Native performance</strong> - uses Windows Edge WebView2 for optimal integration</li>
-                    <li><strong>Windows optimized</strong> - built specifically for Windows with full OS integration</li>
-                    <li><strong>Modern tooling</strong> - cargo, hot reload, and excellent developer experience</li>
-                </ul>
+            <h2>🚀 Core Features</h2>
+            <div class="info-grid">
+                <div>
+                    <h3 style="color: #0066ff; margin-bottom: 15px;">🔐 Credential Management</h3>
+                    <ul>
+                        <li>Windows Credential Manager integration</li>
+                        <li>Global default credentials</li>
+                        <li>Per-host credential overrides</li>
+                        <li>Automatic SSO for RDP connections</li>
+                        <li>Secure encrypted storage</li>
+                        <li>Domain authentication support</li>
+                        <li>Multiple username formats (DOMAIN\user, user@domain)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #0066ff; margin-bottom: 15px;">📋 Active Directory</h3>
+                    <ul>
+                        <li>LDAP domain scanning</li>
+                        <li>Automatic server discovery</li>
+                        <li>Windows Server detection</li>
+                        <li>Authenticated AD queries</li>
+                        <li>Bulk host import from AD</li>
+                        <li>Description metadata from AD</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #0066ff; margin-bottom: 15px;">🖥️ RDP Management</h3>
+                    <ul>
+                        <li>One-click RDP connections</li>
+                        <li>Persistent .rdp files in AppData</li>
+                        <li>Custom RDP settings</li>
+                        <li>Full screen & windowed modes</li>
+                        <li>Audio & clipboard redirection</li>
+                        <li>Printer & smart card support</li>
+                        <li>Connection resumption</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #0066ff; margin-bottom: 15px;">🎯 Host Organization</h3>
+                    <ul>
+                        <li>CSV-based host storage</li>
+                        <li>Quick search & filter</li>
+                        <li>Host descriptions</li>
+                        <li>FQDN validation</li>
+                        <li>Add/edit/delete hosts</li>
+                        <li>Import from AD scans</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #0066ff; margin-bottom: 15px;">⚙️ System Integration</h3>
+                    <ul>
+                        <li>System tray integration</li>
+                        <li>Windows startup support</li>
+                        <li>Registry operations</li>
+                        <li>Hidden window management</li>
+                        <li>Keyboard shortcuts (Escape to close)</li>
+                        <li>Multi-window architecture</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #0066ff; margin-bottom: 15px;">🛠️ Developer Features</h3>
+                    <ul>
+                        <li>Debug logging mode (--debug flag)</li>
+                        <li>Comprehensive error tracking</li>
+                        <li>Application reset (Ctrl+Shift+Alt+R)</li>
+                        <li>Detailed operation logs</li>
+                        <li>Component-level debugging</li>
+                    </ul>
+                </div>
             </div>
-            
-            <p style="margin-bottom: 20px; font-size: 1.05em; color: #ccc;">
-                By choosing Rust and Tauri, QuickRDP delivers desktop application quality that was previously only possible with platform-specific native code, but with the flexibility and rapid development of web technologies.
+            <p style="margin-top: 20px; padding: 15px; background: #2d1e2a; border-radius: 8px; border-left: 4px solid #0066ff; color: #e9d5ff;">
+                <strong>💡 Pro tip:</strong> Use the AD scanner to automatically discover all Windows Servers in your domain. Set global credentials once, then override with per-host credentials for servers requiring different authentication.
             </p>
-            
-            <div style="padding: 20px; background: #1e3040; border-radius: 8px; border-left: 4px solid #f97316;">
-                <p style="margin: 0;"><strong>The result?</strong> A modern Windows desktop application that's fast, secure, small, and beautiful. Native performance meets modern UI, all while using safe, maintainable Rust code.</p>
-            </div>
         </div>
         
         <div class="github-section">
@@ -618,50 +613,70 @@
         </div>
         
         <div class="section">
-            <h2>📖 Documentation</h2>
-            <p style="margin-bottom: 20px;">Everything you need to get started and make the most of QuickRDP:</p>
+            <h2>📖 Getting Started</h2>
+            <p style="margin-bottom: 20px;">Everything you need to start using QuickRDP:</p>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 15px;">
-                <div style="background: #2a2a2a; padding: 20px; border-radius: 8px; border-left: 4px solid #f97316;">
-                    <h4 style="color: #f97316; margin: 0 0 10px 0;">📘 User Guide</h4>
+                <div style="background: #2a2a2a; padding: 20px; border-radius: 8px; border-left: 4px solid #0066ff;">
+                    <h4 style="color: #0066ff; margin: 0 0 10px 0;">📘 First Launch</h4>
                     <ul style="margin: 0; line-height: 1.8;">
-                        <li><strong>README.md</strong> - Quick start guide & features</li>
-                        <li><strong>User Manual</strong> - Complete usage documentation</li>
-                        <li><strong>FAQ</strong> - Common questions answered</li>
-                        <li><strong>Troubleshooting</strong> - Solutions to common issues</li>
+                        <li><strong>1. Launch QuickRDP</strong></li>
+                        <li><strong>2. Enter domain credentials</strong> (DOMAIN\user or user@domain)</li>
+                        <li><strong>3. Saved in Windows Credential Manager</strong></li>
+                        <li><strong>4. Ready to connect!</strong></li>
                     </ul>
                 </div>
                 
-                <div style="background: #2a2a2a; padding: 20px; border-radius: 8px; border-left: 4px solid #f97316;">
-                    <h4 style="color: #f97316; margin: 0 0 10px 0;">💻 Developer Docs</h4>
+                <div style="background: #2a2a2a; padding: 20px; border-radius: 8px; border-left: 4px solid #0066ff;">
+                    <h4 style="color: #0066ff; margin: 0 0 10px 0;">📋 Add Hosts</h4>
                     <ul style="margin: 0; line-height: 1.8;">
-                        <li><strong>Architecture</strong> - How QuickRDP is structured</li>
-                        <li><strong>Building</strong> - Build from source instructions</li>
-                        <li><strong>Contributing</strong> - Contribution guidelines</li>
-                        <li><strong>API Reference</strong> - Internal API documentation</li>
+                        <li><strong>Manual:</strong> Add hosts with FQDN and description</li>
+                        <li><strong>AD Scan:</strong> Scan domain for Windows Servers</li>
+                        <li><strong>Bulk Import:</strong> Select multiple from scan results</li>
+                        <li><strong>CSV Storage:</strong> Simple file-based management</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #2a2a2a; padding: 20px; border-radius: 8px; border-left: 4px solid #0066ff;">
+                    <h4 style="color: #0066ff; margin: 0 0 10px 0;">🔐 Per-Host Credentials</h4>
+                    <ul style="margin: 0; line-height: 1.8;">
+                        <li><strong>Right-click host</strong> or use context menu</li>
+                        <li><strong>Set specific credentials</strong> for that server</li>
+                        <li><strong>Overrides global</strong> default credentials</li>
+                        <li><strong>Stored securely</strong> in Credential Manager</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #2a2a2a; padding: 20px; border-radius: 8px; border-left: 4px solid #0066ff;">
+                    <h4 style="color: #0066ff; margin: 0 0 10px 0;">💻 Developer Mode</h4>
+                    <ul style="margin: 0; line-height: 1.8;">
+                        <li><strong>Launch with --debug flag</strong> for detailed logs</li>
+                        <li><strong>Ctrl+Shift+Alt+R</strong> - complete app reset</li>
+                        <li><strong>Logs in AppData</strong> - detailed operation tracking</li>
+                        <li><strong>Component-level</strong> debugging available</li>
                     </ul>
                 </div>
             </div>
             
-            <div style="margin-top: 20px; padding: 20px; background: #2d2a1e; border-radius: 8px; border-left: 4px solid #f59e0b;">
-                <h4 style="color: #f59e0b; margin: 0 0 15px 0;">🛠️ Technologies Used</h4>
+            <div style="margin-top: 20px; padding: 20px; background: #2d2a1e; border-radius: 8px; border-left: 4px solid #0088ff;">
+                <h4 style="color: #0088ff; margin: 0 0 15px 0;">🛠️ Technologies</h4>
                 <div style="columns: 2; column-gap: 30px; line-height: 1.8;">
-                    <strong style="color: #fbbf24;">Backend:</strong><br>
-                    Rust, Tauri Core, Tokio Async Runtime, Serde Serialization, Native OS APIs<br><br>
+                    <strong style="color: #0088ff;">Backend:</strong><br>
+                    Rust, Tauri 2.0, Windows APIs, LDAP3, CSV Parser, Async Runtime<br><br>
                     
-                    <strong style="color: #fbbf24;">Frontend:</strong><br>
-                    TypeScript, Modern Web APIs, Responsive CSS, Component Architecture<br><br>
+                    <strong style="color: #0088ff;">Frontend:</strong><br>
+                    TypeScript, Tailwind CSS, DaisyUI, Vite Build System<br><br>
                     
-                    <strong style="color: #fbbf24;">Security:</strong><br>
-                    Windows Credential Manager, Encrypted Profiles, Memory Safety (Rust), Sandboxed Architecture<br><br>
+                    <strong style="color: #0088ff;">Security:</strong><br>
+                    Windows Credential Manager, Secure Credential Storage, LDAP Authentication, Memory Safety<br><br>
                     
-                    <strong style="color: #fbbf24;">Build & Deploy:</strong><br>
-                    Cargo, Tauri CLI, GitHub Actions, Cross-platform Compilation, Auto-Updates
+                    <strong style="color: #0088ff;">Integration:</strong><br>
+                    Active Directory LDAP, Windows Registry, System Tray, RDP Protocol
                 </div>
             </div>
             
-            <p style="margin-top: 20px; padding: 15px; background: #1e3040; border-radius: 8px; border-left: 4px solid #f97316;">
-                <strong>🎯 Getting Started:</strong> Check out the README for installation instructions, then explore the user manual for detailed feature documentation. For developers, the architecture docs explain how everything fits together.
+            <p style="margin-top: 20px; padding: 15px; background: #1e3040; border-radius: 8px; border-left: 4px solid #0066ff;">
+                <strong>🎯 Quick Start:</strong> Download QuickRDP, enter your domain credentials, scan your AD domain, and start connecting to servers instantly. Check the README on GitHub for detailed documentation.
             </p>
         </div>
     </div>
@@ -673,7 +688,7 @@
                 MIT License • Use it however you want
             </p>
             <p style="margin-top: 20px; font-size: 0.85em;">
-                <a href="https://swatto.co.uk" style="color: #0078d4; text-decoration: none;">swatto.co.uk</a>
+                <a href="https://swatto.co.uk" style="color: #0088ff; text-decoration: none;">swatto.co.uk</a>
             </p>
         </div>
     </footer>
