@@ -1,519 +1,958 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>QuickRDP - Modern Windows RDP Connection Manager</title>
+        <meta
+            name="description"
+            content="A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight with Active Directory integration. Open source and free."
+        />
+        <meta
+            name="keywords"
+            content="RDP manager, QuickRDP, remote desktop, Rust, Tauri, Windows, RDP connection, secure RDP, modern RDP manager, Swatto, Active Directory, LDAP, Windows Server"
+        />
+        <meta name="author" content="Swatto" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://swatto.co.uk/" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickRDP - Modern Windows RDP Connection Manager</title>
-    <meta name="description"
-        content="A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight. Open source and free.">
-    <meta name="keywords"
-        content="RDP manager, QuickRDP, remote desktop, Rust, Tauri, Windows, RDP connection, secure RDP, modern RDP manager, Swatto">
-    <meta name="author" content="Swatto">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://swatto.co.uk/">
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="favicon-32x32.png"
+        />
+        <link rel="icon" type="image/png" sizes="any" href="icon.png" />
+        <link rel="apple-touch-icon" href="icon.png" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="any" href="icon.png">
-    <link rel="apple-touch-icon" href="icon.png">
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://swatto.co.uk/" />
+        <meta
+            property="og:title"
+            content="QuickRDP - Modern Windows RDP Connection Manager"
+        />
+        <meta
+            property="og:description"
+            content="A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight with Active Directory integration. Open source and free."
+        />
+        <meta property="og:image" content="https://swatto.co.uk/icon.png" />
+        <meta property="og:site_name" content="Swatto" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://swatto.co.uk/">
-    <meta property="og:title" content="QuickRDP - Modern Windows RDP Connection Manager">
-    <meta property="og:description"
-        content="A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight. Open source and free.">
-    <meta property="og:image" content="https://swatto.co.uk/icon.png">
-    <meta property="og:site_name" content="Swatto">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://swatto.co.uk/">
-    <meta name="twitter:title" content="QuickRDP - Modern Windows RDP Connection Manager">
-    <meta name="twitter:description"
-        content="A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight. Open source and free.">
-    <meta name="twitter:image" content="https://swatto.co.uk/icon.png">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #e0e0e0;
-            background: #1a1a1a;
-            text-align: left;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            background: linear-gradient(135deg, #003d7a 0%, #0066cc 50%, #0088ff 100%);
-            color: white;
-            padding: 60px 0;
-            text-align: center;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 102, 255, 0.3) 0%, transparent 70%);
-            animation: pulse 15s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.5;
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://swatto.co.uk/" />
+        <meta
+            name="twitter:title"
+            content="QuickRDP - Modern Windows RDP Connection Manager"
+        />
+        <meta
+            name="twitter:description"
+            content="A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight with Active Directory integration. Open source and free."
+        />
+        <meta name="twitter:image" content="https://swatto.co.uk/icon.png" />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
 
-            50% {
-                transform: translate(10%, 10%) scale(1.1);
-                opacity: 0.8;
-            }
-        }
-
-        header .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        header p {
-            font-size: 1.3em;
-            opacity: 0.9;
-        }
-
-        .tagline {
-            font-size: 1.1em;
-            margin-top: 20px;
-            opacity: 0.85;
-        }
-
-        .download-section {
-            background: #252525;
-            border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-            text-align: center;
-            border: 1px solid #333;
-        }
-
-        .download-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #003d7a 0%, #0088ff 100%);
-            color: white;
-            padding: 18px 50px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 1.2em;
-            font-weight: 600;
-            margin: 20px 0;
-            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.5);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .download-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 136, 255, 0.6);
-        }
-
-        .version-info {
-            color: #999;
-            font-size: 0.9em;
-            margin-top: 15px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .info-card {
-            background: #252525;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-            border: 1px solid #333;
-            text-align: center;
-        }
-
-        .info-card h3 {
-            color: #0066ff;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .info-card ul {
-            list-style: none;
-            padding-left: 0;
-            text-align: left;
-            display: inline-block;
-        }
-
-        .info-card li {
-            padding: 8px 0;
-            border-bottom: 1px solid #333;
-        }
-
-        .info-card li:last-child {
-            border-bottom: none;
-        }
-
-        .info-card li:before {
-            content: "✓ ";
-            color: #0066ff;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-
-        .section {
-            background: #252525;
-            border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-            border: 1px solid #333;
-            text-align: center;
-        }
-
-        .section h2 {
-            color: #0066ff;
-            margin-bottom: 20px;
-            font-size: 2em;
-            border-bottom: 3px solid #0066ff;
-            padding-bottom: 10px;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .tech-tag {
-            background: #333;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            color: #ccc;
-            border: 1px solid #444;
-            text-decoration: none;
-            transition: all 0.2s;
-            display: inline-block;
-        }
-
-        .tech-tag:hover {
-            background: #0066ff;
-            color: white;
-            border-color: #0066ff;
-            transform: translateY(-2px);
-        }
-
-        .tech-tag.primary {
-            background: #0066ff;
-            color: white;
-            border-color: #0066ff;
-        }
-
-        .github-section {
-            background: linear-gradient(135deg, #003d7a 0%, #0088ff 100%);
-            color: white;
-            border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 30px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
-        }
-
-        .github-button {
-            display: inline-block;
-            background: white;
-            color: #003d7a;
-            padding: 15px 40px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 1.1em;
-            font-weight: 600;
-            margin: 20px 0;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .github-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            color: #888;
-            font-size: 0.9em;
-        }
-
-        .license-info {
-            margin-top: 10px;
-            color: #666;
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2em;
-            }
-
-            header p {
-                font-size: 1em;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Oxygen, Ubuntu, Cantarell, sans-serif;
+                line-height: 1.6;
+                color: #e0e0e0;
+                background: #1a1a1a;
+                text-align: left;
             }
 
             .container {
-                padding: 10px;
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            header {
+                background: linear-gradient(
+                    135deg,
+                    #003d7a 0%,
+                    #0066cc 50%,
+                    #0088ff 100%
+                );
+                color: white;
+                padding: 60px 0;
+                text-align: center;
+                margin-bottom: 40px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+                position: relative;
+                overflow: hidden;
+            }
+
+            header::before {
+                content: "";
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(
+                    circle,
+                    rgba(0, 102, 255, 0.3) 0%,
+                    transparent 70%
+                );
+                animation: pulse 15s ease-in-out infinite;
+            }
+
+            @keyframes pulse {
+                0%,
+                100% {
+                    transform: translate(0, 0) scale(1);
+                    opacity: 0.5;
+                }
+                50% {
+                    transform: translate(10%, 10%) scale(1.1);
+                    opacity: 0.8;
+                }
+            }
+
+            header .container {
+                position: relative;
+                z-index: 1;
+            }
+
+            header h1 {
+                font-size: 3em;
+                margin-bottom: 10px;
+                font-weight: 700;
+            }
+
+            header p {
+                font-size: 1.3em;
+                opacity: 0.9;
+            }
+
+            .tagline {
+                font-size: 1.1em;
+                margin-top: 20px;
+                opacity: 0.85;
+            }
+
+            .download-section {
+                background: #252525;
+                border-radius: 12px;
+                padding: 40px;
+                margin-bottom: 30px;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+                text-align: center;
+                border: 1px solid #333;
+            }
+
+            .download-button {
+                display: inline-block;
+                background: linear-gradient(135deg, #003d7a 0%, #0088ff 100%);
+                color: white;
+                padding: 18px 50px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-size: 1.2em;
+                font-weight: 600;
+                margin: 20px 0;
+                box-shadow: 0 4px 15px rgba(0, 102, 255, 0.5);
+                transition:
+                    transform 0.2s,
+                    box-shadow 0.2s;
+            }
+
+            .download-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 136, 255, 0.6);
+            }
+
+            .version-info {
+                color: #999;
+                font-size: 0.9em;
+                margin-top: 15px;
+            }
+
+            .info-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                margin-bottom: 30px;
+            }
+
+            .info-card {
+                background: #252525;
+                border-radius: 12px;
+                padding: 30px;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+                border: 1px solid #333;
+                text-align: center;
+            }
+
+            .info-card h3 {
+                color: #0066ff;
+                margin-bottom: 15px;
+                font-size: 1.3em;
+            }
+
+            .info-card ul {
+                list-style: none;
+                padding-left: 0;
+                text-align: left;
+                display: inline-block;
+            }
+
+            .info-card li {
+                padding: 8px 0;
+                border-bottom: 1px solid #333;
+            }
+
+            .info-card li:last-child {
+                border-bottom: none;
+            }
+
+            .info-card li:before {
+                content: "✓ ";
+                color: #0066ff;
+                font-weight: bold;
+                margin-right: 8px;
             }
 
             .section {
-                padding: 25px 20px;
+                background: #252525;
+                border-radius: 12px;
+                padding: 40px;
+                margin-bottom: 30px;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+                border: 1px solid #333;
+                text-align: center;
+            }
+
+            .section h2 {
+                color: #0066ff;
+                margin-bottom: 20px;
+                font-size: 2em;
+                border-bottom: 3px solid #0066ff;
+                padding-bottom: 10px;
             }
 
             .tech-stack {
-                gap: 10px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin-top: 20px;
                 justify-content: center;
             }
 
             .tech-tag {
-                font-size: 0.95em;
-                padding: 10px 18px;
+                background: #333;
+                padding: 8px 16px;
+                border-radius: 20px;
+                font-size: 0.9em;
+                color: #ccc;
+                border: 1px solid #444;
+                text-decoration: none;
+                transition: all 0.2s;
+                display: inline-block;
             }
-        }
-    </style>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "QuickRDP",
-      "applicationCategory": "UtilityApplication",
-      "operatingSystem": "Windows",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "description": "A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight with a beautiful interface.",
-      "url": "https://swatto.co.uk/",
-      "author": {
-        "@type": "Person",
-        "name": "Swatto",
-        "url": "https://swatto.co.uk"
-      },
-      "softwareVersion": "1.1.0",
-      "screenshot": "https://swatto.co.uk/",
-      "featureList": [
-        "Native Windows application",
-        "Modern, intuitive UI built with web technologies",
-        "Secure credential storage with Windows Credential Manager",
-        "Fast RDP connections with session management",
-        "Real-time connection monitoring",
-        "Import/export connection profiles",
-        "Dark and light theme support",
-        "Quick search and filtering",
-        "Recent connections tracking",
-        "Multi-monitor RDP support",
-        "Custom RDP settings per connection",
-        "Encrypted connection profiles",
-        "Built with Rust for safety and performance",
-        "Small binary size with Tauri",
-        "Auto-updates support",
-        "System tray integration",
-        "Keyboard shortcuts"
-      ],
-      "programmingLanguage": ["Rust", "TypeScript"],
-      "license": "https://github.com/Swatto86/QuickRDP/blob/main/LICENSE"
-    }
-    </script>
-</head>
 
-<body>
-    <header>
+            .tech-tag:hover {
+                background: #0066ff;
+                color: white;
+                border-color: #0066ff;
+                transform: translateY(-2px);
+            }
+
+            .tech-tag.primary {
+                background: #0066ff;
+                color: white;
+                border-color: #0066ff;
+            }
+
+            .github-section {
+                background: linear-gradient(135deg, #003d7a 0%, #0088ff 100%);
+                color: white;
+                border-radius: 12px;
+                padding: 40px;
+                margin-bottom: 30px;
+                text-align: center;
+                box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
+            }
+
+            .github-button {
+                display: inline-block;
+                background: white;
+                color: #003d7a;
+                padding: 15px 40px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-size: 1.1em;
+                font-weight: 600;
+                margin: 20px 0;
+                transition:
+                    transform 0.2s,
+                    box-shadow 0.2s;
+            }
+
+            .github-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
+            }
+
+            .shortcuts-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+                text-align: left;
+            }
+
+            .shortcuts-table th,
+            .shortcuts-table td {
+                padding: 12px 15px;
+                border-bottom: 1px solid #333;
+            }
+
+            .shortcuts-table th {
+                background: #1e3040;
+                color: #0088ff;
+                font-weight: 600;
+            }
+
+            .shortcuts-table tr:hover {
+                background: #2a2a2a;
+            }
+
+            kbd {
+                background: #333;
+                border: 1px solid #555;
+                border-radius: 4px;
+                padding: 3px 8px;
+                font-family: "Consolas", "Monaco", monospace;
+                font-size: 0.9em;
+                color: #0088ff;
+                box-shadow: 0 2px 0 #222;
+            }
+
+            .feature-highlight {
+                background: #1e3040;
+                border-radius: 8px;
+                border-left: 4px solid #0066ff;
+                padding: 15px;
+                margin-top: 20px;
+            }
+
+            .two-column {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+                text-align: left;
+            }
+
+            footer {
+                text-align: center;
+                padding: 30px 0;
+                color: #888;
+                font-size: 0.9em;
+            }
+
+            .license-info {
+                margin-top: 10px;
+                color: #666;
+            }
+
+            @media (max-width: 768px) {
+                header h1 {
+                    font-size: 2em;
+                }
+
+                header p {
+                    font-size: 1em;
+                }
+
+                .info-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .container {
+                    padding: 10px;
+                }
+
+                .section {
+                    padding: 25px 20px;
+                }
+
+                .tech-stack {
+                    gap: 10px;
+                }
+
+                .tech-tag {
+                    font-size: 0.95em;
+                    padding: 10px 18px;
+                }
+
+                .two-column {
+                    grid-template-columns: 1fr;
+                }
+
+                .shortcuts-table {
+                    font-size: 0.9em;
+                }
+
+                .shortcuts-table th,
+                .shortcuts-table td {
+                    padding: 8px 10px;
+                }
+            }
+        </style>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "QuickRDP",
+                "applicationCategory": "UtilityApplication",
+                "operatingSystem": "Windows 10, Windows 11",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                },
+                "description": "A modern Windows RDP connection manager built with Rust and Tauri. Fast, secure, and lightweight with Active Directory integration, per-host credentials, and system tray support.",
+                "url": "https://swatto.co.uk/",
+                "author": {
+                    "@type": "Person",
+                    "name": "Swatto",
+                    "url": "https://swatto.co.uk"
+                },
+                "softwareVersion": "1.1.0",
+                "screenshot": "https://swatto.co.uk/icon.png",
+                "featureList": [
+                    "Secure credential storage with Windows Credential Manager",
+                    "Active Directory LDAP scanning for Windows Servers",
+                    "Per-host credential overrides",
+                    "One-click RDP connections",
+                    "System tray integration with recent connections",
+                    "Global keyboard shortcuts (Ctrl+Shift+R)",
+                    "Dark and light theme support",
+                    "Quick search with auto-focus",
+                    "Recent connections tracking in tray menu",
+                    "Dedicated error window for troubleshooting",
+                    "CSV-based host storage",
+                    "Persistent RDP connection files",
+                    "Windows startup option",
+                    "Debug logging mode",
+                    "Application reset functionality",
+                    "Built with Rust and Tauri for native performance",
+                    "Small binary size (~5 MB installer)"
+                ],
+                "programmingLanguage": ["Rust", "TypeScript"],
+                "license": "https://github.com/Swatto86/QuickRDP/blob/main/LICENSE"
+            }
+        </script>
+    </head>
+
+    <body>
+        <header>
+            <div class="container">
+                <div
+                    style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 20px;
+                        margin-bottom: 10px;
+                    "
+                >
+                    <img
+                        src="icon.png"
+                        alt="QuickRDP Icon"
+                        style="
+                            width: 80px;
+                            height: 80px;
+                            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+                        "
+                    />
+                    <h1 style="margin: 0">QuickRDP</h1>
+                </div>
+                <p>A modern Windows RDP connection manager</p>
+                <div class="tagline">
+                    Built with Rust & Tauri • Native Windows App • Open Source
+                </div>
+            </div>
+        </header>
+
         <div class="container">
-            <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 10px;">
-                <img src="icon.png" alt="QuickRDP Icon"
-                    style="width: 80px; height: 80px; filter: brightness(0) saturate(100%) invert(47%) sepia(94%) saturate(3567%) hue-rotate(196deg) brightness(102%) contrast(104%) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));">
-                <h1 style="margin: 0;">QuickRDP</h1>
+            <!-- Hero Section -->
+            <div class="section">
+                <h2>🚀 For Windows System Administrators</h2>
+                <p style="margin-bottom: 20px; font-size: 1.1em; color: #ccc">
+                    QuickRDP streamlines your daily workflow with features
+                    designed specifically for managing multiple Windows Servers
+                    efficiently and securely.
+                </p>
+                <ul
+                    style="
+                        line-height: 2.2;
+                        font-size: 1.05em;
+                        display: inline-block;
+                        text-align: left;
+                        max-width: 800px;
+                    "
+                >
+                    <li>
+                        ✓ <strong>Secure credential storage</strong> — Windows
+                        Credential Manager integration keeps your passwords safe
+                    </li>
+                    <li>
+                        ✓ <strong>Active Directory scanning</strong> —
+                        automatically discover all Windows Servers in your
+                        domain via LDAP
+                    </li>
+                    <li>
+                        ✓ <strong>Quick connections</strong> — one-click RDP
+                        launch with automatic authentication
+                    </li>
+                    <li>
+                        ✓ <strong>Per-host credentials</strong> — use different
+                        credentials for specific servers when needed
+                    </li>
+                    <li>
+                        ✓ <strong>Recent connections</strong> — quickly
+                        reconnect to your last 5 servers from the system tray
+                    </li>
+                    <li>
+                        ✓ <strong>System tray integration</strong> — always
+                        accessible from your Windows taskbar
+                    </li>
+                    <li>
+                        ✓ <strong>Dark & light themes</strong> — choose your
+                        preferred appearance from the tray menu
+                    </li>
+                    <li>
+                        ✓ <strong>Native Windows app</strong> — built with Rust
+                        and Tauri for performance and security
+                    </li>
+                </ul>
+                <div class="feature-highlight">
+                    <strong>The result?</strong> A powerful yet simple RDP
+                    manager that eliminates repetitive tasks, letting you focus
+                    on server administration instead of connection management.
+                </div>
             </div>
-            <p>A modern Windows RDP connection manager</p>
-            <div class="tagline">
-                Built with Rust & Tauri • Native Windows App • Open source
+
+            <!-- Download Section -->
+            <div class="download-section">
+                <h2 style="margin: 0 0 20px 0; color: #e0e0e0">📥 Download</h2>
+                <p style="font-size: 1.1em; margin-bottom: 20px">
+                    Get QuickRDP for Windows 10/11
+                </p>
+                <div
+                    style="
+                        display: flex;
+                        gap: 20px;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        margin: 20px 0;
+                    "
+                >
+                    <a
+                        href="https://github.com/Swatto86/QuickRDP/releases/latest"
+                        class="download-button"
+                    >
+                        🪟 Download for Windows
+                    </a>
+                </div>
+                <div class="version-info">
+                    Native Windows App • Small ~5 MB installer • Auto-updates<br />
+                    <span style="color: #0088ff; font-weight: 600"
+                        >✨ Version 1.1.0 — Latest Release!</span
+                    >
+                </div>
             </div>
-        </div>
-    </header>
 
-    <div class="container">
-        <div class="section">
-            <h2>🚀 For Windows System Administrators</h2>
-            <p style="margin-bottom: 20px; font-size: 1.1em; color: #ccc;">
-                QuickRDP streamlines your daily workflow with features designed specifically for managing multiple
-                Windows Servers efficiently and securely.
-            </p>
-            <ul style="line-height: 2.2; font-size: 1.05em; display: inline-block; text-align: left; max-width: 800px;">
-                <li>✓ <strong>Secure credential storage</strong> - Windows Credential Manager integration keeps your
-                    passwords safe</li>
-                <li>✓ <strong>Active Directory scanning</strong> - automatically discover all Windows Servers in your
-                    domain via LDAP</li>
-                <li>✓ <strong>Quick connections</strong> - one-click RDP launch with automatic authentication</li>
-                <li>✓ <strong>Per-host credentials</strong> - use different credentials for specific servers when needed
-                </li>
-                <li>✓ <strong>CSV host management</strong> - simple file-based storage with search and filter
-                    capabilities</li>
-                <li>✓ <strong>System tray integration</strong> - always accessible from your Windows taskbar</li>
-                <li>✓ <strong>Native Windows app</strong> - built with Rust and Tauri for performance and security</li>
-            </ul>
-            <p
-                style="margin-top: 20px; padding: 15px; background: #1e3040; border-radius: 8px; border-left: 4px solid #0066ff;">
-                <strong>The result?</strong> A powerful yet simple RDP manager that eliminates repetitive tasks, letting
-                you focus on server administration instead of connection management.
-            </p>
-        </div>
+            <!-- Feature Cards Grid -->
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🔐 Secure</h3>
+                    <ul>
+                        <li>Windows Credential Manager</li>
+                        <li>Global credential defaults</li>
+                        <li>Per-host credential overrides</li>
+                        <li>Automatic RDP single sign-on</li>
+                        <li>No plain text passwords</li>
+                        <li>Memory-safe Rust code</li>
+                    </ul>
+                </div>
 
-        <div class="download-section">
-            <h2 style="margin: 0 0 20px 0; color: #e0e0e0;">📥 Download</h2>
-            <p style="font-size: 1.1em; margin-bottom: 20px;">Get QuickRDP for Windows</p>
-            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 20px 0;">
-                <a href="https://github.com/Swatto86/QuickRDP/releases/latest" class="download-button">
-                    🪟 Download for Windows
+                <div class="info-card">
+                    <h3>⚡ Fast</h3>
+                    <ul>
+                        <li>One-click RDP connections</li>
+                        <li>Auto-focus search on hotkey</li>
+                        <li>Recent connections in tray</li>
+                        <li>Persistent .rdp files</li>
+                        <li>Small ~5 MB installer</li>
+                        <li>Native performance</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>📋 Active Directory</h3>
+                    <ul>
+                        <li>LDAP domain scanning</li>
+                        <li>Authenticated AD queries</li>
+                        <li>Auto-discover Windows Servers</li>
+                        <li>Bulk host import</li>
+                        <li>Server descriptions from AD</li>
+                        <li>Domain credential support</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>🎯 User Experience</h3>
+                    <ul>
+                        <li>Dark and light themes</li>
+                        <li>System tray integration</li>
+                        <li>Global keyboard shortcuts</li>
+                        <li>Search with highlighting</li>
+                        <li>Dedicated error window</li>
+                        <li>Windows startup option</li>
+                        <li>Debug logging mode</li>
+                        <li>Application reset shortcut</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Keyboard Shortcuts Section -->
+            <div class="section">
+                <h2>⌨️ Keyboard Shortcuts</h2>
+                <p style="margin-bottom: 20px; color: #ccc">
+                    QuickRDP includes powerful keyboard shortcuts for efficient
+                    workflow.
+                </p>
+                <table class="shortcuts-table">
+                    <thead>
+                        <tr>
+                            <th>Shortcut</th>
+                            <th>Action</th>
+                            <th>Scope</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> +
+                                <kbd>R</kbd>
+                            </td>
+                            <td>
+                                Show/hide main window with search auto-focused
+                            </td>
+                            <td>Global (works from anywhere)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> +
+                                <kbd>E</kbd>
+                            </td>
+                            <td>Show/hide error log window</td>
+                            <td>Global (works from anywhere)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> +
+                                <kbd>Alt</kbd> + <kbd>R</kbd>
+                            </td>
+                            <td>
+                                Complete application reset (clears all data)
+                            </td>
+                            <td>Any QuickRDP window</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="feature-highlight">
+                    <strong>💡 Pro tip:</strong> Press
+                    <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> from anywhere
+                    to instantly bring up QuickRDP with the search box focused —
+                    just start typing to find your server!
+                </div>
+            </div>
+
+            <!-- System Tray Features -->
+            <div class="section">
+                <h2>🖥️ System Tray Features</h2>
+                <p style="margin-bottom: 20px; color: #ccc">
+                    QuickRDP lives in your system tray for instant access
+                    without cluttering your taskbar.
+                </p>
+                <div class="two-column">
+                    <div>
+                        <h3 style="color: #0088ff; margin-bottom: 15px">
+                            📌 Tray Menu Options
+                        </h3>
+                        <ul
+                            style="list-style: none; padding: 0; line-height: 2"
+                        >
+                            <li>
+                                ✓ <strong>Recent Connections</strong> — Quick
+                                access to last 5 servers
+                            </li>
+                            <li>
+                                ✓ <strong>Theme Selection</strong> — Switch
+                                between dark and light themes
+                            </li>
+                            <li>
+                                ✓ <strong>Autostart Toggle</strong> — Launch
+                                QuickRDP with Windows
+                            </li>
+                            <li>
+                                ✓ <strong>About Dialog</strong> — Version info
+                                and credits
+                            </li>
+                            <li>
+                                ✓ <strong>Quit</strong> — Exit the application
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #0088ff; margin-bottom: 15px">
+                            🖱️ Tray Interactions
+                        </h3>
+                        <ul
+                            style="list-style: none; padding: 0; line-height: 2"
+                        >
+                            <li>
+                                ✓ <strong>Left-click</strong> — Toggle window
+                                visibility
+                            </li>
+                            <li>
+                                ✓ <strong>Right-click</strong> — Open tray menu
+                            </li>
+                            <li>
+                                ✓ <strong>Smart window tracking</strong> — Shows
+                                the last active window
+                            </li>
+                            <li>
+                                ✓ <strong>Single instance</strong> — Only one
+                                QuickRDP runs at a time
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Handling Section -->
+            <div class="section">
+                <h2>🔍 Error Handling & Debugging</h2>
+                <p style="margin-bottom: 20px; color: #ccc">
+                    QuickRDP provides comprehensive error handling and debugging
+                    tools for troubleshooting.
+                </p>
+                <div class="two-column">
+                    <div>
+                        <h3 style="color: #0088ff; margin-bottom: 15px">
+                            📋 Dedicated Error Window
+                        </h3>
+                        <ul
+                            style="list-style: none; padding: 0; line-height: 2"
+                        >
+                            <li>✓ Automatically appears when errors occur</li>
+                            <li>✓ Scrollable list of all errors</li>
+                            <li>✓ Timestamp and category for each error</li>
+                            <li>✓ Detailed context and troubleshooting info</li>
+                            <li>
+                                ✓ Toggle with
+                                <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #0088ff; margin-bottom: 15px">
+                            🐛 Debug Logging
+                        </h3>
+                        <ul
+                            style="list-style: none; padding: 0; line-height: 2"
+                        >
+                            <li>
+                                ✓ Enable with
+                                <code style="color: #0088ff">--debug</code> flag
+                            </li>
+                            <li>✓ Human-readable timestamps</li>
+                            <li>✓ Category-specific troubleshooting steps</li>
+                            <li>
+                                ✓ Structured log levels (ERROR, WARN, INFO,
+                                DEBUG)
+                            </li>
+                            <li>
+                                ✓ Log file:
+                                <code style="color: #888; font-size: 0.9em"
+                                    >%APPDATA%\QuickRDP\QuickRDP_Debug.log</code
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GitHub Section -->
+            <div class="github-section">
+                <h2 style="margin: 0 0 20px 0">📂 Open Source</h2>
+                <p style="font-size: 1.1em; margin-bottom: 20px; opacity: 0.9">
+                    QuickRDP is completely open source. Explore the code, learn
+                    from it, contribute to it, or fork it for your own use.
+                </p>
+                <a
+                    href="https://github.com/Swatto86/QuickRDP"
+                    class="github-button"
+                >
+                    View on GitHub
                 </a>
+                <div class="tech-stack" style="margin-top: 30px">
+                    <span class="tech-tag primary">Rust</span>
+                    <span class="tech-tag primary">Tauri 2.0</span>
+                    <span class="tech-tag">TypeScript</span>
+                    <span class="tech-tag">Tailwind CSS</span>
+                    <span class="tech-tag">DaisyUI</span>
+                    <span class="tech-tag">Win32 API</span>
+                    <span class="tech-tag">LDAP</span>
+                </div>
+                <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9em">
+                    MIT License • Contributions Welcome
+                </p>
             </div>
-            <div class="version-info">
-                Native Windows App • Small binary size • Auto-updates<br>
-                <span style="color: #0088ff; font-weight: 600;">✨ Version 1.1.0 - Latest Release!</span>
+
+            <!-- Quick Start Section -->
+            <div class="section">
+                <h2>📖 Quick Start Guide</h2>
+                <ol
+                    style="
+                        line-height: 2.2;
+                        font-size: 1.05em;
+                        display: inline-block;
+                        text-align: left;
+                        max-width: 800px;
+                    "
+                >
+                    <li>
+                        <strong>Download and install</strong> QuickRDP from the
+                        <a
+                            href="https://github.com/Swatto86/QuickRDP/releases/latest"
+                            style="color: #0088ff"
+                            >releases page</a
+                        >
+                    </li>
+                    <li>
+                        <strong>Launch and enter</strong> your domain
+                        credentials (format:
+                        <code style="color: #0088ff">DOMAIN\username</code> or
+                        <code style="color: #0088ff">user@domain.com</code>)
+                    </li>
+                    <li>
+                        <strong>Add hosts manually</strong> or click "Scan
+                        Domain" to auto-discover servers from Active Directory
+                    </li>
+                    <li>
+                        <strong>Click any host</strong> to instantly connect via
+                        RDP with your saved credentials
+                    </li>
+                    <li>
+                        <strong>Use the system tray</strong> for quick access to
+                        recent connections and settings
+                    </li>
+                </ol>
+                <div class="feature-highlight">
+                    <strong>💡 Workflow tip:</strong> After initial setup, use
+                    <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd>
+                    to quickly open QuickRDP — the search box is automatically
+                    focused so you can immediately start typing to find your
+                    server. Recent connections are also available in the system
+                    tray menu for even faster access!
+                </div>
+            </div>
+
+            <!-- Data Storage Info -->
+            <div class="section">
+                <h2>💾 Data Storage</h2>
+                <p style="margin-bottom: 20px; color: #ccc">
+                    QuickRDP stores all data locally on your machine using
+                    Windows-native mechanisms.
+                </p>
+                <table class="shortcuts-table">
+                    <thead>
+                        <tr>
+                            <th>Data Type</th>
+                            <th>Storage Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Global Credentials</td>
+                            <td>
+                                Windows Credential Manager
+                                (<code>QuickRDP</code>)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Per-Host Credentials</td>
+                            <td>
+                                Windows Credential Manager
+                                (<code>TERMSRV/*</code>)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Host List</td>
+                            <td><code>%APPDATA%\QuickRDP\hosts.csv</code></td>
+                        </tr>
+                        <tr>
+                            <td>RDP Connection Files</td>
+                            <td>
+                                <code>%APPDATA%\QuickRDP\Connections\</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Recent Connections</td>
+                            <td>
+                                <code
+                                    >%APPDATA%\QuickRDP\recent_connections.json</code
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Debug Logs</td>
+                            <td>
+                                <code
+                                    >%APPDATA%\QuickRDP\QuickRDP_Debug.log</code
+                                >
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="feature-highlight">
+                    <strong>🔄 Need a fresh start?</strong> Press
+                    <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>R</kbd>
+                    from any window to completely reset the application and
+                    clear all stored data.
+                </div>
             </div>
         </div>
 
-        <div class="info-grid">
-            <div class="info-card">
-                <h3>🔐 Secure</h3>
-                <ul>
-                    <li>Windows Credential Manager</li>
-                    <li>Global credential defaults</li>
-                    <li>Per-host credential overrides</li>
-                    <li>Automatic RDP SSO</li>
-                    <li>No plain text passwords</li>
-                    <li>Memory-safe Rust code</li>
-                </ul>
+        <footer>
+            <div class="container">
+                <p><strong>Directed by Swatto • Built with AI</strong></p>
+                <p class="license-info">
+                    MIT License • Use it however you want
+                </p>
+                <p style="margin-top: 20px; font-size: 0.85em">
+                    <a
+                        href="https://swatto.co.uk"
+                        style="color: #0088ff; text-decoration: none"
+                        >swatto.co.uk</a
+                    >
+                </p>
             </div>
-
-            <div class="info-card">
-                <h3>⚡ Fast</h3>
-                <ul>
-                    <li>One-click RDP connections</li>
-                    <li>Quick host search</li>
-                    <li>Instant system tray access</li>
-                    <li>Persistent .rdp files</li>
-                    <li>Small ~5 MB installer</li>
-                    <li>Native performance</li>
-                </ul>
-            </div>
-
-            <div class="info-card">
-                <h3>📋 Active Directory</h3>
-                <ul>
-                    <li>LDAP domain scanning</li>
-                    <li>Authenticated AD queries</li>
-                    <li>Auto-discover Windows Servers</li>
-                    <li>Bulk host import</li>
-                    <li>Server descriptions from AD</li>
-                    <li>Domain credential support</li>
-                </ul>
-            </div>
-
-            <div class="info-card">
-                <h3>🎯 Easy to Use</h3>
-                <ul>
-                    <li>CSV-based host storage</li>
-                    <li>Search and filter hosts</li>
-                    <li>FQDN validation</li>
-                    <li>System tray integration</li>
-                    <li>Keyboard shortcuts</li>
-                    <li>Windows startup option</li>
-                    <li>Debug logging mode</li>
-                    <li>Application reset shortcut</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="github-section">
-            <h2 style="margin: 0 0 20px 0;">📂 Source Code</h2>
-            <p style="font-size: 1.1em; margin-bottom: 20px; opacity: 0.9;">
-                QuickRDP is open source. Explore the code, learn from it, contribute to it, or fork it for your own use.
-            </p>
-            <a href="https://github.com/Swatto86/QuickRDP" class="github-button">
-                View on GitHub
-            </a>
-            <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9em;">
-                MIT License • Written in Rust • Built with Tauri • Windows
-            </p>
-        </div>
-
-        <div class="section">
-            <h2>📖 Quick Start</h2>
-            <ol style="line-height: 2; font-size: 1.05em; display: inline-block; text-align: left; max-width: 800px;">
-                <li><strong>Download and install</strong> QuickRDP from the releases page</li>
-                <li><strong>Launch and enter</strong> your domain credentials (stored securely in Windows Credential
-                    Manager)</li>
-                <li><strong>Add hosts manually</strong> or scan your Active Directory domain to auto-discover servers
-                </li>
-                <li><strong>Click any host</strong> to instantly connect via RDP with saved credentials</li>
-            </ol>
-            <p
-                style="margin-top: 20px; padding: 15px; background: #1e3040; border-radius: 8px; border-left: 4px solid #0066ff;">
-                <strong>💡 Pro tip:</strong> Use <kbd>Ctrl+Shift+R</kbd> to quickly focus the main window, or access
-                QuickRDP from the system tray. See the <a
-                    href="https://github.com/Swatto86/QuickRDP/blob/main/README.md"
-                    style="color: #0088ff; text-decoration: underline;">README</a> for advanced features.
-            </p>
-        </div>
-    </div>
-
-    <footer>
-        <div class="container">
-            <p><strong>Directed by Swatto • Built with AI</strong></p>
-            <p class="license-info">
-                MIT License • Use it however you want
-            </p>
-            <p style="margin-top: 20px; font-size: 0.85em;">
-                <a href="https://swatto.co.uk" style="color: #0088ff; text-decoration: none;">swatto.co.uk</a>
-            </p>
-        </div>
-    </footer>
-</body>
-
+        </footer>
+    </body>
 </html>
