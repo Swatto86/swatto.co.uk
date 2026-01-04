@@ -1,5 +1,5 @@
 # swatto.co.uk
 
-Personal website for QuickConnect - a modern Windows RDP connection manager built with Rust and Tauri.
+Landing site for QuickProbe — a proprietary Windows server interrogation and RDP launch tool with live WinRM/SSH probes and credential-aware connections.
 
 Visit: [swatto.co.uk](https://swatto.co.uk)
