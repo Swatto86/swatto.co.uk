@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QuickProbe - Windows Server Interrogation & RDP Launchpad</title>
     <meta name="description"
-        content="QuickProbe is a proprietary Windows server interrogation tool from Swatto. Live WinRM and SSH probes, credential-aware RDP launch, and a fast dashboard for Windows and Linux hosts." />
+        content="QuickProbe is a proprietary Windows server interrogation tool from Swatto. Live health probes, credential-aware RDP launch, and a fast dashboard for Windows and Linux hosts." />
     <meta name="keywords"
-        content="QuickProbe, Windows server monitoring, WinRM, PowerShell remoting, SSH probes, RDP launcher, credential manager, Swatto" />
+        content="QuickProbe, Windows server monitoring, RDP launcher, credential manager, operations dashboard, Swatto" />
     <meta name="author" content="Swatto" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://swatto.co.uk/" />
@@ -21,7 +21,7 @@
     <meta property="og:url" content="https://swatto.co.uk/" />
     <meta property="og:title" content="QuickProbe - Windows Server Interrogation & RDP Launchpad" />
     <meta property="og:description"
-        content="Live WinRM and SSH probes, RDP launch with stored credentials, and a fast dashboard for Windows and Linux hosts." />
+        content="Live health probes, RDP launch with stored credentials, and a fast dashboard for Windows and Linux hosts." />
     <meta property="og:image" content="https://swatto.co.uk/icon.png" />
     <meta property="og:site_name" content="Swatto" />
 
@@ -29,7 +29,7 @@
     <meta name="twitter:url" content="https://swatto.co.uk/" />
     <meta name="twitter:title" content="QuickProbe - Windows Server Interrogation & RDP Launchpad" />
     <meta name="twitter:description"
-        content="Proprietary Windows server interrogation tool with WinRM, SSH, and credential-aware RDP launch." />
+        content="Proprietary Windows server interrogation tool with live health probes and credential-aware RDP launch." />
     <meta name="twitter:image" content="https://swatto.co.uk/icon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -332,6 +332,83 @@
             background: var(--panel-soft);
         }
 
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .shot {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: linear-gradient(160deg, rgba(34, 211, 238, 0.08), rgba(16, 185, 129, 0.06));
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .shot-header {
+            padding: 12px 14px;
+            background: rgba(0, 0, 0, 0.15);
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .shot-body {
+            padding: 14px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .shot-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .shot-card {
+            height: 70px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shot-card::before,
+        .shot-card::after {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            height: 10px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .shot-card::before {
+            top: 12px;
+        }
+
+        .shot-card::after {
+            top: 30px;
+            width: 70%;
+        }
+
+        .shot-footer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .pill-small {
+            height: 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
         .callout {
             text-align: left;
             border: 1px solid rgba(34, 211, 238, 0.3);
@@ -371,7 +448,7 @@
             "name": "QuickProbe",
             "applicationCategory": "SystemAdministrationApplication",
             "operatingSystem": "Windows 10, Windows 11, Windows Server 2016+",
-            "description": "QuickProbe is a proprietary Windows server interrogation and RDP launch tool with WinRM and SSH probes, credential-aware connections, and a fast multi-server dashboard.",
+            "description": "QuickProbe is a proprietary Windows server interrogation and RDP launch tool with live health probes, credential-aware connections, and a fast multi-server dashboard.",
             "url": "https://swatto.co.uk/",
             "author": {
                 "@type": "Organization",
@@ -385,19 +462,18 @@
             "softwareVersion": "1.0.0",
             "image": "https://swatto.co.uk/icon.png",
             "featureList": [
-                "Live WinRM and PowerShell remoting probes for CPU, RAM, disks, services, firewall, adapters, uptime, and reboot signals",
-                "SSH probes for Linux hosts using the same dashboard patterns",
-                "Credential-aware RDP launch with per-host overrides and reuse of existing TERMSRV profiles",
-                "Searchable, reorderable multi-server dashboard with inline highlighting and quick filters",
-                "System tray access, autostart toggle, and light/dark themes",
-                "Local-only storage for hosts, credentials, and connection files under %APPDATA%\\\\QuickProbe"
+                "Live server health signals across Windows and Linux hosts",
+                "Credential-aware RDP launch with optional per-host overrides",
+                "Searchable dashboard with saved layout and quick filters",
+                "System tray access with theme toggle and optional autostart",
+                "Local-only storage for credentials, hosts, and settings"
             ],
             "keywords": [
                 "Windows server monitoring",
-                "WinRM dashboard",
                 "RDP launcher",
-                "SSH probes",
+                "operations dashboard",
                 "credential manager integration",
+                "Linux host monitoring",
                 "QuickProbe"
             ],
             "license": "Proprietary",
@@ -420,18 +496,17 @@
                 </div>
             </div>
             <p class="lede">
-                QuickProbe gives operators a fast, credential-aware dashboard for Windows and Linux fleets.
-                Live WinRM and SSH probes surface disk, service, CPU, memory, firewall, and adapter health while keeping
-                RDP launch one click away. Closed source, delivered directly by Swatto.
+                QuickProbe gives operators a focused dashboard to check server health at a glance and launch sessions quickly.
+                Proprietary Windows build from Swatto, designed for fast visibility across Windows and Linux fleets.
             </p>
             <div class="cta-row">
-                <a class="button primary" href="https://github.com/Swatto86/swatto.co.uk/releases/latest" target="_blank" rel="noreferrer">Download latest build</a>
-                <a class="button ghost" href="https://github.com/Swatto86/swatto.co.uk/issues" target="_blank" rel="noreferrer">Request access</a>
-                <a class="button ghost" href="#features">See capabilities</a>
+                <a class="button primary" href="https://swatto.co.uk/QuickProbe_1.0.0_x64-setup.exe" target="_blank" rel="noreferrer">Download QuickProbe</a>
+                <a class="button ghost" href="#features">Product overview</a>
+                <a class="button ghost" href="#workflow">How it works</a>
             </div>
             <div class="pill-row">
-                <span class="pill">WinRM + PowerShell remoting</span>
-                <span class="pill">SSH probes for Linux hosts</span>
+                <span class="pill">Windows server health</span>
+                <span class="pill">Linux host visibility</span>
                 <span class="pill">Credential Manager aware RDP</span>
                 <span class="pill">Version 1.0.0</span>
             </div>
@@ -442,31 +517,31 @@
         <section class="panel" id="features">
             <div class="section-header">
                 <h2>Built for operations teams</h2>
-                <p>Everything on one dashboard: live probes, credential handling, and launch actions tuned for Windows-heavy environments.</p>
+                <p>Everything on one dashboard: high-signal health, secure credential handling, and quick launch actions.</p>
             </div>
             <div class="grid">
                 <div class="feature-card">
                     <h3>Fleet intelligence</h3>
                     <ul>
-                        <li>Live WinRM/PowerShell probes for CPU, RAM, disks, services, firewall profiles, adapters, and uptime.</li>
-                        <li>Inline search with highlighting across names, notes, services, OS type, and recent errors.</li>
-                        <li>Reorderable cards with saved layout, plus quick filters for high CPU, RAM, disk, reboot-needed, or service issues.</li>
+                        <li>Live health signals across servers with at-a-glance status for services and connectivity.</li>
+                        <li>Search and filters to surface the right host quickly, with saved layout preferences.</li>
+                        <li>Card-level refresh to spot-check systems without slowing the rest of the fleet.</li>
                     </ul>
                 </div>
                 <div class="feature-card">
                     <h3>Credential-aware launch</h3>
                     <ul>
-                        <li>RDP on double-click with stored credentials; reuses existing TERMSRV profiles and per-host overrides.</li>
-                        <li>Global credential is shared across probes and RDP; host-specific credentials override when present.</li>
-                        <li>Linux hosts (set <code>OsType=Linux</code>) use SSH probes and skip RDP launch automatically.</li>
+                        <li>RDP launch reuses stored credentials to reduce prompts.</li>
+                        <li>Host-specific overrides stay isolated while a global credential keeps things fast.</li>
+                        <li>Linux-tagged hosts are probed without RDP actions.</li>
                     </ul>
                 </div>
                 <div class="feature-card">
                     <h3>Operator-focused UX</h3>
                     <ul>
-                        <li>System tray access with autostart toggle, theme selection, and quick refresh controls.</li>
-                        <li>Bounded-concurrency refresh to handle large lists without locking the OS; throttled quick probes when you interact.</li>
-                        <li>Dedicated error view, debug logging switch, and light/dark modes that respect system defaults.</li>
+                        <li>System tray access with quick actions, theme switcher, and optional autostart.</li>
+                        <li>Responsive refresh designed to stay snappy on larger host lists.</li>
+                        <li>Light/dark modes and a dedicated error view when you need detail.</li>
                     </ul>
                 </div>
             </div>
@@ -475,26 +550,88 @@
         <section class="panel" id="insights">
             <div class="section-header">
                 <h2>What QuickProbe inspects</h2>
-                <p>Consistent dashboards for mixed fleets. Windows uses WinRM and PowerShell remoting; Linux uses SSH with the same visual patterns.</p>
+                <p>Consistent dashboards for mixed fleets, keeping health, responsiveness, and service posture visible.</p>
             </div>
             <div class="two-col">
                 <div class="feature-card">
                     <h3>Windows hosts</h3>
                     <ul class="list-plain">
-                        <li>CPU, memory, process counts, uptime, and reboot-needed signals.</li>
-                        <li>Disk inventory with free space alerts and service state tracking with templated service lists.</li>
-                        <li>WinRM listeners, firewall profiles, and active network adapters.</li>
-                        <li>Per-host notes and groups that are searchable and visible on the cards.</li>
+                        <li>Health signals for CPU, memory, disks, and services.</li>
+                        <li>Network readiness and firewall posture at a glance.</li>
+                        <li>Quick notes and grouping to keep context close to each host.</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <h3>Linux hosts (SSH)</h3>
+                    <h3>Linux hosts</h3>
                     <ul class="list-plain">
-                        <li>CPU and memory load plus process count visibility.</li>
-                        <li>Disk usage and service state checks aligned to the same templates.</li>
-                        <li>Uptime, distro info, and quick identification in the dashboard.</li>
-                        <li>Tagged via <code>OsType=Linux</code> in <code>hosts.csv</code> to skip RDP actions.</li>
+                        <li>Visibility into system load, disks, and key services.</li>
+                        <li>Aligned layout so Linux hosts feel consistent in the dashboard.</li>
+                        <li>Tagged to avoid RDP launches while still surfacing status.</li>
                     </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" id="screenshots">
+            <div class="section-header">
+                <h2>UI previews</h2>
+                <p class="muted">Representative snapshots of the dashboard layout and quick actions.</p>
+            </div>
+            <div class="screenshot-grid">
+                <div class="shot">
+                    <div class="shot-header">Dashboard overview</div>
+                    <div class="shot-body">
+                        <div class="shot-row">
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                        </div>
+                        <div class="shot-row">
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                        </div>
+                        <div class="shot-footer">
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shot">
+                    <div class="shot-header">Per-host detail</div>
+                    <div class="shot-body">
+                        <div class="shot-card" style="height: 110px;"></div>
+                        <div class="shot-row">
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                        </div>
+                        <div class="shot-footer">
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shot">
+                    <div class="shot-header">Actions & quick launch</div>
+                    <div class="shot-body">
+                        <div class="shot-card" style="height: 60px;"></div>
+                        <div class="shot-row">
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                        </div>
+                        <div class="shot-footer">
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -502,24 +639,24 @@
         <section class="panel" id="workflow">
             <div class="section-header">
                 <h2>Workflow in four steps</h2>
-                <p class="muted">Built for daily use by Windows administrators who need fast visibility and instant launch actions.</p>
+                <p class="muted">Built for daily use by admins who need fast visibility and instant launch actions.</p>
             </div>
             <div class="steps">
                 <div class="step">
                     <strong>1. Authenticate once</strong><br />
-                    Store a global credential in Windows Credential Manager (<code>QuickProbe:Default</code>).
+                    Set a global credential so probes and launches stay in sync.
                 </div>
                 <div class="step">
                     <strong>2. Load your hosts</strong><br />
-                    Manage <code>%APPDATA%\QuickProbe\hosts.csv</code> or edit via the host manager (groups, notes, service templates).
+                    Add servers, notes, and service expectations to keep context close.
                 </div>
                 <div class="step">
                     <strong>3. Probe and filter</strong><br />
-                    Run full refresh or per-card quick probes; search highlights matches across all card content.
+                    Refresh as needed; search and filters help you find the right host fast.
                 </div>
                 <div class="step">
                     <strong>4. Launch with context</strong><br />
-                    Double-click to RDP with credential reuse; SSH probes for Linux hosts preserve the same dashboard feel.
+                    Launch RDP with credential reuse; Linux hosts stay probe-only.
                 </div>
             </div>
         </section>
@@ -529,44 +666,11 @@
                 <h2>Data stays on your machine</h2>
                 <p class="muted">QuickProbe keeps everything local using Windows-native storage. No cloud dependencies.</p>
             </div>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Data type</th>
-                        <th>Location</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Global credential</td>
-                        <td>Windows Credential Manager (<code>QuickProbe:Default</code>)</td>
-                    </tr>
-                    <tr>
-                        <td>Per-host credentials</td>
-                        <td>Windows Credential Manager (<code>QuickProbe:HOST/&lt;SERVER&gt;</code>)</td>
-                    </tr>
-                    <tr>
-                        <td>RDP profiles</td>
-                        <td>Windows Credential Manager (<code>TERMSRV/...</code>) reused for launches</td>
-                    </tr>
-                    <tr>
-                        <td>Hosts list</td>
-                        <td><code>%APPDATA%\QuickProbe\hosts.csv</code></td>
-                    </tr>
-                    <tr>
-                        <td>RDP connection files</td>
-                        <td><code>%APPDATA%\QuickProbe\Connections\</code></td>
-                    </tr>
-                    <tr>
-                        <td>Settings and state</td>
-                        <td><code>%APPDATA%\QuickProbe\settings.json</code> and localStorage (<code>qp_settings</code>)</td>
-                    </tr>
-                    <tr>
-                        <td>Debug logs</td>
-                        <td><code>%APPDATA%\QuickProbe\QuickProbe_Debug.log</code></td>
-                    </tr>
-                </tbody>
-            </table>
+            <ul class="list-plain">
+                <li>Credentials stay in Windows Credential Manager; no cloud storage.</li>
+                <li>Host lists, settings, and connection files remain on your device.</li>
+                <li>Telemetry is not sent to external services.</li>
+            </ul>
         </section>
 
         <section class="panel" id="fact-sheet">
@@ -577,33 +681,20 @@
             <ul class="fact-list">
                 <li class="fact"><strong>Version:</strong> 1.0.0</li>
                 <li class="fact"><strong>Platform:</strong> Windows 10/11 and Windows Server 2016+</li>
-                <li class="fact"><strong>Protocols:</strong> WinRM/PowerShell remoting and SSH</li>
+                <li class="fact"><strong>Works with:</strong> Windows and Linux hosts</li>
                 <li class="fact"><strong>Launchers:</strong> RDP with credential reuse and per-host overrides</li>
                 <li class="fact"><strong>Licensing:</strong> Proprietary build, not open source</li>
                 <li class="fact"><strong>Made by:</strong> Swatto</li>
                 <li class="fact"><strong>Theming:</strong> System, light, or dark modes</li>
-                <li class="fact"><strong>Autostart:</strong> Optional HKCU Run entry managed from the tray</li>
+                <li class="fact"><strong>Autostart:</strong> Optional toggle in the tray</li>
             </ul>
-        </section>
-
-        <section class="panel callout" id="access">
-            <div class="section-header">
-                <h2>See QuickProbe in action</h2>
-                <p class="muted">Request access to the latest build or schedule a walkthrough for your operations team.</p>
-            </div>
-            <div class="cta-row">
-                <a class="button primary" href="https://github.com/Swatto86/swatto.co.uk/releases/latest" target="_blank" rel="noreferrer">Download latest build</a>
-                <a class="button ghost" href="#workflow">View workflow</a>
-                <a class="button ghost" href="https://github.com/Swatto86/swatto.co.uk/issues" target="_blank" rel="noreferrer">Feedback on GitHub</a>
-                <a class="button ghost" href="https://github.com/Swatto86/swatto.co.uk" target="_blank" rel="noreferrer">Project page</a>
-            </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <div><strong>QuickProbe</strong> — proprietary Windows server interrogation by Swatto.</div>
-            <div style="margin-top: 8px;">Contact via the GitHub issues page: <a href="https://github.com/Swatto86/swatto.co.uk/issues" target="_blank" rel="noreferrer">Swatto on GitHub</a>. View the project at <a href="https://github.com/Swatto86/swatto.co.uk" target="_blank" rel="noreferrer">github.com/Swatto86/swatto.co.uk</a>.</div>
+            <div><strong>QuickProbe</strong> - proprietary Windows server interrogation by Swatto.</div>
+            <div style="margin-top: 8px;">For questions or support, contact your Swatto representative.</div>
         </div>
     </footer>
 </body>
