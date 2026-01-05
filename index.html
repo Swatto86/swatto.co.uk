@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QuickProbe - Windows and Linux Server Interrogation & RDP Launchpad</title>
+    <title>QuickProbe - Windows Server Health Probing & RDP Launchpad</title>
+
     <meta name="description"
-        content="QuickProbe is a proprietary Windows and Linux server interrogation tool. Live health probes, credential-aware RDP launch, and a fast dashboard for Windows and Linux hosts." />
+        content="QuickProbe is a Windows-first server interrogation tool for system administrators. Probe health signals, validate key services, and launch RDP quickly. Limited probe support for Linux hosts." />
     <meta name="keywords"
-        content="QuickProbe, Windows Linux server monitoring, RDP launcher, credential manager, operations dashboard, Swatto" />
-    <meta name="author" content="Swatto" />
+        content="QuickProbe, Windows server health, server interrogation, RDP launcher, sysadmin dashboard, Windows Server monitoring, Linux probe" />
+    <meta name="author" content="QuickProbe" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://swatto.co.uk/" />
 
@@ -19,17 +20,17 @@
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://swatto.co.uk/" />
-    <meta property="og:title" content="QuickProbe - Windows and Linux Server Interrogation & RDP Launchpad" />
+    <meta property="og:title" content="QuickProbe - Windows Server Health Probing & RDP Launchpad" />
     <meta property="og:description"
-        content="Live health probes, RDP launch with stored credentials, and a fast dashboard for Windows and Linux hosts." />
+        content="Windows-first server probing with fast health signals, key service visibility, and RDP launch. Limited probe support for Linux hosts." />
     <meta property="og:image" content="https://swatto.co.uk/icon.png" />
-    <meta property="og:site_name" content="Swatto" />
+    <meta property="og:site_name" content="QuickProbe" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://swatto.co.uk/" />
-    <meta name="twitter:title" content="QuickProbe - Windows and Linux Server Interrogation & RDP Launchpad" />
+    <meta name="twitter:title" content="QuickProbe - Windows Server Health Probing & RDP Launchpad" />
     <meta name="twitter:description"
-        content="Windows and Linux Server interrogation tool with live health probes and credential-aware RDP launch." />
+        content="Windows-first server probing with fast health signals, key service visibility, and RDP launch. Limited probe support for Linux hosts." />
     <meta name="twitter:image" content="https://swatto.co.uk/icon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -298,25 +299,6 @@
             color: var(--accent);
         }
 
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 12px;
-        }
-
-        .data-table th,
-        .data-table td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border);
-            text-align: left;
-        }
-
-        .data-table th {
-            color: var(--accent-2);
-            font-weight: 700;
-            background: rgba(255, 255, 255, 0.02);
-        }
-
         .fact-list {
             list-style: none;
             padding: 0;
@@ -409,12 +391,6 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .callout {
-            text-align: left;
-            border: 1px solid rgba(34, 211, 238, 0.3);
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(34, 211, 238, 0.1));
-        }
-
         footer {
             text-align: center;
             padding: 30px 0 50px;
@@ -448,32 +424,31 @@
             "name": "QuickProbe",
             "applicationCategory": "SystemAdministrationApplication",
             "operatingSystem": "Windows 10, Windows 11, Windows Server 2016+",
-            "description": "QuickProbe is a proprietary Windows server interrogation and RDP launch tool with live health probes, credential-aware connections, and a fast multi-server dashboard.",
+            "description": "QuickProbe is a Windows-first server interrogation and RDP launch tool built for system administrators. It surfaces fast health signals and key service visibility across Windows hosts, with limited probe support for Linux hosts.",
             "url": "https://swatto.co.uk/",
             "author": {
                 "@type": "Organization",
-                "name": "Swatto",
-                "url": "https://swatto.co.uk"
+                "name": "QuickProbe"
             },
             "publisher": {
                 "@type": "Organization",
-                "name": "Swatto"
+                "name": "QuickProbe"
             },
             "softwareVersion": "1.0.0",
             "image": "https://swatto.co.uk/icon.png",
             "featureList": [
-                "Live server health signals across Windows and Linux hosts",
+                "Windows-first server health probing and key service visibility",
                 "Credential-aware RDP launch with optional per-host overrides",
                 "Searchable dashboard with saved layout and quick filters",
-                "System tray access with theme toggle and optional autostart",
-                "Local-only storage for credentials, hosts, and settings"
+                "Limited probe support for Linux hosts"
             ],
             "keywords": [
-                "Windows server monitoring",
+                "Windows server health",
+                "server interrogation",
                 "RDP launcher",
-                "operations dashboard",
-                "credential manager integration",
-                "Linux host monitoring",
+                "sysadmin dashboard",
+                "Windows Server monitoring",
+                "Linux probe",
                 "QuickProbe"
             ],
             "license": "Proprietary",
@@ -485,28 +460,31 @@
 <body>
     <header class="hero">
         <div class="container inner">
-            <div class="eyebrow">Proprietary Windows build</div>
+            <div class="eyebrow">Windows-first sysadmin tool</div>
             <div class="hero-top">
                 <div class="logo-mark">
                     <img src="icon.png" alt="QuickProbe icon" />
                 </div>
                 <div>
                     <h1>QuickProbe</h1>
-                    <div class="muted">Windows server interrogation and launchpad</div>
+                    <div class="muted">Windows Server health probing and RDP launchpad</div>
                 </div>
             </div>
             <p class="lede">
-                QuickProbe gives system administrators a focused dashboard to check server health at a glance and launch remote sessions quickly.
+                QuickProbe is built for Windows System Administrators who need quick, repeatable answers: is the host reachable, are the right services up, and is it ready for an RDP session.
+                Linux hosts can be included for limited probe-only visibility, without Windows-specific launch actions.
             </p>
             <div class="cta-row">
-                <a class="button primary" href="https://swatto.co.uk/QuickProbe_1.0.0_x64-setup.exe" target="_blank" rel="noreferrer">Download QuickProbe</a>
+                <a class="button primary" href="https://swatto.co.uk/QuickProbe_1.0.0_x64-setup.exe" target="_blank"
+                    rel="noreferrer">Download QuickProbe</a>
                 <a class="button ghost" href="#features">Product overview</a>
                 <a class="button ghost" href="#workflow">How it works</a>
             </div>
             <div class="pill-row">
-                <span class="pill">Windows server health</span>
-                <span class="pill">Linux host visibility</span>
-                <span class="pill">Credential Manager aware RDP</span>
+                <span class="pill">Windows Server health</span>
+                <span class="pill">Key service visibility</span>
+                <span class="pill">Credential-aware RDP launch</span>
+                <span class="pill">Linux probe support (limited)</span>
                 <span class="pill">Version 1.0.0</span>
             </div>
         </div>
@@ -515,32 +493,32 @@
     <main class="container">
         <section class="panel" id="features">
             <div class="section-header">
-                <h2>Built for system administrators</h2>
-                <p>Everything on one dashboard: server health and launching remote sessions.</p>
+                <h2>Designed for Windows System Administrators</h2>
+                <p>One screen for health signals and launch actions, optimised for Windows Server estates.</p>
             </div>
             <div class="grid">
                 <div class="feature-card">
-                    <h3>Fleet intelligence</h3>
+                    <h3>Fast fleet visibility</h3>
                     <ul>
-                        <li>Live health signals across servers with at-a-glance status for services and connectivity.</li>
-                        <li>Search and filters to surface the right host quickly, with saved layout preferences.</li>
-                        <li>Card-level refresh to spot-check systems without slowing the rest of the fleet.</li>
+                        <li>At-a-glance status across your host list so you can spot issues quickly.</li>
+                        <li>Search and filters to find the right server fast, with layout preferences retained locally.</li>
+                        <li>Per-host refresh to spot-check a system without interrupting the rest of the dashboard.</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <h3>Credential-aware launch</h3>
+                    <h3>Health signals that matter day-to-day</h3>
                     <ul>
-                        <li>RDP launch reuses stored credentials to reduce prompts.</li>
-                        <li>Host-specific overrides stay isolated while a global credential keeps things fast.</li>
-                        <li>Linux-tagged hosts are probed without RDP actions.</li>
+                        <li>Reachability and responsiveness checks designed for practical triage.</li>
+                        <li>Key service visibility to confirm expected workloads are running.</li>
+                        <li>Notes and grouping so operational context sits next to the host.</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <h3>System Administrator-focused UX</h3>
+                    <h3>RDP launch with fewer prompts</h3>
                     <ul>
-                        <li>System tray access with quick actions, theme switcher, and optional autostart.</li>
-                        <li>Responsive refresh designed to stay snappy on larger host lists.</li>
-                        <li>Light/dark modes and a dedicated error view when you need detail.</li>
+                        <li>Launch RDP quickly using stored credentials where appropriate.</li>
+                        <li>Optional per-host overrides remain isolated from your global default.</li>
+                        <li>Linux-tagged hosts remain probe-only and do not offer Windows launch actions.</li>
                     </ul>
                 </div>
             </div>
@@ -549,23 +527,23 @@
         <section class="panel" id="insights">
             <div class="section-header">
                 <h2>What QuickProbe inspects</h2>
-                <p>Consistent dashboards for mixed fleets, keeping health, responsiveness, and service posture visible.</p>
+                <p>Windows-first signals with consistent layout across mixed fleets.</p>
             </div>
             <div class="two-col">
                 <div class="feature-card">
-                    <h3>Windows hosts</h3>
+                    <h3>Windows hosts (primary)</h3>
                     <ul class="list-plain">
-                        <li>Health signals for CPU, memory, disks, and services.</li>
-                        <li>Network readiness and firewall posture at a glance.</li>
-                        <li>Quick notes and grouping to keep context close to each host.</li>
+                        <li>Core health signals across CPU, memory, disks, and expected services.</li>
+                        <li>Connectivity and “ready to manage” posture to support rapid triage.</li>
+                        <li>Per-host notes and grouping to keep ownership and context clear.</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <h3>Linux hosts</h3>
+                    <h3>Linux hosts (limited probe support)</h3>
                     <ul class="list-plain">
-                        <li>Visibility into system load, disks, and key services.</li>
-                        <li>Aligned layout so Linux hosts feel consistent in the dashboard.</li>
-                        <li>Tagged to avoid RDP launches while still surfacing status.</li>
+                        <li>Probe-only visibility into availability and selected system signals.</li>
+                        <li>Consistent card layout so Linux hosts fit naturally into the same dashboard.</li>
+                        <li>No RDP actions exposed; Linux entries are intentionally “view and verify”.</li>
                     </ul>
                 </div>
             </div>
@@ -638,62 +616,60 @@
         <section class="panel" id="workflow">
             <div class="section-header">
                 <h2>Workflow in four steps</h2>
-                <p class="muted">Built for daily use by admins who need fast visibility and instant launch actions.</p>
+                <p class="muted">A simple loop: set context, probe, filter, launch.</p>
             </div>
             <div class="steps">
                 <div class="step">
-                    <strong>1. Authenticate once</strong><br />
-                    Set a global credential so probes and launches stay in sync.
+                    <strong>1. Set credentials</strong><br />
+                    Choose a default credential for probes and RDP launches, with optional per-host overrides.
                 </div>
                 <div class="step">
-                    <strong>2. Load your hosts</strong><br />
-                    Add servers, notes, and service expectations to keep context close.
+                    <strong>2. Load hosts</strong><br />
+                    Add servers and notes so the dashboard reflects the estate you actually manage.
                 </div>
                 <div class="step">
                     <strong>3. Probe and filter</strong><br />
-                    Refresh as needed; search and filters help you find the right host fast.
+                    Refresh as needed; search and filters help you isolate the server you care about.
                 </div>
                 <div class="step">
-                    <strong>4. Launch with context</strong><br />
-                    Launch RDP with credential reuse; Linux hosts stay probe-only.
+                    <strong>4. Launch</strong><br />
+                    Start an RDP session directly from the host card when the server is in a good state.
                 </div>
             </div>
         </section>
 
         <section class="panel" id="storage">
             <div class="section-header">
-                <h2>Data stays on your machine</h2>
-                <p class="muted">QuickProbe keeps everything local using Windows-native storage. No cloud dependencies.</p>
+                <h2>Local-first data handling</h2>
+                <p class="muted">Designed to operate without external service dependencies.</p>
             </div>
             <ul class="list-plain">
-                <li>Credentials stay in Windows Credential Manager; no cloud storage.</li>
-                <li>Host lists, settings, and connection files remain on your device.</li>
-                <li>Telemetry is not sent to external services.</li>
+                <li>Credentials are stored using Windows Credential Manager (no cloud storage).</li>
+                <li>Host lists, settings, and connection artifacts remain on the device.</li>
+                <li>No telemetry is sent to third-party services by default.</li>
             </ul>
         </section>
 
         <section class="panel" id="fact-sheet">
             <div class="section-header">
                 <h2>Product facts</h2>
-                <p class="muted">Concise details teams ask for before deployment.</p>
+                <p class="muted">Concise details commonly requested before internal rollout.</p>
             </div>
             <ul class="fact-list">
                 <li class="fact"><strong>Version:</strong> 1.0.0</li>
-                <li class="fact"><strong>Platform:</strong> Windows 10/11 and Windows Server 2016+</li>
-                <li class="fact"><strong>Works with:</strong> Windows and Linux hosts</li>
-                <li class="fact"><strong>Launchers:</strong> RDP with credential reuse and per-host overrides</li>
-                <li class="fact"><strong>Licensing:</strong> Proprietary build, not open source</li>
-                <li class="fact"><strong>Made by:</strong> Swatto</li>
-                <li class="fact"><strong>Theming:</strong> System, light, or dark modes</li>
-                <li class="fact"><strong>Autostart:</strong> Optional toggle in the tray</li>
+                <li class="fact"><strong>Primary platform:</strong> Windows 10/11 and Windows Server 2016+</li>
+                <li class="fact"><strong>Primary focus:</strong> Windows System Administration</li>
+                <li class="fact"><strong>Linux support:</strong> Limited probe-only visibility</li>
+                <li class="fact"><strong>RDP:</strong> Credential-aware launch with optional per-host overrides</li>
+                <li class="fact"><strong>Licensing:</strong> Proprietary</li>
             </ul>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <div><strong>QuickProbe</strong> - proprietary Windows server interrogation by Swatto.</div>
-            <div style="margin-top: 8px;">For questions or support, contact your Swatto representative.</div>
+            <div><strong>QuickProbe</strong> — Windows-first server interrogation and RDP launchpad.</div>
+            <div style="margin-top: 8px;">Support and distribution are handled via your internal administrator.</div>
         </div>
     </footer>
 </body>
