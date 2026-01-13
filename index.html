@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickProbe - Windows Server Interrogation & RDP Launchpad</title>
+    <meta name="description"
+        content="QuickProbe is a proprietary Windows workstation and RDP-shared interrogation tool from Swatto. Live health probes via WinRM and SSH, credential-aware RDP launch, searchable multi-host dashboard with SQLite storage. No central server required." />
+    <meta name="keywords"
+        content="QuickProbe, Windows monitoring, RDP launcher, WinRM, SSH, credential manager, operations dashboard, SQLite, local-only, Swatto" />
+    <meta name="author" content="Swatto" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://swatto.co.uk/" />
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://swatto.co.uk/" />
+    <meta property="og:title" content="QuickProbe - Windows Server Interrogation & RDP Launchpad" />
+    <meta property="og:description"
+        content="Live health probes via WinRM and SSH, RDP launch with stored credentials, searchable dashboard with SQLite storage. Runs locally or over RDP; no central API server." />
+    <meta property="og:image" content="https://swatto.co.uk/icon.png" />
+    <meta property="og:site_name" content="Swatto" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://swatto.co.uk/" />
+    <meta name="twitter:title" content="QuickProbe - Windows Server Interrogation & RDP Launchpad" />
+    <meta name="twitter:description"
+        content="Proprietary Windows server interrogation tool with live WinRM/SSH health probes, credential-aware RDP launch, and SQLite-backed storage." />
+    <meta name="twitter:image" content="https://swatto.co.uk/icon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #081020;
+            --panel: #0f172a;
+            --panel-soft: #111c2f;
+            --text: #e6edf6;
+            --muted: #9cb2c7;
+            --border: #1f2a3d;
+            --accent: #10b981;
+            --accent-2: #22d3ee;
+            --shadow: 0 12px 50px rgba(0, 0, 0, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Manrope", "Segoe UI", Tahoma, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.08), transparent 30%),
+                radial-gradient(circle at 80% 0%, rgba(16, 185, 129, 0.08), transparent 26%),
+                var(--bg);
+        }
+
+        a {
+            color: var(--accent-2);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(34, 211, 238, 0.14));
+            border-bottom: 1px solid var(--border);
+            padding: 70px 0 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 70% 10%, rgba(255, 255, 255, 0.05), transparent 30%);
+            pointer-events: none;
+        }
+
+        .hero .inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .eyebrow {
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+
+        .hero-top {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 12px;
+        }
+
+        .logo-mark {
+            width: 78px;
+            height: 78px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.04);
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .logo-mark img {
+            width: 64px;
+            height: 64px;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            letter-spacing: -0.02em;
+        }
+
+        .lede {
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 840px;
+            margin: 14px 0 24px;
+        }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 20px;
+            font-weight: 700;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border 0.15s ease;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .button.primary {
+            background: linear-gradient(135deg, #0ea36b, #22d3ee);
+            box-shadow: 0 12px 30px rgba(34, 211, 238, 0.28);
+        }
+
+        .button.ghost {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--border);
+            color: var(--muted);
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 26px rgba(34, 211, 238, 0.2);
+            text-decoration: none;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 0.92rem;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-top: 26px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            margin-bottom: 18px;
+        }
+
+        .section-header h2 {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            max-width: 760px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+
+        .feature-card {
+            background: var(--panel-soft);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            height: 100%;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+            color: var(--accent);
+            letter-spacing: -0.01em;
+        }
+
+        .feature-card ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .feature-card li {
+            padding: 8px 0;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feature-card li:last-child {
+            border-bottom: none;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 12px;
+        }
+
+        .list-plain {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .list-plain li {
+            padding: 7px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .list-plain li:last-child {
+            border-bottom: none;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .step {
+            background: var(--panel-soft);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .step strong {
+            color: var(--accent);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .data-table th {
+            color: var(--accent-2);
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .fact-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 10px;
+        }
+
+        .fact {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--panel-soft);
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .shot {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: linear-gradient(160deg, rgba(34, 211, 238, 0.08), rgba(16, 185, 129, 0.06));
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .shot-header {
+            padding: 12px 14px;
+            background: rgba(0, 0, 0, 0.15);
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .shot-body {
+            padding: 14px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .shot-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .shot-card {
+            height: 70px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shot-card::before,
+        .shot-card::after {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            height: 10px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .shot-card::before {
+            top: 12px;
+        }
+
+        .shot-card::after {
+            top: 30px;
+            width: 70%;
+        }
+
+        .shot-footer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .pill-small {
+            height: 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .callout {
+            text-align: left;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(34, 211, 238, 0.1));
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0 50px;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        footer a {
+            color: var(--accent-2);
+        }
+
+        @media (max-width: 720px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-top {
+                align-items: flex-start;
+            }
+
+            .panel {
+                padding: 24px;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "QuickProbe",
+            "applicationCategory": "SystemAdministrationApplication",
+            "operatingSystem": "Windows 10, Windows 11, Windows Server 2016+",
+            "description": "QuickProbe is a proprietary Windows server interrogation and RDP launch tool with live health probes via WinRM and SSH, credential-aware connections, searchable multi-server dashboard, and SQLite-backed local storage.",
+            "url": "https://swatto.co.uk/",
+            "author": {
+                "@type": "Organization",
+                "name": "Swatto",
+                "url": "https://swatto.co.uk"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Swatto"
+            },
+            "softwareVersion": "1.0.0",
+            "image": "https://swatto.co.uk/icon.png",
+            "featureList": [
+                "Live server health probes via WinRM (Windows) and SSH (Linux)",
+                "Full probe: OS, disks, services, CPU, memory, uptime, network adapters, firewall, recent events, reboot signals",
+                "Quick probe: heartbeat with uptime, CPU, memory, processes, service status (~20s intervals, 500ms jitter, 3-minute stale threshold, 30s per-host cooldown)",
+                "Configurable probe timeout: 10-900 seconds (default 90s)",
+                "Credential-aware RDP launch with per-host credential overrides",
+                "Searchable dashboard with drag-and-drop card reordering and quick filters",
+                "SQLite-backed storage for hosts, settings, health snapshots, and dashboard cache",
+                "Encrypted backup/restore with AES encryption",
+                "IP/CIDR-to-location mapping with automatic location derivation from network adapter IPs",
+                "System tray access with theme toggle (light/dark/system) and optional autostart",
+                "Credentials stored in Windows Credential Manager (DPAPI)",
+                "RemoteApp/RDP multi-session support with shared SQLite database (WAL mode)",
+                "Reachability probes via ping + TCP with ~1.2s timeout per port",
+                "Network adapter detection with multiple PowerShell fallbacks and last-known caching"
+            ],
+            "keywords": [
+                "Windows server monitoring",
+                "RDP launcher",
+                "operations dashboard",
+                "credential manager integration",
+                "Linux host monitoring",
+                "WinRM",
+                "SSH probes",
+                "SQLite storage",
+                "multi-user deployment",
+                "QuickProbe"
+            ],
+            "license": "Proprietary",
+            "isAccessibleForFree": false
+        }
+    </script>
+</head>
+
+<body>
+    <header class="hero">
+        <div class="container inner">
+            <div class="eyebrow">Proprietary Windows build</div>
+            <div class="hero-top">
+                <div class="logo-mark">
+                    <img src="icon.png" alt="QuickProbe icon" />
+                </div>
+                <div>
+                    <h1>QuickProbe</h1>
+                    <div class="muted">Windows server interrogation and launchpad</div>
+                </div>
+            </div>
+            <p class="lede">
+                QuickProbe gives operators a focused dashboard to check server health at a glance and launch sessions
+                quickly.
+                Built on SQLite with WinRM and SSH probes, it supports single-user local use or multi-session sharing
+                on a central Windows host via RemoteApp/RDP.
+            </p>
+            <div class="cta-row">
+                <a class="button primary" href="https://swatto.co.uk/QuickProbe_1.0.0_x64-setup.exe" target="_blank"
+                    rel="noreferrer">Download QuickProbe</a>
+                <a class="button ghost" href="#features">Product overview</a>
+                <a class="button ghost" href="#storage">Storage & deployment</a>
+            </div>
+            <div class="pill-row">
+                <span class="pill">WinRM & SSH probes</span>
+                <span class="pill">SQLite-backed storage</span>
+                <span class="pill">Encrypted backup/restore</span>
+                <span class="pill">Version 1.0.0</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="panel" id="features">
+            <div class="section-header">
+                <h2>Built for operations teams</h2>
+                <p>Everything on one dashboard: high-signal health via WinRM and SSH, SQLite-backed persistence, secure
+                    credential handling, and quick launch actions. Deploy locally and share via RemoteApp/RDP if needed.
+                </p>
+            </div>
+            <div class="grid">
+                <div class="feature-card">
+                    <h3>Fleet intelligence</h3>
+                    <ul>
+                        <li>Live health probes via WinRM (Windows) and SSH (Linux) with comprehensive metrics.</li>
+                        <li>Full probes collect OS, disks, services, CPU, memory, uptime, network adapters, firewall,
+                            recent events, and reboot signals.</li>
+                        <li>Quick probes provide heartbeat with uptime, CPU, memory, processes, and service status (~20s
+                            intervals, configurable timeout 10-900s, default 90s).</li>
+                        <li>Search and filters to surface the right host quickly, with saved layout preferences and
+                            drag-and-drop card reordering.</li>
+                        <li>Card-level refresh to spot-check systems without slowing the rest of the fleet.</li>
+                        <li>IP/CIDR-to-location mapping for fleet organization with automatic location derivation from
+                            network adapters.</li>
+                        <li>Quick filters for high CPU/RAM, reboot-needed, disk warnings, service issues, or WinRM
+                            connectivity problems.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Credential-aware launch</h3>
+                    <ul>
+                        <li>RDP launch reuses stored credentials from Windows Credential Manager (DPAPI) to reduce
+                            prompts.</li>
+                        <li>Per-host credential overrides stay isolated while a global credential keeps things fast.
+                        </li>
+                        <li>Linux-tagged hosts are probed via SSH (password auth) without RDP actions.</li>
+                        <li>All credentials are stored securely in Windows Credential Manager; no secrets logged.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Deployment</h3>
+                    <ul>
+                        <li>Local mode: Single-user deployment with SQLite storage in %APPDATA%\QuickProbe.</li>
+                        <li>RemoteApp/RDP: Multi-session support with shared SQLite database (same Windows account).
+                        </li>
+                        <li>Encrypted backup/restore with AES encryption; pre-restore snapshots for safety.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Operator-focused UX</h3>
+                    <ul>
+                        <li>IP/CIDR-to-location mapping with automatic location derivation from network adapter IPs;
+                            locations persist to database and display on server cards.</li>
+                        <li>System tray access with quick actions, theme switcher (light/dark/system), and optional
+                            Windows autostart.</li>
+                        <li>Responsive refresh designed to stay snappy on larger host lists with bounded concurrency.
+                        </li>
+                        <li>Per-server notes shown and searchable; host editor search matches notes, names, services,
+                            and OS info.</li>
+                        <li>Disk/service alert surfacing with summary tiles for quick filtering.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" id="insights">
+            <div class="section-header">
+                <h2>What QuickProbe inspects</h2>
+                <p>Comprehensive health metrics via WinRM and SSH for mixed fleets, keeping CPU, memory, disks,
+                    services, network, and system events visible.</p>
+            </div>
+            <div class="two-col">
+                <div class="feature-card">
+                    <h3>Windows hosts (WinRM)</h3>
+                    <ul class="list-plain">
+                        <li>OS info, disks with alert thresholds (default 10% free), and critical service status
+                            (defaults to WinRM).</li>
+                        <li>CPU load (normalized by core count), total/used memory, process count, and high-CPU process
+                            detection (>90%).</li>
+                        <li>Uptime hours, pending reboot signals (Windows Update, Component-Based Servicing, etc.).</li>
+                        <li>WinRM listeners, firewall profiles (Domain/Private/Public), and network adapters (multiple
+                            fallbacks).</li>
+                        <li>Recent critical/error events from System/Application logs (last 30 minutes, up to 10
+                            entries).</li>
+                        <li>Reachability via ping + TCP (ports 3389/5985 by default, ~1.2s timeout per port,
+                            configurable per host).</li>
+                        <li>Quick probe heartbeat (~20s intervals, 30s per-host cooldown on manual triggers intervals
+                            with 500ms jitter, 3-minute stale threshold) with uptime, CPU, memory, processes, and
+                            service status.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Linux hosts (SSH)</h3>
+                    <ul class="list-plain">
+                        <li>OS info from /etc/os-release, disks from df, and service status via systemctl (password
+                            auth).</li>
+                        <li>CPU load from /proc/loadavg, memory from /proc/meminfo, and process count.</li>
+                        <li>Uptime hours from /proc/uptime and top CPU processes from ps.</li>
+                        <li>Reachability via ping + TCP (SSH port 22 by default, configurable per host).</li>
+                        <li>Quick probe heartbeat (~20s intervals) reuses full probe path (system_health_probe) for core
+                            metrics.</li>
+                        <li>Windows-only extras (WinRM listeners, firewall, reboot signals, recent events, network
+                            adapters) are skipped on SSH targets.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" id="screenshots">
+            <div class="section-header">
+                <h2>UI previews</h2>
+                <p class="muted">Representative snapshots of the dashboard layout and quick actions.</p>
+            </div>
+            <div class="screenshot-grid">
+                <div class="shot">
+                    <div class="shot-header">Dashboard overview</div>
+                    <div class="shot-body">
+                        <div class="shot-row">
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                        </div>
+                        <div class="shot-row">
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                        </div>
+                        <div class="shot-footer">
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shot">
+                    <div class="shot-header">Per-host detail</div>
+                    <div class="shot-body">
+                        <div class="shot-card" style="height: 110px;"></div>
+                        <div class="shot-row">
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                        </div>
+                        <div class="shot-footer">
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shot">
+                    <div class="shot-header">Actions & quick launch</div>
+                    <div class="shot-body">
+                        <div class="shot-card" style="height: 60px;"></div>
+                        <div class="shot-row">
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                            <div class="shot-card"></div>
+                        </div>
+                        <div class="shot-footer">
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                            <div class="pill-small"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" id="workflow">
+            <div class="section-header">
+                <h2>Workflow in four steps</h2>
+                <p class="muted">Built for daily use by admins who need fast visibility and instant launch actions.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <strong>1. Install & authenticate</strong><br />
+                    Run QuickProbe.exe and set a global credential; credentials stored in Windows Credential Manager.
+                </div>
+                <div class="step">
+                    <strong>2. Add hosts & configure</strong><br />
+                    Add Windows/Linux servers with notes, service expectations, and optional per-host credentials.
+                </div>
+                <div class="step">
+                    <strong>3. Probe & monitor</strong><br />
+                    Full probes collect comprehensive metrics; quick probes (~20s) provide heartbeat. Search and filters
+                    help you find issues fast.
+                </div>
+                <div class="step">
+                    <strong>4. Launch & manage</strong><br />
+                    Double-click for RDP with credential reuse; backup/restore via encrypted ZIP. Share a Windows host
+                    via RemoteApp/RDP when multiple admins need access.
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" id="storage">
+            <div class="section-header">
+                <h2>Storage & deployment</h2>
+                <p class="muted">QuickProbe uses SQLite for persistence and runs locally; share access by hosting it on
+                    a Windows machine and exposing it via RemoteApp/RDP.</p>
+            </div>
+            <div class="two-col">
+                <div class="feature-card">
+                    <h3>Local mode (default)</h3>
+                    <ul class="list-plain">
+                        <li>SQLite database in %APPDATA%\QuickProbe\quickprobe.db (created on demand).</li>
+                        <li>Hosts, settings, and view state stored in SQLite; dashboard cache is local-only JSON.</li>
+                        <li>Credentials stored in Windows Credential Manager (DPAPI); no cloud storage.</li>
+                        <li>Encrypted backup/restore with AES encryption; pre-restore snapshots for safety.</li>
+                        <li>Legacy CSV import on first run; one-time migration to SQLite with timestamped backup.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>RemoteApp/RDP</h3>
+                    <ul class="list-plain">
+                        <li>Multiple Windows sessions under the same account share one SQLite database.</li>
+                        <li>SQLite WAL (Write-Ahead Logging) allows concurrent reads; writes serialize with 5s timeout.
+                        </li>
+                        <li>Each Windows account has its own %APPDATA%\QuickProbe (isolated data).</li>
+                        <li>Simultaneous writes resolve to the last committed transaction; no merge/conflict prompts.
+                        </li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Security & privacy</h3>
+                    <ul class="list-plain">
+                        <li>All credentials stored in Windows Credential Manager; no secrets logged or sent to external
+                            services.</li>
+                        <li>Telemetry is not collected or sent to cloud services.</li>
+                        <li>Backups are AES-encrypted; password required for restore.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" id="technical">
+            <div class="section-header">
+                <h2>Technical details</h2>
+                <p class="muted">Built on Tauri (Rust backend, web UI) with SQLite persistence, WinRM/SSH probes, and
+                    Windows Credential Manager integration.</p>
+            </div>
+            <table class="data-table">
+                <tr>
+                    <th>Component</th>
+                    <th>Technology</th>
+                </tr>
+                <tr>
+                    <td>Backend</td>
+                    <td>Rust (Tauri framework), SQLite with WAL mode</td>
+                </tr>
+                <tr>
+                    <td>Frontend</td>
+                    <td>Static HTML/CSS/JavaScript (dashboard-all.html, hosts.html, options.html)</td>
+                </tr>
+                <tr>
+                    <td>Windows probes</td>
+                    <td>WinRM (PowerShell remoting via Invoke-Command)</td>
+                </tr>
+                <tr>
+                    <td>Linux probes</td>
+                    <td>SSH (password auth) via ssh2 crate</td>
+                </tr>
+                <tr>
+                    <td>Credentials</td>
+                    <td>Windows Credential Manager (DPAPI) via windows-credentials crate</td>
+                </tr>
+                <tr>
+                    <td>Storage</td>
+                    <td>SQLite (hosts, settings, kv tables); local JSON cache for dashboard</td>
+                </tr>
+                <tr>
+                    <td>Backup/Restore</td>
+                    <td>AES-encrypted ZIP (manifest.json + quickprobe-backup.json)</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="panel callout" id="requirements">
+            <div class="section-header">
+                <h2>Requirements</h2>
+            </div>
+            <ul class="list-plain">
+                <li><strong>Client:</strong> Windows 10/11 or Windows Server 2016+; PowerShell 5.1+</li>
+                <li><strong>Windows targets:</strong> WinRM enabled (Enable-PSRemoting -Force); network access to ports
+                    5985/5986</li>
+                <li><strong>Linux targets:</strong> SSH reachable with password auth (port 22 or custom)</li>
+            </ul>
+        </section>
+
+        <section class="panel" id="fact-sheet">
+            <div class="section-header">
+                <h2>Product facts</h2>
+                <p class="muted">Concise details teams ask for before deployment.</p>
+            </div>
+            <ul class="fact-list">
+                <li class="fact"><strong>Version:</strong> 1.0.0</li>
+                <li class="fact"><strong>Platform:</strong> Windows 10/11 and Windows Server 2016+</li>
+                <li class="fact"><strong>Target OS:</strong> Windows (WinRM) and Linux (SSH)</li>
+                <li class="fact"><strong>Storage:</strong> SQLite (WAL mode)</li>
+                <li class="fact"><strong>Launchers:</strong> RDP with credential reuse and per-host overrides</li>
+                <li class="fact"><strong>Credentials:</strong> Windows Credential Manager (DPAPI)</li>
+                <li class="fact"><strong>Backup:</strong> AES-encrypted ZIP with pre-restore snapshots</li>
+                <li class="fact"><strong>Probe timeout:</strong> Configurable 10-900s (default 90s)</li>
+                <li class="fact"><strong>Deployment:</strong> Local or RemoteApp/RDP multi-session</li>
+                <li class="fact"><strong>Probe timeout:</strong> 10-900s configurable (default 90s)</li>
+                <li class="fact"><strong>Licensing:</strong> Proprietary build, not open source</li>
+                <li class="fact"><strong>Made by:</strong> Swatto</li>
+                <li class="fact"><strong>Theming:</strong> System, light, or dark modes</li>
+                <li class="fact"><strong>Autostart:</strong> Optional Windows autostart toggle</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div><strong>QuickProbe</strong> - proprietary Windows server interrogation by Swatto.</div>
+            <div style="margin-top: 8px;">For questions or support, contact your Swatto representative.</div>
+        </div>
+    </footer>
+</body>
+
+</html>
