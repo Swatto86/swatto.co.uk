@@ -514,7 +514,7 @@
                 </div>
             </div>
             <p class="lede">
-                QuickProbe gives Windows operators a focused dashboard to check server health at a glance and launch RDP
+                QuickProbe gives Windows server administrators a focused dashboard to check server health at a glance and launch RDP
                 sessions
                 quickly. Built on SQLite with WinRM probes, it supports single-user local use or multi-session sharing
                 on a central Windows host via RemoteApp/RDP. All data stays local with comprehensive health metrics,
@@ -598,14 +598,14 @@
                         <li>Single portable executable (quickprobe.exe) — no external dependencies, no MSI installer
                             required.</li>
                         <li>Runs on Windows 10/11 workstations or Windows Server 2012 R2+ terminal servers.</li>
-                        <li>Perfect for RemoteApp/RDP multi-session environments where multiple operators share a single
+                        <li>Perfect for RemoteApp/RDP multi-session environments where multiple server administrators share a single
                             terminal server.</li>
                         <li>Each Windows user gets isolated SQLite database, credential profiles, and logs in their own
                             <code>%LOCALAPPDATA%\QuickProbe</code> directory.
                         </li>
                         <li>Supports concurrent multi-user operation with full data isolation — no cross-contamination
                             between
-                            operators.</li>
+                            server administrators.</li>
                         <li>Can be deployed to a network share for instant updates without redistributing to every
                             workstation.</li>
                         <li>No administrator privileges required for standard operation; requires admin only for initial
@@ -806,10 +806,10 @@
                         <li>SQLite WAL (Write-Ahead Logging) allows concurrent reads from multiple sessions; writes
                             serialize with 5s timeout and automatic retry.</li>
                         <li>Each Windows account has isolated <code>%LOCALAPPDATA%\QuickProbe</code> directory — no
-                            cross-contamination between operators.</li>
+                            cross-contamination between server administrators.</li>
                         <li>Simultaneous writes resolve to last committed transaction with ACID guarantees; no merge
                             conflicts or prompts to users.</li>
-                        <li>Perfect for terminal server environments where multiple operators monitor the same fleet
+                        <li>Perfect for terminal server environments where multiple server administrators monitor the same fleet
                             from different RDP sessions.</li>
                     </ul>
                 </div>
