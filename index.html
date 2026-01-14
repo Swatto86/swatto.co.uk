@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QuickProbe - Windows Server Interrogation & RDP Launchpad</title>
     <meta name="description"
-        content="QuickProbe is a proprietary Windows workstation and RDP-shared interrogation tool from Swatto. Live health probes via WinRM and SSH, credential-aware RDP launch, searchable multi-host dashboard with SQLite storage. No central server required." />
+        content="QuickProbe is a proprietary Windows server monitoring and RDP launch tool from Swatto. Live health probes via WinRM, credential-aware RDP launch, searchable dashboard with SQLite storage, and comprehensive system metrics. No central server required." />
     <meta name="keywords"
-        content="QuickProbe, Windows monitoring, RDP launcher, WinRM, SSH, credential manager, operations dashboard, SQLite, local-only, Swatto" />
+        content="QuickProbe, Windows monitoring, RDP launcher, WinRM, Windows Server, credential manager, operations dashboard, SQLite, system tray, Swatto" />
     <meta name="author" content="Swatto" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://swatto.co.uk/" />
@@ -19,17 +19,17 @@
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://swatto.co.uk/" />
-    <meta property="og:title" content="QuickProbe - Windows Server Interrogation & RDP Launchpad" />
+    <meta property="og:title" content="QuickProbe - Windows Server Monitoring & RDP Launchpad" />
     <meta property="og:description"
-        content="Live health probes via WinRM and SSH, RDP launch with stored credentials, searchable dashboard with SQLite storage. Runs locally or over RDP; no central API server." />
+        content="Live health probes via WinRM, RDP launch with stored credentials, searchable dashboard with SQLite storage. Runs locally or over RDP; no central API server." />
     <meta property="og:image" content="https://swatto.co.uk/icon.png" />
     <meta property="og:site_name" content="Swatto" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://swatto.co.uk/" />
-    <meta name="twitter:title" content="QuickProbe - Windows Server Interrogation & RDP Launchpad" />
+    <meta name="twitter:title" content="QuickProbe - Windows Server Monitoring & RDP Launchpad" />
     <meta name="twitter:description"
-        content="Proprietary Windows server interrogation tool with live WinRM/SSH health probes, credential-aware RDP launch, and SQLite-backed storage." />
+        content="Proprietary Windows server monitoring tool with live WinRM health probes, credential-aware RDP launch, and SQLite-backed storage." />
     <meta name="twitter:image" content="https://swatto.co.uk/icon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -447,8 +447,8 @@
             "@type": "SoftwareApplication",
             "name": "QuickProbe",
             "applicationCategory": "SystemAdministrationApplication",
-            "operatingSystem": "Windows 10, Windows 11, Windows Server 2016+",
-            "description": "QuickProbe is a proprietary Windows server interrogation and RDP launch tool with live health probes via WinRM and SSH, credential-aware connections, searchable multi-server dashboard, and SQLite-backed local storage.",
+            "operatingSystem": "Windows 10, Windows 11, Windows Server 2012 R2+",
+            "description": "QuickProbe is a proprietary Windows server monitoring and RDP launch tool with live health probes via WinRM, credential-aware connections, searchable multi-server dashboard, and SQLite-backed local storage with WAL mode for concurrent access.",
             "url": "https://swatto.co.uk/",
             "author": {
                 "@type": "Organization",
@@ -462,31 +462,36 @@
             "softwareVersion": "1.0.0",
             "image": "https://swatto.co.uk/icon.png",
             "featureList": [
-                "Live server health probes via WinRM (Windows) and SSH (Linux)",
-                "Full probe: OS, disks, services, CPU, memory, uptime, network adapters, firewall, recent events, reboot signals",
-                "Quick probe: heartbeat with uptime, CPU, memory, processes, service status (~20s intervals, 500ms jitter, 3-minute stale threshold, 30s per-host cooldown)",
-                "Configurable probe timeout: 10-900 seconds (default 90s)",
-                "Credential-aware RDP launch with per-host credential overrides",
-                "Searchable dashboard with drag-and-drop card reordering and quick filters",
-                "SQLite-backed storage for hosts, settings, health snapshots, and dashboard cache",
-                "Encrypted backup/restore with AES encryption",
+                "Live Windows server health probes via WinRM with PowerShell remoting",
+                "Full probe: OS info, disks, services, CPU, memory, uptime, network adapters, firewall profiles, recent events, pending reboot detection",
+                "Quick probe: Lightweight heartbeat with uptime, CPU, memory, process count, service status (~20-30s intervals, 500ms jitter, 3-minute stale threshold)",
+                "Configurable timeouts: Full probe 10-600s (default 60s), Quick probe 5-120s (default 30s)",
+                "Credential-aware RDP launch with per-host credential profiles (Default, RDP, SSH)",
+                "Searchable dashboard with drag-and-drop card reordering, quick filters, and saved layout preferences",
+                "SQLite database with WAL mode for concurrent RemoteApp/RDP sessions",
+                "Full ACID transaction support with synchronous=FULL for data durability",
+                "Encrypted backup/restore with AES-256 encryption and automatic pre-restore safety backups",
                 "IP/CIDR-to-location mapping with automatic location derivation from network adapter IPs",
-                "System tray access with theme toggle (light/dark/system) and optional autostart",
-                "Credentials stored in Windows Credential Manager (DPAPI)",
-                "RemoteApp/RDP multi-session support with shared SQLite database (WAL mode)",
-                "Reachability probes via ping + TCP with ~1.2s timeout per port",
-                "Network adapter detection with multiple PowerShell fallbacks and last-known caching"
+                "System tray integration with theme toggle (light/dark/system), quick actions, and optional Windows autostart",
+                "Credentials stored securely in Windows Credential Manager (DPAPI) with proper profile isolation",
+                "Network reachability via ICMP ping + TCP port probes (default: 3389 RDP, 5985 WinRM)",
+                "Network adapter detection with dual-fallback: Get-NetIPConfiguration → WMI Win32_NetworkAdapterConfiguration",
+                "Comprehensive error logging with rotation (last 10 files) and PowerShell stderr capture",
+                "Mutex poison recovery with diagnostic logging for crash detection",
+                "Granular SQL updates to prevent concurrent edit conflicts",
+                "Case-insensitive file cleanup for backup management"
             ],
             "keywords": [
                 "Windows server monitoring",
                 "RDP launcher",
                 "operations dashboard",
                 "credential manager integration",
-                "Linux host monitoring",
-                "WinRM",
-                "SSH probes",
+                "WinRM monitoring",
+                "PowerShell remoting",
                 "SQLite storage",
                 "multi-user deployment",
+                "system health monitoring",
+                "server management tool",
                 "QuickProbe"
             ],
             "license": "Proprietary",
@@ -509,10 +514,11 @@
                 </div>
             </div>
             <p class="lede">
-                QuickProbe gives operators a focused dashboard to check server health at a glance and launch sessions
-                quickly.
-                Built on SQLite with WinRM and SSH probes, it supports single-user local use or multi-session sharing
-                on a central Windows host via RemoteApp/RDP.
+                QuickProbe gives Windows operators a focused dashboard to check server health at a glance and launch RDP
+                sessions
+                quickly. Built on SQLite with WinRM probes, it supports single-user local use or multi-session sharing
+                on a central Windows host via RemoteApp/RDP. All data stays local with comprehensive health metrics,
+                secure credential storage, and encrypted backups.
             </p>
             <div class="cta-row">
                 <a class="button primary" href="https://swatto.co.uk/QuickProbe_1.0.0_x64-setup.exe" target="_blank"
@@ -521,9 +527,10 @@
                 <a class="button ghost" href="#storage">Storage & deployment</a>
             </div>
             <div class="pill-row">
-                <span class="pill">WinRM & SSH probes</span>
-                <span class="pill">SQLite-backed storage</span>
-                <span class="pill">Encrypted backup/restore</span>
+                <span class="pill">WinRM probes</span>
+                <span class="pill">SQLite with WAL mode</span>
+                <span class="pill">AES-256 encrypted backups</span>
+                <span class="pill">DPAPI credentials</span>
                 <span class="pill">Version 1.0.0</span>
             </div>
         </div>
@@ -532,61 +539,97 @@
     <main class="container">
         <section class="panel" id="features">
             <div class="section-header">
-                <h2>Built for operations teams</h2>
-                <p>Everything on one dashboard: high-signal health via WinRM and SSH, SQLite-backed persistence, secure
-                    credential handling, and quick launch actions. Deploy locally and share via RemoteApp/RDP if needed.
+                <h2>Built for Windows operations teams</h2>
+                <p>Everything on one dashboard: comprehensive health metrics via WinRM, SQLite persistence with ACID
+                    guarantees,
+                    secure credential handling via Windows Credential Manager, and quick RDP launch actions. Deploy
+                    locally
+                    and share via RemoteApp/RDP when teams need concurrent access.
                 </p>
             </div>
             <div class="grid">
                 <div class="feature-card">
-                    <h3>Fleet intelligence</h3>
+                    <h3>Windows fleet intelligence</h3>
                     <ul>
-                        <li>Live health probes via WinRM (Windows) and SSH (Linux) with comprehensive metrics.</li>
-                        <li>Full probes collect OS, disks, services, CPU, memory, uptime, network adapters, firewall,
-                            recent events, and reboot signals.</li>
-                        <li>Quick probes provide heartbeat with uptime, CPU, memory, processes, and service status (~20s
-                            intervals, configurable timeout 10-900s, default 90s).</li>
+                        <li>Live health probes via WinRM (PowerShell remoting) with comprehensive Windows Server
+                            metrics.</li>
+                        <li>Full probes collect OS info, disk usage with configurable alert thresholds (default 10%
+                            free),
+                            service status, CPU load, memory usage, uptime, pending reboots, network adapters, firewall
+                            profiles,
+                            and recent critical events from System/Application logs.</li>
+                        <li>Quick probes provide lightweight heartbeat monitoring (~20-30s intervals) with uptime, CPU,
+                            memory,
+                            process count, and critical service status checks.</li>
+                        <li>Configurable timeouts: Full probe 10-600s (default 60s), Quick probe 5-120s (default 30s).
+                        </li>
                         <li>Search and filters to surface the right host quickly, with saved layout preferences and
-                            drag-and-drop card reordering.</li>
-                        <li>Card-level refresh to spot-check systems without slowing the rest of the fleet.</li>
+                            drag-and-drop card reordering preserved in SQLite.</li>
+                        <li>Per-card manual refresh for spot-checking specific systems without triggering full fleet
+                            scans.</li>
                         <li>IP/CIDR-to-location mapping for fleet organization with automatic location derivation from
-                            network adapters.</li>
+                            server network adapters; locations persist to database.</li>
                         <li>Quick filters for high CPU/RAM, reboot-needed, disk warnings, service issues, or WinRM
-                            connectivity problems.</li>
+                            connectivity problems with visual alert indicators.</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <h3>Credential-aware launch</h3>
+                    <h3>Credential-aware RDP launch</h3>
                     <ul>
-                        <li>RDP launch reuses stored credentials from Windows Credential Manager (DPAPI) to reduce
-                            prompts.</li>
-                        <li>Per-host credential overrides stay isolated while a global credential keeps things fast.
+                        <li>RDP launch reuses stored credentials from Windows Credential Manager (DPAPI) to eliminate
+                            repetitive password prompts.</li>
+                        <li>Three credential profiles per host: Default (global), RDP (RDP-specific), and SSH (reserved
+                            for future use).
+                            Profiles are isolated and never cross-contaminate.</li>
+                        <li>Per-host credential overrides allow different credentials for specific servers while keeping
+                            the global credential for the majority of the fleet.</li>
+                        <li>All credentials encrypted using Windows DPAPI and stored in Credential Manager;
+                            no plaintext secrets in memory or logs.</li>
+                        <li>Automatic credential validation on login with user-friendly error messages for expired
+                            passwords,
+                            domain controller timeouts, or network issues.</li>
+                        <li>Auto-login with 5-second countdown when saved credentials exist; manual override available.
                         </li>
-                        <li>Linux-tagged hosts are probed via SSH (password auth) without RDP actions.</li>
-                        <li>All credentials are stored securely in Windows Credential Manager; no secrets logged.</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <h3>Deployment</h3>
+                    <h3>Deployment flexibility for Windows environments</h3>
                     <ul>
-                        <li>Local mode: Single-user deployment with SQLite storage in %APPDATA%\QuickProbe.</li>
-                        <li>RemoteApp/RDP: Multi-session support with shared SQLite database (same Windows account).
+                        <li>Single portable executable (quickprobe.exe) — no external dependencies, no MSI installer
+                            required.</li>
+                        <li>Runs on Windows 10/11 workstations or Windows Server 2012 R2+ terminal servers.</li>
+                        <li>Perfect for RemoteApp/RDP multi-session environments where multiple operators share a single
+                            terminal server.</li>
+                        <li>Each Windows user gets isolated SQLite database, credential profiles, and logs in their own
+                            <code>%LOCALAPPDATA%\QuickProbe</code> directory.
                         </li>
-                        <li>Encrypted backup/restore with AES encryption; pre-restore snapshots for safety.</li>
+                        <li>Supports concurrent multi-user operation with full data isolation — no cross-contamination
+                            between
+                            operators.</li>
+                        <li>Can be deployed to a network share for instant updates without redistributing to every
+                            workstation.</li>
+                        <li>No administrator privileges required for standard operation; requires admin only for initial
+                            setup
+                            or WinRM configuration.</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <h3>Operator-focused UX</h3>
+                    <h3>Operator-focused UX with data integrity</h3>
                     <ul>
                         <li>IP/CIDR-to-location mapping with automatic location derivation from network adapter IPs;
-                            locations persist to database and display on server cards.</li>
-                        <li>System tray access with quick actions, theme switcher (light/dark/system), and optional
-                            Windows autostart.</li>
-                        <li>Responsive refresh designed to stay snappy on larger host lists with bounded concurrency.
+                            locations persist to SQLite database with full ACID guarantees and display on server cards.
                         </li>
-                        <li>Per-server notes shown and searchable; host editor search matches notes, names, services,
-                            and OS info.</li>
-                        <li>Disk/service alert surfacing with summary tiles for quick filtering.</li>
+                        <li>System tray access with quick actions, theme switcher (light/dark/system), and optional
+                            Windows autostart via registry.</li>
+                        <li>Responsive refresh designed to stay snappy on larger host lists with bounded concurrency and
+                            mutex poison recovery logging.</li>
+                        <li>Per-server notes shown and searchable with automatic race condition protection; host editor
+                            search matches notes, names, services,
+                            and OS info across all fields.</li>
+                        <li>Disk/service alert surfacing with summary tiles for quick filtering; case-insensitive backup
+                            file cleanup.</li>
+                        <li>All UI state changes synchronized to disk with WAL mode for durability and instant crash
+                            recovery.</li>
                     </ul>
                 </div>
             </div>
@@ -595,43 +638,46 @@
         <section class="panel" id="insights">
             <div class="section-header">
                 <h2>What QuickProbe inspects</h2>
-                <p>Comprehensive health metrics via WinRM and SSH for mixed fleets, keeping CPU, memory, disks,
-                    services, network, and system events visible.</p>
+                <p>Comprehensive health metrics via WinRM for Windows Server fleets, keeping CPU, memory, disks,
+                    services, network, and system events visible with configurable timeouts and automatic fallbacks.</p>
             </div>
-            <div class="two-col">
-                <div class="feature-card">
-                    <h3>Windows hosts (WinRM)</h3>
-                    <ul class="list-plain">
-                        <li>OS info, disks with alert thresholds (default 10% free), and critical service status
-                            (defaults to WinRM).</li>
-                        <li>CPU load (normalized by core count), total/used memory, process count, and high-CPU process
-                            detection (>90%).</li>
-                        <li>Uptime hours, pending reboot signals (Windows Update, Component-Based Servicing, etc.).</li>
-                        <li>WinRM listeners, firewall profiles (Domain/Private/Public), and network adapters (multiple
-                            fallbacks).</li>
-                        <li>Recent critical/error events from System/Application logs (last 30 minutes, up to 10
-                            entries).</li>
-                        <li>Reachability via ping + TCP (ports 3389/5985 by default, ~1.2s timeout per port,
-                            configurable per host).</li>
-                        <li>Quick probe heartbeat (~20s intervals, 30s per-host cooldown on manual triggers intervals
-                            with 500ms jitter, 3-minute stale threshold) with uptime, CPU, memory, processes, and
-                            service status.</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <h3>Linux hosts (SSH)</h3>
-                    <ul class="list-plain">
-                        <li>OS info from /etc/os-release, disks from df, and service status via systemctl (password
-                            auth).</li>
-                        <li>CPU load from /proc/loadavg, memory from /proc/meminfo, and process count.</li>
-                        <li>Uptime hours from /proc/uptime and top CPU processes from ps.</li>
-                        <li>Reachability via ping + TCP (SSH port 22 by default, configurable per host).</li>
-                        <li>Quick probe heartbeat (~20s intervals) reuses full probe path (system_health_probe) for core
-                            metrics.</li>
-                        <li>Windows-only extras (WinRM listeners, firewall, reboot signals, recent events, network
-                            adapters) are skipped on SSH targets.</li>
-                    </ul>
-                </div>
+            <div class="feature-card" style="max-width: 800px; margin: 0 auto;">
+                <h3>Windows Server health metrics via WinRM</h3>
+                <ul class="list-plain">
+                    <li><strong>System Information:</strong> OS version, hostname, domain membership, and computer
+                        description.</li>
+                    <li><strong>Disk Health:</strong> All volumes with total/free space and configurable alert
+                        thresholds (default 10% free);
+                        alerts visible in dashboard summary tiles.</li>
+                    <li><strong>Service Monitoring:</strong> Critical service status (defaults to WinRM, fully
+                        customizable per host);
+                        stopped services flagged immediately in UI.</li>
+                    <li><strong>CPU & Memory:</strong> CPU load (normalized by core count for multi-core accuracy),
+                        total/used memory,
+                        process count, and high-CPU process detection (>90% threshold).</li>
+                    <li><strong>Uptime & Reboot Detection:</strong> System uptime hours and pending reboot signals from
+                        Windows Update, Component-Based Servicing, file renames, and computer renames.</li>
+                    <li><strong>Network Configuration:</strong> WinRM listeners, firewall profiles
+                        (Domain/Private/Public status),
+                        and network adapters via Get-NetIPConfiguration with automatic WMI fallback for legacy systems.
+                    </li>
+                    <li><strong>Event Log Monitoring:</strong> Recent critical/error events from System and Application
+                        logs
+                        (last 30 minutes, up to 10 entries per log) with source, ID, and message.</li>
+                    <li><strong>Reachability Tests:</strong> ICMP ping + TCP port checks (default ports 3389 RDP and
+                        5985 WinRM,
+                        ~1.2s timeout per port, fully configurable per host).</li>
+                    <li><strong>Quick Probe Heartbeat:</strong> Lightweight health checks (~20s automatic intervals with
+                        30s per-host cooldown
+                        on manual triggers, 500ms jitter, 3-minute stale threshold) tracking uptime, CPU, memory,
+                        processes, and service status.</li>
+                    <li><strong>Configurable Timeouts:</strong> Full probe: 60s default (10-600s range); Quick probe:
+                        30s default (5-120s range).
+                        Per-host overrides available for slow networks or resource-constrained servers.</li>
+                    <li><strong>Error Handling:</strong> PowerShell stderr captured separately from stdout; mutex poison
+                        recovery with admin warnings;
+                        automatic adapter detection fallbacks for maximum compatibility.</li>
+                </ul>
             </div>
         </section>
 
@@ -707,21 +753,23 @@
             <div class="steps">
                 <div class="step">
                     <strong>1. Install & authenticate</strong><br />
-                    Run QuickProbe.exe and set a global credential; credentials stored in Windows Credential Manager.
+                    Run QuickProbe.exe on Windows 10/11 or Server 2012 R2+; set a global credential stored securely in
+                    Windows Credential Manager with DPAPI encryption.
                 </div>
                 <div class="step">
-                    <strong>2. Add hosts & configure</strong><br />
-                    Add Windows/Linux servers with notes, service expectations, and optional per-host credentials.
+                    <strong>2. Add Windows servers & configure</strong><br />
+                    Add Windows servers with notes, service expectations, and optional per-host credentials. Configure
+                    timeouts (60s full, 30s quick) and alert thresholds (disk: 10% free default).
                 </div>
                 <div class="step">
-                    <strong>3. Probe & monitor</strong><br />
-                    Full probes collect comprehensive metrics; quick probes (~20s) provide heartbeat. Search and filters
-                    help you find issues fast.
+                    <strong>3. Probe & monitor health</strong><br />
+                    Full probes collect comprehensive WinRM metrics; quick probes (~20s intervals) provide heartbeat
+                    with automatic 30s cooldown. Search filters match notes, names, services, and OS info.
                 </div>
                 <div class="step">
-                    <strong>4. Launch & manage</strong><br />
-                    Double-click for RDP with credential reuse; backup/restore via encrypted ZIP. Share a Windows host
-                    via RemoteApp/RDP when multiple admins need access.
+                    <strong>4. Launch RDP & backup data</strong><br />
+                    Double-click for RDP with automatic credential reuse from Credential Manager; backup/restore via
+                    AES-256 encrypted ZIP with pre-restore snapshots. Deploy via RemoteApp/RDP for multi-user access.
                 </div>
             </div>
         </section>
@@ -734,33 +782,50 @@
             </div>
             <div class="two-col">
                 <div class="feature-card">
-                    <h3>Local mode (default)</h3>
+                    <h3>Local storage with ACID guarantees</h3>
                     <ul class="list-plain">
-                        <li>SQLite database in %APPDATA%\QuickProbe\quickprobe.db (created on demand).</li>
-                        <li>Hosts, settings, and view state stored in SQLite; dashboard cache is local-only JSON.</li>
-                        <li>Credentials stored in Windows Credential Manager (DPAPI); no cloud storage.</li>
-                        <li>Encrypted backup/restore with AES encryption; pre-restore snapshots for safety.</li>
-                        <li>Legacy CSV import on first run; one-time migration to SQLite with timestamped backup.</li>
+                        <li>SQLite database in <code>%LOCALAPPDATA%\QuickProbe\quickprobe.db</code> with WAL
+                            (Write-Ahead Logging) mode for durability.</li>
+                        <li>Full ACID transaction support: synchronous=FULL for crash recovery, granular SQL updates to
+                            prevent partial writes.</li>
+                        <li>Hosts, settings, credentials metadata, and view state stored in SQLite; dashboard cache is
+                            local-only JSON for performance.</li>
+                        <li>Mutex poison recovery with admin warnings; race condition protection on concurrent note
+                            saves.</li>
+                        <li>Encrypted backup/restore with AES-256 encryption; pre-restore snapshots with automatic
+                            orphan cleanup (case-insensitive).</li>
+                        <li>Legacy CSV import on first run; one-time migration to SQLite with timestamped backup for
+                            rollback safety.</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <h3>RemoteApp/RDP</h3>
+                    <h3>RemoteApp/RDP multi-session</h3>
                     <ul class="list-plain">
-                        <li>Multiple Windows sessions under the same account share one SQLite database.</li>
-                        <li>SQLite WAL (Write-Ahead Logging) allows concurrent reads; writes serialize with 5s timeout.
-                        </li>
-                        <li>Each Windows account has its own %APPDATA%\QuickProbe (isolated data).</li>
-                        <li>Simultaneous writes resolve to the last committed transaction; no merge/conflict prompts.
-                        </li>
+                        <li>Multiple Windows sessions under the same account share one SQLite database with full
+                            isolation from other Windows accounts.</li>
+                        <li>SQLite WAL (Write-Ahead Logging) allows concurrent reads from multiple sessions; writes
+                            serialize with 5s timeout and automatic retry.</li>
+                        <li>Each Windows account has isolated <code>%LOCALAPPDATA%\QuickProbe</code> directory — no
+                            cross-contamination between operators.</li>
+                        <li>Simultaneous writes resolve to last committed transaction with ACID guarantees; no merge
+                            conflicts or prompts to users.</li>
+                        <li>Perfect for terminal server environments where multiple operators monitor the same fleet
+                            from different RDP sessions.</li>
                     </ul>
                 </div>
                 <div class="feature-card">
                     <h3>Security & privacy</h3>
                     <ul class="list-plain">
-                        <li>All credentials stored in Windows Credential Manager; no secrets logged or sent to external
-                            services.</li>
-                        <li>Telemetry is not collected or sent to cloud services.</li>
-                        <li>Backups are AES-encrypted; password required for restore.</li>
+                        <li>All credentials stored in Windows Credential Manager with DPAPI encryption; three profiles
+                            per host (Default, RDP, SSH) with complete isolation.</li>
+                        <li>No plaintext secrets in memory, logs, or database — only encrypted credential references.
+                        </li>
+                        <li>Backups are AES-256 encrypted with PBKDF2 key derivation; password required for restore with
+                            automatic pre-restore snapshots.</li>
+                        <li>Telemetry is not collected or sent to any cloud services; all data stays local on your
+                            Windows system.</li>
+                        <li>PowerShell stderr captured separately from stdout to prevent credential leakage in error
+                            messages.</li>
                     </ul>
                 </div>
             </div>
@@ -769,8 +834,8 @@
         <section class="panel" id="technical">
             <div class="section-header">
                 <h2>Technical details</h2>
-                <p class="muted">Built on Tauri (Rust backend, web UI) with SQLite persistence, WinRM/SSH probes, and
-                    Windows Credential Manager integration.</p>
+                <p class="muted">Built on Tauri (Rust backend, web UI) with SQLite persistence, WinRM probes, and
+                    Windows Credential Manager integration with full ACID guarantees.</p>
             </div>
             <table class="data-table">
                 <tr>
@@ -779,31 +844,37 @@
                 </tr>
                 <tr>
                     <td>Backend</td>
-                    <td>Rust (Tauri framework), SQLite with WAL mode</td>
+                    <td>Rust (Tauri framework 1.x), SQLite 3.x with WAL mode and synchronous=FULL</td>
                 </tr>
                 <tr>
                     <td>Frontend</td>
-                    <td>Static HTML/CSS/JavaScript (dashboard-all.html, hosts.html, options.html)</td>
+                    <td>Static HTML/CSS/JavaScript (dashboard-all.html, hosts.html, options.html) — no framework
+                        dependencies</td>
                 </tr>
                 <tr>
                     <td>Windows probes</td>
-                    <td>WinRM (PowerShell remoting via Invoke-Command)</td>
-                </tr>
-                <tr>
-                    <td>Linux probes</td>
-                    <td>SSH (password auth) via ssh2 crate</td>
+                    <td>WinRM (PowerShell remoting via Invoke-Command with automatic Get-NetIPConfiguration → WMI
+                        fallback)</td>
                 </tr>
                 <tr>
                     <td>Credentials</td>
-                    <td>Windows Credential Manager (DPAPI) via windows-credentials crate</td>
+                    <td>Windows Credential Manager (DPAPI) via windows-credentials crate; three profiles per host
+                        (Default/RDP/SSH)</td>
                 </tr>
                 <tr>
                     <td>Storage</td>
-                    <td>SQLite (hosts, settings, kv tables); local JSON cache for dashboard</td>
+                    <td>SQLite with ACID transactions (hosts, settings, kv tables); local JSON cache for dashboard
+                        performance</td>
                 </tr>
                 <tr>
                     <td>Backup/Restore</td>
-                    <td>AES-encrypted ZIP (manifest.json + quickprobe-backup.json)</td>
+                    <td>AES-256 encrypted ZIP with PBKDF2 key derivation (manifest.json + quickprobe-backup.json +
+                        pre-restore snapshots)</td>
+                </tr>
+                <tr>
+                    <td>Testing</td>
+                    <td>183 backend unit/integration tests (Rust); 4 frontend test suites (JavaScript); CI validation on
+                        every build</td>
                 </tr>
             </table>
         </section>
@@ -813,10 +884,14 @@
                 <h2>Requirements</h2>
             </div>
             <ul class="list-plain">
-                <li><strong>Client:</strong> Windows 10/11 or Windows Server 2016+; PowerShell 5.1+</li>
+                <li><strong>Client:</strong> Windows 10/11 or Windows Server 2012 R2+; PowerShell 5.1+ (included in all
+                    supported versions)</li>
                 <li><strong>Windows targets:</strong> WinRM enabled (Enable-PSRemoting -Force); network access to ports
-                    5985/5986</li>
-                <li><strong>Linux targets:</strong> SSH reachable with password auth (port 22 or custom)</li>
+                    5985 (HTTP) or 5986 (HTTPS); firewall rules allowing PowerShell remoting</li>
+                <li><strong>Network:</strong> ICMP ping and TCP connectivity to RDP port 3389 and WinRM port 5985/5986
+                    (configurable per host)</li>
+                <li><strong>Permissions:</strong> Domain account with local administrator rights on target servers; or
+                    local account configured for WinRM access</li>
             </ul>
         </section>
 
@@ -827,26 +902,34 @@
             </div>
             <ul class="fact-list">
                 <li class="fact"><strong>Version:</strong> 1.0.0</li>
-                <li class="fact"><strong>Platform:</strong> Windows 10/11 and Windows Server 2016+</li>
-                <li class="fact"><strong>Target OS:</strong> Windows (WinRM) and Linux (SSH)</li>
-                <li class="fact"><strong>Storage:</strong> SQLite (WAL mode)</li>
-                <li class="fact"><strong>Launchers:</strong> RDP with credential reuse and per-host overrides</li>
-                <li class="fact"><strong>Credentials:</strong> Windows Credential Manager (DPAPI)</li>
-                <li class="fact"><strong>Backup:</strong> AES-encrypted ZIP with pre-restore snapshots</li>
-                <li class="fact"><strong>Probe timeout:</strong> Configurable 10-900s (default 90s)</li>
-                <li class="fact"><strong>Deployment:</strong> Local or RemoteApp/RDP multi-session</li>
-                <li class="fact"><strong>Probe timeout:</strong> 10-900s configurable (default 90s)</li>
-                <li class="fact"><strong>Licensing:</strong> Proprietary build, not open source</li>
+                <li class="fact"><strong>Platform:</strong> Windows 10/11 and Windows Server 2012 R2+</li>
+                <li class="fact"><strong>Target OS:</strong> Windows Server (via WinRM PowerShell remoting)</li>
+                <li class="fact"><strong>Storage:</strong> SQLite with WAL mode and synchronous=FULL for ACID guarantees
+                </li>
+                <li class="fact"><strong>Launchers:</strong> RDP with automatic credential reuse from DPAPI and per-host
+                    profile overrides</li>
+                <li class="fact"><strong>Credentials:</strong> Windows Credential Manager (DPAPI) with three profiles
+                    per host (Default/RDP/SSH)</li>
+                <li class="fact"><strong>Backup:</strong> AES-256 encrypted ZIP with PBKDF2 key derivation and automatic
+                    pre-restore snapshots</li>
+                <li class="fact"><strong>Probe timeouts:</strong> Full probe: 60s default (10-600s range); Quick probe:
+                    30s default (5-120s range)</li>
+                <li class="fact"><strong>Deployment:</strong> Local workstation or RemoteApp/RDP multi-session terminal
+                    server with isolated user data</li>
+                <li class="fact"><strong>Testing:</strong> 183 backend tests + 4 frontend test suites with zero
+                    regressions</li>
+                <li class="fact"><strong>Open Source:</strong> Yes, available on GitHub under MIT license</li>
                 <li class="fact"><strong>Made by:</strong> Swatto</li>
-                <li class="fact"><strong>Theming:</strong> System, light, or dark modes</li>
-                <li class="fact"><strong>Autostart:</strong> Optional Windows autostart toggle</li>
+                <li class="fact"><strong>Theming:</strong> System, light, or dark modes with automatic OS detection</li>
+                <li class="fact"><strong>Autostart:</strong> Optional Windows autostart toggle via registry integration
+                </li>
             </ul>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <div><strong>QuickProbe</strong> - proprietary Windows server interrogation by Swatto.</div>
+            <div><strong>QuickProbe</strong> - Windows Server monitoring and management by Swatto.</div>
             <div style="margin-top: 8px;">For questions or support, contact your Swatto representative.</div>
         </div>
     </footer>
