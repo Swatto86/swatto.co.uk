@@ -38,14 +38,14 @@
 
     <style>
         :root {
-            --bg: #081020;
-            --panel: #0f172a;
-            --panel-soft: #111c2f;
-            --text: #e6edf6;
-            --muted: #9cb2c7;
-            --border: #1f2a3d;
-            --accent: #10b981;
-            --accent-2: #22d3ee;
+            --bg: #0f172a;
+            --panel: #1e293b;
+            --panel-soft: #1e293b;
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --border: #334155;
+            --accent: #3b82f6;
+            --accent-2: #60a5fa;
             --shadow: 0 12px 50px rgba(0, 0, 0, 0.35);
         }
 
@@ -59,8 +59,8 @@
             font-family: "Manrope", "Segoe UI", Tahoma, sans-serif;
             line-height: 1.7;
             color: var(--text);
-            background: radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.08), transparent 30%),
-                radial-gradient(circle at 80% 0%, rgba(16, 185, 129, 0.08), transparent 26%),
+            background: radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.08), transparent 30%),
+                radial-gradient(circle at 80% 0%, rgba(96, 165, 250, 0.08), transparent 26%),
                 var(--bg);
         }
 
@@ -81,7 +81,7 @@
         }
 
         .hero {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(34, 211, 238, 0.14));
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(96, 165, 250, 0.14));
             border-bottom: 1px solid var(--border);
             padding: 70px 0 60px;
             position: relative;
@@ -165,8 +165,8 @@
         }
 
         .button.primary {
-            background: linear-gradient(135deg, #0ea36b, #22d3ee);
-            box-shadow: 0 12px 30px rgba(34, 211, 238, 0.28);
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            box-shadow: 0 12px 30px rgba(59, 130, 246, 0.28);
         }
 
         .button.ghost {
@@ -177,7 +177,7 @@
 
         .button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 26px rgba(34, 211, 238, 0.2);
+            box-shadow: 0 10px 26px rgba(59, 130, 246, 0.3);
             text-decoration: none;
         }
 
@@ -342,7 +342,7 @@
         .shot {
             border: 1px solid var(--border);
             border-radius: 14px;
-            background: linear-gradient(160deg, rgba(34, 211, 238, 0.08), rgba(16, 185, 129, 0.06));
+            background: linear-gradient(160deg, rgba(59, 130, 246, 0.08), rgba(96, 165, 250, 0.06));
             box-shadow: var(--shadow);
             overflow: hidden;
         }
@@ -411,8 +411,8 @@
 
         .callout {
             text-align: left;
-            border: 1px solid rgba(34, 211, 238, 0.3);
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(34, 211, 238, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(96, 165, 250, 0.1));
         }
 
         footer {
@@ -614,12 +614,25 @@
                     </ul>
                 </div>
                 <div class="feature-card">
+                    <h3>Modern UI with DaisyUI theming</h3>
+                    <ul>
+                        <li>Built with Tailwind CSS + DaisyUI component library for consistent, accessible UI across all windows.</li>
+                        <li>32 built-in themes: light, dark, cupcake, cyberpunk, forest, aqua, and more — all accessible via system tray.</li>
+                        <li>Theme persistence across all windows with instant cross-window synchronization via localStorage and Tauri events.</li>
+                        <li>System theme detection automatically switches between light/dark based on Windows appearance settings.</li>
+                        <li>Redesigned host cards with DaisyUI badges for status indicators (success/warning/error) and semantic colors.</li>
+                        <li>Group view with collapsible cards and hostname pills displaying host states with theme-aware colors.</li>
+                        <li>Expandable host cards with toggle behavior — click once to expand, click again to collapse; state persists across restarts.</li>
+                        <li>Compact About dialog optimized to fit on screen without scrolling on all standard resolutions.</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
                     <h3>Operator-focused UX with data integrity</h3>
                     <ul>
                         <li>IP/CIDR-to-location mapping with automatic location derivation from network adapter IPs;
                             locations persist to SQLite database with full ACID guarantees and display on server cards.
                         </li>
-                        <li>System tray access with quick actions, theme switcher (light/dark/system), and optional
+                        <li>System tray access with quick actions, theme switcher (32 themes including light/dark/system), and optional
                             Windows autostart via registry.</li>
                         <li>Responsive refresh designed to stay snappy on larger host lists with bounded concurrency and
                             mutex poison recovery logging.</li>
@@ -848,8 +861,7 @@
                 </tr>
                 <tr>
                     <td>Frontend</td>
-                    <td>Static HTML/CSS/JavaScript (dashboard-all.html, hosts.html, options.html) — no framework
-                        dependencies</td>
+                    <td>Static HTML/CSS/JavaScript with Tailwind CSS + DaisyUI v4 (dashboard-all.html, hosts.html, options.html, about.html) — 32 built-in themes with cross-window synchronization</td>
                 </tr>
                 <tr>
                     <td>Windows probes</td>
@@ -919,7 +931,8 @@
                 <li class="fact"><strong>Testing:</strong> 183 backend tests + 4 frontend test suites with zero
                     regressions</li>
                 <li class="fact"><strong>Made by:</strong> Swatto</li>
-                <li class="fact"><strong>Theming:</strong> System, light, or dark modes with automatic OS detection</li>
+                <li class="fact"><strong>UI Framework:</strong> Tailwind CSS + DaisyUI with 32 built-in themes</li>
+                <li class="fact"><strong>Theming:</strong> 32 themes (light, dark, cupcake, cyberpunk, forest, etc.) with system detection and cross-window sync</li>
                 <li class="fact"><strong>Autostart:</strong> Optional Windows autostart toggle via registry integration
                 </li>
             </ul>
