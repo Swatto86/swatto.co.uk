@@ -1,5 +1,7 @@
 # swatto.co.uk
 
-Landing site for QuickProbe — a proprietary Windows server interrogation and RDP launch tool with live WinRM/SSH probes and credential-aware connections.
+Landing page for [QuickProbe](https://github.com/swatto/quickprobe) — a free, open-source server monitoring tool for system administrators.
 
-Visit: [swatto.co.uk](https://swatto.co.uk)
+This is a static GitHub Pages site. Push changes to deploy automatically.
+
+**Live site:** [swatto.co.uk](https://swatto.co.uk)
