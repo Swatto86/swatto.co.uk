@@ -54,6 +54,7 @@
             --typescript: #3b82f6;
             --cpp: #8b5cf6;
             --html: #ef4444;
+            --csharp: #68217a;
         }
 
         * {
@@ -442,6 +443,10 @@
             background: var(--html);
         }
 
+        .lang-csharp .lang-dot {
+            background: var(--csharp);
+        }
+
         .tool-links {
             display: flex;
             gap: 12px;
@@ -632,7 +637,7 @@
                 </div>
                 <div class="stats">
                     <div class="stat">
-                        <div class="stat-value">11</div>
+                        <div class="stat-value">15</div>
                         <div class="stat-label">Projects</div>
                     </div>
                     <div class="stat">
@@ -835,6 +840,72 @@
                             <span class="lang-tag lang-cpp"><span class="lang-dot"></span> C</span>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/ps-launcher">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SwatCrypt -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(239, 68, 68, 0.1);">&#128272;</div>
+                            <span class="category-label cat-security">Security</span>
+                        </div>
+                        <h3>SwatCrypt</h3>
+                        <p>XChaCha20-Poly1305 file encryption with Argon2id key derivation. Encrypts single or multiple files/folders into a single <code>.swc</code> bundle with optional gzip compression, tamper detection via AEAD, and Explorer context menu integration.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                            <span class="lang-tag" style="color: var(--muted);"><span class="lang-dot" style="background: #22c55e;"></span> egui</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/SwatCrypt">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LockSmith -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(59, 130, 246, 0.1);">&#128275;</div>
+                            <span class="category-label cat-utility">Utility</span>
+                        </div>
+                        <h3>LockSmith</h3>
+                        <p>Lightweight Windows utility for viewing and managing file locks. Identifies and force-releases file handles to resolve &ldquo;file in use&rdquo; errors, with search, multi-select, sortable columns, and dark/light themes.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                            <span class="lang-tag" style="color: var(--muted);"><span class="lang-dot" style="background: #22c55e;"></span> egui</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/LockSmith">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HandleHunter -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(59, 130, 246, 0.1);">&#128270;</div>
+                            <span class="category-label cat-utility">Utility</span>
+                        </div>
+                        <h3>HandleHunter</h3>
+                        <p>Lightweight Windows utility for managing file locks, built with pure C and Win32 API. Auto-detects system theme, supports multi-select lock release, real-time search filtering, and DPI-aware rendering at just ~134KB.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-cpp"><span class="lang-dot"></span> C</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/HandleHunter">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PSTInsight -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(168, 85, 247, 0.1);">&#128231;</div>
+                            <span class="category-label cat-utility">Utility</span>
+                        </div>
+                        <h3>PSTInsight</h3>
+                        <p>Desktop application for viewing and exporting emails from Outlook PST files. Built with C# and WPF, featuring a dark theme, folder tree navigation, and email content preview without requiring Outlook installed.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-csharp"><span class="lang-dot"></span> C#</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/PSTInsight">GitHub</a>
                             </div>
                         </div>
                     </div>
