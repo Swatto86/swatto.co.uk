@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QuickProbe - Server Health Monitoring for Windows & Linux</title>
+    <title>Swatto &mdash; Developer Tools &amp; Utilities</title>
     <meta name="description"
-        content="QuickProbe is a free, open-source desktop application for system administrators to monitor Windows and Linux servers. Real-time health probes via WinRM and SSH, one-click RDP launch, and secure credential management." />
+        content="Open-source desktop tools and utilities by Swatto. Server monitoring, security tools, system utilities, and productivity apps built with Rust, Tauri, and modern web technologies." />
     <meta name="keywords"
-        content="QuickProbe, server monitoring, Windows Server, Linux, WinRM, SSH, RDP launcher, sysadmin tool, open source, Tauri, Rust" />
+        content="Swatto, developer tools, Rust, Tauri, open source, server monitoring, security tools, system utilities, Windows tools" />
     <meta name="author" content="Swatto" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://swatto.co.uk/" />
@@ -19,36 +19,41 @@
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://swatto.co.uk/" />
-    <meta property="og:title" content="QuickProbe - Server Health Monitoring for Windows & Linux" />
+    <meta property="og:title" content="Swatto &mdash; Developer Tools &amp; Utilities" />
     <meta property="og:description"
-        content="Free, open-source server monitoring tool for system administrators. Real-time health probes, one-click RDP, Active Directory scanning." />
+        content="Open-source desktop tools and utilities built with Rust, Tauri, and modern web technologies." />
     <meta property="og:image" content="https://swatto.co.uk/icon.png" />
-    <meta property="og:site_name" content="QuickProbe" />
+    <meta property="og:site_name" content="Swatto" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://swatto.co.uk/" />
-    <meta name="twitter:title" content="QuickProbe - Server Health Monitoring for Windows & Linux" />
+    <meta name="twitter:title" content="Swatto &mdash; Developer Tools &amp; Utilities" />
     <meta name="twitter:description"
-        content="Free, open-source server monitoring tool for sysadmins. Real-time health probes via WinRM and SSH." />
+        content="Open-source desktop tools and utilities built with Rust, Tauri, and modern web technologies." />
     <meta name="twitter:image" content="https://swatto.co.uk/icon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <style>
         :root {
-            --bg: #0a0a0a;
-            --panel: #141414;
-            --panel-soft: #1a1a1a;
-            --text: #fafafa;
-            --muted: #a1a1aa;
+            --bg: #0b0d11;
+            --bg-secondary: #12151c;
+            --panel: #161a24;
+            --panel-hover: #1c2130;
+            --text: #e4e4e7;
+            --text-bright: #fafafa;
+            --muted: #71717a;
             --border: #27272a;
-            --accent: #22c55e;
-            --accent-hover: #16a34a;
-            --accent-soft: rgba(34, 197, 94, 0.15);
-            --warning: #eab308;
-            --error: #ef4444;
+            --accent: #22d3ee;
+            --accent-hover: #06b6d4;
+            --accent-soft: rgba(34, 211, 238, 0.1);
+            --accent-border: rgba(34, 211, 238, 0.2);
+            --rust: #f97316;
+            --typescript: #3b82f6;
+            --cpp: #8b5cf6;
+            --html: #ef4444;
         }
 
         * {
@@ -57,41 +62,114 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             line-height: 1.6;
             color: var(--text);
             background: var(--bg);
+            -webkit-font-smoothing: antialiased;
         }
 
         a {
             color: var(--accent);
             text-decoration: none;
+            transition: color 0.15s ease;
         }
 
         a:hover {
-            text-decoration: underline;
-        }
-
-        code {
-            background: var(--panel-soft);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.9em;
-            font-family: "JetBrains Mono", "Fira Code", monospace;
+            color: var(--accent-hover);
         }
 
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1120px;
             margin: 0 auto;
             padding: 0 24px;
         }
 
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(11, 13, 17, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-bright);
+        }
+
+        .nav-brand:hover {
+            color: var(--text-bright);
+        }
+
+        .nav-brand img {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-bright);
+        }
+
         /* Hero */
         .hero {
-            padding: 80px 0 60px;
-            border-bottom: 1px solid var(--border);
+            padding: 140px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto;
         }
 
         .hero-badge {
@@ -99,33 +177,45 @@
             align-items: center;
             gap: 8px;
             background: var(--accent-soft);
+            border: 1px solid var(--accent-border);
             color: var(--accent);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 20px;
+            padding: 6px 16px;
+            border-radius: 24px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin-bottom: 24px;
         }
 
         .hero h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: var(--text-bright);
             margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent), #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero-subtitle {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: var(--muted);
-            max-width: 640px;
-            margin-bottom: 32px;
+            max-width: 540px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
         }
 
         .hero-actions {
             display: flex;
+            justify-content: center;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 40px;
         }
 
         .btn {
@@ -134,22 +224,24 @@
             gap: 8px;
             padding: 12px 24px;
             font-weight: 600;
-            font-size: 0.95rem;
-            border-radius: 8px;
+            font-size: 0.9rem;
+            border-radius: 10px;
             border: none;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.2s ease;
             text-decoration: none;
         }
 
         .btn-primary {
             background: var(--accent);
-            color: #000;
+            color: #0b0d11;
         }
 
         .btn-primary:hover {
             background: var(--accent-hover);
-            text-decoration: none;
+            color: #0b0d11;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(34, 211, 238, 0.3);
         }
 
         .btn-secondary {
@@ -159,237 +251,326 @@
         }
 
         .btn-secondary:hover {
-            background: var(--panel-soft);
-            border-color: var(--muted);
-            text-decoration: none;
+            background: var(--panel-hover);
+            border-color: #3f3f46;
+            transform: translateY(-1px);
         }
 
-        .hero-stats {
+        /* Stats */
+        .stats {
             display: flex;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: 32px;
+            gap: 40px;
+            padding: 40px 0;
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
         }
 
         .stat {
-            display: flex;
-            flex-direction: column;
+            text-align: center;
         }
 
         .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text);
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text-bright);
         }
 
         .stat-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--muted);
+            margin-top: 4px;
         }
 
         /* Section */
         section {
-            padding: 60px 0;
-            border-bottom: 1px solid var(--border);
+            padding: 80px 0;
         }
 
-        section:last-of-type {
-            border-bottom: none;
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
         }
 
         .section-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            letter-spacing: -0.02em;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text-bright);
+            margin-bottom: 12px;
         }
 
         .section-desc {
             color: var(--muted);
-            margin-bottom: 32px;
-            max-width: 640px;
+            max-width: 560px;
+            margin: 0 auto;
+            font-size: 1rem;
         }
 
-        /* Cards Grid */
-        .cards {
+        /* Category label */
+        .category-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .cat-monitoring {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .cat-security {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .cat-utility {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .cat-productivity {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+        }
+
+        .cat-analysis {
+            background: rgba(249, 115, 22, 0.1);
+            color: #f97316;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
         }
 
-        .card {
+        .tool-card {
             background: var(--panel);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 14px;
+            padding: 28px;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
         }
 
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-soft);
-            border-radius: 8px;
+        .tool-card:hover {
+            border-color: var(--accent-border);
+            background: var(--panel-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .tool-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 16px;
-            font-size: 1.25rem;
+            font-size: 1.4rem;
         }
 
-        .card h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
+        .tool-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-bright);
             margin-bottom: 8px;
         }
 
-        .card p {
+        .tool-card p {
             color: var(--muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            flex: 1;
         }
 
-        /* Quick Start */
-        .quickstart {
+        .tool-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .lang-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--muted);
+        }
+
+        .lang-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .lang-rust .lang-dot {
+            background: var(--rust);
+        }
+
+        .lang-typescript .lang-dot {
+            background: var(--typescript);
+        }
+
+        .lang-cpp .lang-dot {
+            background: var(--cpp);
+        }
+
+        .lang-html .lang-dot {
+            background: var(--html);
+        }
+
+        .tool-links {
+            display: flex;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        .tool-links a {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            transition: all 0.15s;
+        }
+
+        .tool-links a:hover {
+            color: var(--accent);
+            border-color: var(--accent-border);
+        }
+
+        /* Private badge */
+        .private-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--muted);
+            background: rgba(113, 113, 122, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* Tech section */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .tech-item {
             background: var(--panel);
             border: 1px solid var(--border);
             border-radius: 12px;
-            overflow: hidden;
+            padding: 20px;
+            text-align: center;
+            transition: border-color 0.2s;
         }
 
-        .quickstart-header {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border);
+        .tech-item:hover {
+            border-color: var(--accent-border);
+        }
+
+        .tech-item .tech-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .tech-item h4 {
+            font-size: 0.95rem;
             font-weight: 600;
-        }
-
-        .quickstart-steps {
-            padding: 24px;
-        }
-
-        .step {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .step:last-child {
-            margin-bottom: 0;
-        }
-
-        .step-number {
-            width: 28px;
-            height: 28px;
-            background: var(--accent);
-            color: #000;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-        }
-
-        .step-content h4 {
-            font-weight: 600;
+            color: var(--text-bright);
             margin-bottom: 4px;
         }
 
-        .step-content p {
+        .tech-item p {
+            font-size: 0.8rem;
             color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        /* Table */
-        .table-wrap {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            font-weight: 600;
-            color: var(--muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        td {
-            font-size: 0.95rem;
-        }
-
-        /* Requirements */
-        .requirements {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .req-group h4 {
-            font-weight: 600;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .req-group ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .req-group li {
-            padding: 8px 0;
-            color: var(--muted);
-            border-bottom: 1px solid var(--border);
-            font-size: 0.95rem;
-        }
-
-        .req-group li:last-child {
-            border-bottom: none;
         }
 
         /* Footer */
         footer {
             padding: 40px 0;
             text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        footer p {
             color: var(--muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         footer a {
             color: var(--muted);
+            font-weight: 500;
         }
 
         footer a:hover {
-            color: var(--text);
+            color: var(--text-bright);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
         }
 
         /* Responsive */
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2.25rem;
+                font-size: 2.5rem;
             }
 
-            .hero-stats {
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .stats {
                 gap: 24px;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
             }
 
             .hero-actions {
                 flex-direction: column;
+                align-items: center;
             }
 
             .btn {
                 width: 100%;
+                max-width: 280px;
                 justify-content: center;
             }
         }
@@ -398,355 +579,349 @@
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            "name": "QuickProbe",
-            "applicationCategory": "SystemAdministrationApplication",
-            "operatingSystem": "Windows 10, Windows 11, Windows Server 2012 R2+",
-            "description": "A free, open-source desktop application for system administrators to monitor Windows and Linux server health via WinRM and SSH, with one-click RDP launch and secure credential management.",
+            "@type": "WebSite",
+            "name": "Swatto",
             "url": "https://swatto.co.uk/",
-            "downloadUrl": "https://github.com/Swatto86/QuickProbe/releases",
+            "description": "Open-source desktop tools and utilities by Swatto. Built with Rust, Tauri, and modern web technologies.",
             "author": {
                 "@type": "Person",
-                "name": "Swatto"
-            },
-            "softwareVersion": "2.x",
-            "license": "MIT",
-            "isAccessibleForFree": true,
-            "offers": {
-                "@type": "Offer",
-                "price": "0"
+                "name": "Swatto",
+                "url": "https://github.com/Swatto86"
             }
         }
     </script>
 </head>
 
 <body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-inner">
+            <a href="/" class="nav-brand">
+                <img src="favicon.svg" alt="Swatto logo" />
+                Swatto
+            </a>
+            <ul class="nav-links">
+                <li><a href="#tools">Tools</a></li>
+                <li><a href="#tech">Tech Stack</a></li>
+                <li><a href="https://github.com/Swatto86">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <main>
+        <!-- Hero -->
         <section class="hero">
             <div class="container">
-                <div class="hero-badge">
-                    <span>🟢</span> Open Source • MIT License
-                </div>
-                <h1>QuickProbe</h1>
-                <p class="hero-subtitle">
-                    A lightweight desktop app for system administrators to monitor Windows and Linux servers.
-                    Check server health, launch RDP sessions, and manage your fleet—all from one place.
-                </p>
-                <div class="hero-actions">
-                    <a href="https://github.com/Swatto86/QuickProbe/releases" class="btn btn-primary">
-                        ⬇️ Download for Windows
-                    </a>
-                    <a href="https://github.com/Swatto86/QuickProbe" class="btn btn-secondary">
-                        View on GitHub
-                    </a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-value">WinRM + SSH</span>
-                        <span class="stat-label">Probe protocols</span>
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        &#9889; Open Source &bull; Built with Rust &amp; Tauri
                     </div>
+                    <h1>Desktop tools that <span>get things done</span></h1>
+                    <p class="hero-subtitle">
+                        A collection of lightweight, security-focused desktop applications
+                        for system administrators and power users. All built with modern technologies.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#tools" class="btn btn-primary">
+                            Explore Tools &#8595;
+                        </a>
+                        <a href="https://github.com/Swatto86" class="btn btn-secondary">
+                            View GitHub Profile
+                        </a>
+                    </div>
+                </div>
+                <div class="stats">
                     <div class="stat">
-                        <span class="stat-value">Windows & Linux</span>
-                        <span class="stat-label">Target platforms</span>
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Projects</div>
                     </div>
                     <div class="stat">
-                        <span class="stat-value">Local-first</span>
-                        <span class="stat-label">No cloud required</span>
+                        <div class="stat-value">Rust</div>
+                        <div class="stat-label">Primary Language</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">MIT</div>
+                        <div class="stat-label">Licensed</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">Local-first</div>
+                        <div class="stat-label">No Cloud Required</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="what">
+        <!-- Tools -->
+        <section id="tools">
             <div class="container">
-                <h2 class="section-title">What is QuickProbe?</h2>
-                <p class="section-desc">
-                    QuickProbe is a Windows desktop application built for IT administrators who need to quickly check
-                    server health
-                    and connect to remote machines. It uses WinRM (PowerShell Remoting) for Windows servers and SSH for
-                    Linux hosts.
-                </p>
-                <div class="cards">
-                    <div class="card">
-                        <div class="card-icon">🖥️</div>
-                        <h3>Real-time Health Probes</h3>
-                        <p>
-                            Get CPU, memory, disk, uptime, and service status from your servers in seconds.
-                            Automatic heartbeat checks keep your dashboard fresh.
-                        </p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🚀</div>
-                        <h3>One-click RDP Launch</h3>
-                        <p>
-                            Double-click any server card to launch an RDP session with your stored credentials.
-                            No more typing passwords repeatedly.
-                        </p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🔐</div>
-                        <h3>Secure Credentials</h3>
-                        <p>
-                            Credentials are stored in Windows Credential Manager (DPAPI encrypted).
-                            Nothing is stored in plaintext—ever.
-                        </p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">📂</div>
-                        <h3>Active Directory Scanning</h3>
-                        <p>
-                            Scan your domain via LDAP to automatically discover servers.
-                            Bulk import with smart merging preserves your existing notes and groups.
-                        </p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">💾</div>
-                        <h3>Local SQLite Storage</h3>
-                        <p>
-                            All data stays on your machine in a SQLite database. No cloud services,
-                            no internet required, no subscription fees.
-                        </p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🔄</div>
-                        <h3>Backup & Restore</h3>
-                        <p>
-                            Export your configuration as an AES-256 encrypted ZIP file.
-                            Migrate to a new machine or share with your team securely.
-                        </p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🎯</div>
-                        <h3>Single Instance</h3>
-                        <p>
-                            Only one instance of QuickProbe can run at a time. Launching again
-                            focuses the existing window—no duplicates, no confusion.
-                        </p>
-                    </div>
+                <div class="section-header">
+                    <h2 class="section-title">Tools &amp; Projects</h2>
+                    <p class="section-desc">
+                        Purpose-built desktop applications focused on performance, security, and simplicity.
+                    </p>
                 </div>
-            </div>
-        </section>
 
-        <section id="health">
-            <div class="container">
-                <h2 class="section-title">What does QuickProbe collect?</h2>
-                <p class="section-desc">
-                    QuickProbe runs remote commands via WinRM (Windows) or SSH (Linux) to gather system health data.
-                    Here's what you'll see on your dashboard:
-                </p>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Metric</th>
-                                <th>Windows (WinRM)</th>
-                                <th>Linux (SSH)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>OS Info</strong></td>
-                                <td>Version, hostname, domain</td>
-                                <td>Distro, kernel, hostname</td>
-                            </tr>
-                            <tr>
-                                <td><strong>CPU</strong></td>
-                                <td>Load % (normalized by cores)</td>
-                                <td>Load average</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Memory</strong></td>
-                                <td>Total / Used / Free</td>
-                                <td>Total / Used / Free</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Disk</strong></td>
-                                <td>All volumes with % free</td>
-                                <td>All mounts via <code>df</code></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Uptime</strong></td>
-                                <td>Hours since last boot</td>
-                                <td>Hours since last boot</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Services</strong></td>
-                                <td>Status of specified services</td>
-                                <td>Status via <code>systemctl</code></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Processes</strong></td>
-                                <td>Top CPU consumers</td>
-                                <td>Top CPU consumers via <code>ps</code></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Pending Reboot</strong></td>
-                                <td>Windows Update, CBS, file renames</td>
-                                <td>—</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Network</strong></td>
-                                <td>Adapters, IPs, firewall status</td>
-                                <td>—</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Event Logs</strong></td>
-                                <td>Recent errors from System/App logs</td>
-                                <td>—</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
+                <div class="tools-grid">
 
-        <section id="quickstart">
-            <div class="container">
-                <h2 class="section-title">Quick Start</h2>
-                <p class="section-desc">
-                    Get up and running in under 5 minutes.
-                </p>
-                <div class="quickstart">
-                    <div class="quickstart-header">Getting Started</div>
-                    <div class="quickstart-steps">
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <h4>Download and install</h4>
-                                <p>
-                                    Download the installer from GitHub Releases. Run it—no admin rights needed.
-                                    QuickProbe installs to your user profile.
-                                </p>
-                            </div>
+                    <!-- QuickProbe -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(34, 197, 94, 0.1);">&#128421;&#65039;</div>
+                            <span class="category-label cat-monitoring">Monitoring</span>
                         </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <h4>Enter your credentials</h4>
-                                <p>
-                                    On first launch, enter your domain credentials (e.g., <code>DOMAIN\username</code>).
-                                    These are stored securely in Windows Credential Manager.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <h4>Add your servers</h4>
-                                <p>
-                                    Add servers manually, or scan your Active Directory domain to import them
-                                    automatically.
-                                    Set the OS type (Windows/Linux) for each host.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">4</div>
-                            <div class="step-content">
-                                <h4>Monitor and connect</h4>
-                                <p>
-                                    Click "Refresh" to probe your servers. Double-click any card to launch RDP.
-                                    Use the dashboard filters to find servers with issues quickly.
-                                </p>
+                        <h3>QuickProbe</h3>
+                        <p>Lightweight desktop app for monitoring Windows and Linux servers. Real-time health probes via WinRM and SSH, one-click RDP launch, Active Directory scanning, and secure credential storage.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                            <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/QuickProbe">GitHub</a>
+                                <a href="https://github.com/Swatto86/QuickProbe/releases">Download</a>
                             </div>
                         </div>
                     </div>
+
+                    <!-- QuickConnect -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(59, 130, 246, 0.1);">&#128279;</div>
+                            <span class="category-label cat-monitoring">Monitoring</span>
+                        </div>
+                        <h3>QuickConnect</h3>
+                        <p>Fast RDP connection manager for system administrators. Secure credential storage, Active Directory integration, quick server search, and instant remote desktop connections.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-typescript"><span class="lang-dot"></span> TypeScript</span>
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Tauri</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/QuickConnect">GitHub</a>
+                                <a href="https://github.com/Swatto86/QuickConnect/releases">Download</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EventSleuth -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(249, 115, 22, 0.1);">&#128203;</div>
+                            <span class="category-label cat-analysis">Analysis</span>
+                        </div>
+                        <h3>EventSleuth</h3>
+                        <p>Fast, filterable Windows Event Log viewer &mdash; a modern alternative to Event Viewer. Background-threaded queries, virtual scrolling for 100k+ events, composable filters, and CSV/JSON export.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                            <span class="lang-tag" style="color: var(--muted);"><span class="lang-dot" style="background: #22c55e;"></span> egui</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/EventSleuth">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DiskSleuth -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(249, 115, 22, 0.1);">&#128191;</div>
+                            <span class="category-label cat-analysis">Analysis</span>
+                        </div>
+                        <h3>DiskSleuth</h3>
+                        <p>Fast, visual disk space analyser for Windows. Parallel scanning, SpaceSniffer-style treemap, NTFS MFT fast-scan, stale file finder, and top-N largest files &mdash; all in a single portable executable.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                            <span class="lang-tag" style="color: var(--muted);"><span class="lang-dot" style="background: #22c55e;"></span> egui</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/DiskSleuth">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BitBurn -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(239, 68, 68, 0.1);">&#128293;</div>
+                            <span class="category-label cat-security">Security</span>
+                        </div>
+                        <h3>BitBurn</h3>
+                        <p>Secure file and drive wiping utility with industry-standard erasure algorithms. Supports NIST 800-88, Gutmann 35-pass, and custom random passes with Explorer context menu integration.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                            <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/BitBurn">GitHub</a>
+                                <a href="https://github.com/Swatto86/BitBurn/releases">Download</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ChecksumCheck -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(239, 68, 68, 0.1);">&#9989;</div>
+                            <span class="category-label cat-security">Security</span>
+                        </div>
+                        <h3>ChecksumCheck</h3>
+                        <p>Cross-platform desktop app for calculating and verifying file checksums. Supports MD5, SHA1, SHA256, and SHA512 with drag-and-drop, one-click copying, and local-only processing.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-typescript"><span class="lang-dot"></span> TypeScript</span>
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Tauri</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/ChecksumCheck">GitHub</a>
+                                <a href="https://github.com/Swatto86/ChecksumCheck/releases">Download</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SwatNotes -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(168, 85, 247, 0.1);">&#128221;</div>
+                            <span class="category-label cat-productivity">Productivity</span>
+                        </div>
+                        <h3>SwatNotes</h3>
+                        <p>Production-grade desktop notes app with rich text editing, reminders, encrypted backups, clipboard image paste, global hotkeys, OneNote import, and 20+ themes. All data stays local.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                            <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/SwatNotes">GitHub</a>
+                                <a href="https://github.com/Swatto86/SwatNotes/releases">Download</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tea -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(59, 130, 246, 0.1);">&#9749;</div>
+                            <span class="category-label cat-utility">Utility</span>
+                        </div>
+                        <h3>Tea</h3>
+                        <p>Cross-platform system tray app that prevents your system from sleeping. Screen control modes for keeping the display on or allowing it to sleep, with start-at-login and minimal resource usage.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                            <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/Tea">GitHub</a>
+                                <a href="https://github.com/Swatto86/Tea/releases">Download</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QuickRun -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(59, 130, 246, 0.1);">&#128640;</div>
+                            <span class="category-label cat-utility">Utility</span>
+                        </div>
+                        <h3>QuickRun</h3>
+                        <p>Lightweight Windows Run-style launcher in the system tray. Global Alt+Space hotkey, PATH resolution, light and dark themes, auto-updates, and transparent borderless window.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                            <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/QuickRun">GitHub</a>
+                                <a href="https://github.com/Swatto86/QuickRun/releases">Download</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ps-launcher -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(168, 85, 247, 0.1);">&#9889;</div>
+                            <span class="category-label cat-utility">Utility</span>
+                        </div>
+                        <h3>ps-launcher</h3>
+                        <p>Minimal, secure PowerShell script launcher under 10KB. Runs scripts silently without console windows &mdash; ideal for Task Scheduler, login scripts, and background automation. Future-proof VBScript replacement.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-cpp"><span class="lang-dot"></span> C</span>
+                            <div class="tool-links">
+                                <a href="https://github.com/Swatto86/ps-launcher">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FSAnalyser (Private) -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(249, 115, 22, 0.1);">&#128202;</div>
+                            <span class="category-label cat-analysis">Analysis</span>
+                        </div>
+                        <h3>FSAnalyser</h3>
+                        <p>File server analysis tool that scans Windows file servers and produces detailed health reports. Covers storage usage, stale data, duplicate detection, permission auditing, and SharePoint migration readiness.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                            <span class="private-badge">&#128274; Private</span>
+                        </div>
+                    </div>
+
+                    <!-- SharedScope (Private) -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-icon" style="background: rgba(34, 197, 94, 0.1);">&#128269;</div>
+                            <span class="category-label cat-monitoring">Monitoring</span>
+                        </div>
+                        <h3>SharedScope</h3>
+                        <p>Internal network share monitoring and analysis tool. Provides visibility into shared resources, access patterns, and permission structures across the network.</p>
+                        <div class="tool-meta">
+                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                            <span class="private-badge">&#128274; Private</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
 
-        <section id="requirements">
+        <!-- Tech Stack -->
+        <section id="tech" style="background: var(--bg-secondary);">
             <div class="container">
-                <h2 class="section-title">Requirements</h2>
-                <p class="section-desc">
-                    What you need to run QuickProbe and probe your servers.
-                </p>
-                <div class="requirements">
-                    <div class="req-group">
-                        <h4>🖥️ Your Workstation</h4>
-                        <ul>
-                            <li>Windows 10/11 or Windows Server 2012 R2+</li>
-                            <li>PowerShell 5.1+ (included in Windows)</li>
-                            <li>Network access to target servers</li>
-                        </ul>
-                    </div>
-                    <div class="req-group">
-                        <h4>🪟 Windows Targets</h4>
-                        <ul>
-                            <li>WinRM enabled (<code>Enable-PSRemoting -Force</code>)</li>
-                            <li>Port 5985 (HTTP) or 5986 (HTTPS) open</li>
-                            <li>Admin credentials with remote access</li>
-                        </ul>
-                    </div>
-                    <div class="req-group">
-                        <h4>🐧 Linux Targets</h4>
-                        <ul>
-                            <li>SSH server running on port 22</li>
-                            <li>Standard utilities: <code>df</code>, <code>ps</code>, <code>systemctl</code></li>
-                            <li>User account with sudo access for full metrics</li>
-                        </ul>
-                    </div>
-                    <div class="req-group">
-                        <h4>🔐 Credentials</h4>
-                        <ul>
-                            <li>Domain account for Windows servers</li>
-                            <li>SSH credentials for Linux hosts</li>
-                            <li>Per-host overrides supported</li>
-                        </ul>
-                    </div>
+                <div class="section-header">
+                    <h2 class="section-title">Tech Stack</h2>
+                    <p class="section-desc">
+                        Built with modern, reliable technologies focused on performance and security.
+                    </p>
                 </div>
-            </div>
-        </section>
 
-        <section id="tech">
-            <div class="container">
-                <h2 class="section-title">Built With</h2>
-                <p class="section-desc">
-                    QuickProbe is built with modern, reliable technologies.
-                </p>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Component</th>
-                                <th>Technology</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Backend</strong></td>
-                                <td>Rust + Tauri 2.x</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Frontend</strong></td>
-                                <td>HTML/CSS/JavaScript + Tailwind CSS + DaisyUI</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Database</strong></td>
-                                <td>SQLite with WAL mode</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Windows Probes</strong></td>
-                                <td>WinRM via PowerShell Remoting</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Linux Probes</strong></td>
-                                <td>SSH via ssh2 crate</td>
-                            </tr>
-                            <tr>
-                                <td><strong>AD Scanning</strong></td>
-                                <td>LDAP via ldap3 crate</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Credentials</strong></td>
-                                <td>Windows Credential Manager (DPAPI)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Backups</strong></td>
-                                <td>AES-256 encrypted ZIP files</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <div class="tech-icon">&#129408;</div>
+                        <h4>Rust</h4>
+                        <p>Memory-safe systems programming</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">&#9881;&#65039;</div>
+                        <h4>Tauri 2.0</h4>
+                        <p>Lightweight desktop framework</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">&#127912;</div>
+                        <h4>egui</h4>
+                        <p>Immediate-mode native GUI</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">&#128216;</div>
+                        <h4>TypeScript</h4>
+                        <p>Type-safe frontend development</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">&#128190;</div>
+                        <h4>SQLite</h4>
+                        <p>Local-first data storage</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">&#128272;</div>
+                        <h4>AES-256</h4>
+                        <p>Industry-standard encryption</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">&#127760;</div>
+                        <h4>WinRM / SSH</h4>
+                        <p>Remote management protocols</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">&#127919;</div>
+                        <h4>React / Tailwind</h4>
+                        <p>Modern UI components</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -754,16 +929,15 @@
 
     <footer>
         <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/Swatto86">GitHub</a>
+                <a href="https://github.com/Swatto86?tab=repositories">All Repositories</a>
+            </div>
             <p>
-                <strong>QuickProbe</strong> is open source under the MIT License.
-                <br />
-                <a href="https://github.com/Swatto86/QuickProbe">GitHub</a> •
-                <a href="https://github.com/Swatto86/QuickProbe/issues">Report an Issue</a> •
-                Made by <a href="https://github.com/Swatto86">Swatto</a>
+                Built by <strong>Swatto</strong> &bull; Open source under MIT License
             </p>
         </div>
     </footer>
 </body>
-
 
 </html>
