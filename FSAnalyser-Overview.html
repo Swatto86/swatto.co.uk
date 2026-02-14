@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSAnalyser — File Server Analysis Tool</title>
+    <style>
+        :root {
+            --brand: #1e3a5f;
+            --accent: #2c5282;
+            --green: #28a745;
+            --amber: #e67e22;
+            --red: #dc3545;
+            --gray: #6c757d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #2d3748;
+            background: #f7fafc;
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--brand) 0%, var(--accent) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .header .badge {
+            display: inline-block;
+            margin-top: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        }
+
+        .section h2 {
+            color: var(--brand);
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .section h3 {
+            color: var(--accent);
+            font-size: 1.05rem;
+            margin: 1.2rem 0 0.5rem;
+        }
+
+        .section p {
+            margin-bottom: 0.8rem;
+        }
+
+        .section ul,
+        .section ol {
+            margin: 0.5rem 0 1rem 1.5rem;
+        }
+
+        .section li {
+            margin-bottom: 0.4rem;
+        }
+
+        .callout {
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .callout-green {
+            background: #d4edda;
+            border-left: 4px solid var(--green);
+        }
+
+        .callout-amber {
+            background: #fff3cd;
+            border-left: 4px solid var(--amber);
+        }
+
+        .callout-red {
+            background: #f8d7da;
+            border-left: 4px solid var(--red);
+        }
+
+        .callout-blue {
+            background: #cfe2ff;
+            border-left: 4px solid #0d6efd;
+        }
+
+        .callout strong {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 700px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .grid-item {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .grid-item .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .grid-item .title {
+            font-weight: 600;
+            color: var(--brand);
+            margin-bottom: 0.3rem;
+        }
+
+        .grid-item p {
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin: 0;
+        }
+
+        .report-preview {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .report-preview .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #edf2f7;
+            font-size: 0.92rem;
+        }
+
+        .report-preview .row:last-child {
+            border: none;
+        }
+
+        .report-preview .label {
+            color: var(--gray);
+        }
+
+        .report-preview .value {
+            font-weight: 600;
+            color: var(--brand);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin: 0.1rem 0.2rem;
+        }
+
+        .tag-green {
+            background: #d4edda;
+            color: var(--green);
+        }
+
+        .tag-amber {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .tag-red {
+            background: #f8d7da;
+            color: var(--red);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: #f7fafc;
+            text-align: left;
+            padding: 0.6rem 0.8rem;
+            font-weight: 600;
+            color: #4a5568;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        td {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .section {
+                box-shadow: none;
+                border: 1px solid #e2e8f0;
+                break-inside: avoid;
+            }
+
+            .header {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>FSAnalyser</h1>
+        <div class="subtitle">Windows File Server Analysis & Inventory Tool</div>
+        <div class="badge">Read-Only &bull; Non-Destructive &bull; Single Application &bull; Runs Locally on Each Server
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- ============================================================ -->
+        <div class="section">
+            <h2>What Is This?</h2>
+            <p>FSAnalyser is a lightweight analysis tool that scans Windows file servers and produces a detailed
+                report showing exactly what data exists, how it's organised, who has access, and where optimization
+                opportunities lie.</p>
+            <p>Think of it as a comprehensive inventory and health check. The output provides the facts needed
+                to plan migrations, security audits, storage optimization, and compliance reviews with complete
+                visibility into file server contents and permissions.</p>
+
+            <div class="callout callout-green">
+                <strong>🔒 Safety Guarantee</strong>
+                FSAnalyser operates in <strong>strict read-only mode</strong>. It does not modify, move, delete, or
+                lock any files or folders. It is a single application with a graphical interface — there is
+                nothing to install and nothing to uninstall afterwards. We simply copy it onto the server, run it,
+                and remove it when finished. Users will not notice it running.
+                It reads the same information that Windows Explorer reads when you browse a folder — just
+                faster and more systematically.
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <div class="section">
+            <h2>What Does It Actually Do?</h2>
+            <p>FSAnalyser is a single application with a point-and-click interface that runs <strong>directly on
+                    each file server</strong>. There is no remote scanning, no network overhead for file enumeration,
+                and
+                no agent or software to install. We copy the application onto the server, double-click to open it,
+                and the system <strong>automatically detects</strong> local drives, domain controller, and DFS
+                namespaces — pre-filling
+                the form so we can press Start immediately. The scan runs in up to eleven automated stages:
+
+            <div class="grid">
+                <div class="grid-item">
+                    <div class="icon">🖧</div>
+                    <div class="title">1. Discover Shares</div>
+                    <p>Finds every SMB share on the local server, including hidden shares (e.g. Finance$), and records
+                        who has share-level permissions.</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">🔗</div>
+                    <div class="title">2. Map DFS Namespaces</div>
+                    <p>Discovers all DFS links and where they point, identifying data that may be accessible via
+                        multiple paths.</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">📂</div>
+                    <div class="title">3. Inventory Every File</div>
+                    <p>Walks the entire folder tree recording file name, size, type, dates, and NTFS attributes
+                        (including EFS encryption and reparse point flags) for every item.</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">🔐</div>
+                    <div class="title">4. Read Security Permissions</div>
+                    <p>Reads the NTFS access control lists (ACLs) on every folder to understand exactly who can access
+                        what.</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">👥</div>
+                    <div class="title">5. Resolve AD Identities</div>
+                    <p>Looks up every user and group found in the permissions against Active Directory to get real names
+                        and group memberships. This is the only stage that generates network traffic (LDAP queries to a
+                        domain controller).</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">💚</div>
+                    <div class="title">6. Check Group Health</div>
+                    <p>Identifies security groups that have no enabled members — "dead groups" that grant access to
+                        nobody but clutter permissions.</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">🔓</div>
+                    <div class="title">7. Detect Open Files</div>
+                    <p>Uses the Windows Server API to identify files currently open by users. Helps plan migration
+                        cutover — open files may fail to copy. Requires running elevated (Administrator).</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">#️⃣</div>
+                    <div class="title">8. Content Hashing (optional)</div>
+                    <p>Reads file contents and computes SHA-256 hashes for exact duplicate detection. Only runs when
+                        the "Hash file contents" option is ticked. This is the only stage that reads file content.</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">📎</div>
+                    <div class="title">9. Alternate Data Streams (optional)</div>
+                    <p>Enumerates hidden NTFS alternate data streams attached to files. These are invisible in Explorer
+                        but consume space and will be lost during migration. Only runs when the
+                        "Scan Alternate Data Streams" option is ticked.</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">📊</div>
+                    <div class="title">10. Export Raw Data</div>
+                    <p>Produces CSV files for every dimension (shares, permissions, cold data, etc.) so the data can be
+                        loaded into Excel or Power BI.</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">📋</div>
+                    <div class="title">11. Generate Report</div>
+                    <p>Produces a self-contained HTML report with colour-coded charts, tables, and clear status
+                        indicators — no software needed to view it.</p>
+                </div>
+            </div>
+
+            <div class="callout callout-blue">
+                <strong>💡 Network Traffic</strong>
+                Because the tool runs locally on the file server, all file and folder enumeration is local disk I/O —
+                there is <strong>no SMB network traffic</strong>. The only network traffic is LDAP queries to
+                Active Directory during stages 5–6, which is lightweight (a few MB at most).
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <div class="section">
+            <h2>What Will the Report Show?</h2>
+            <p>The report is designed to answer the key questions that come up in every SharePoint migration planning
+                exercise:</p>
+
+            <h3>📐 How Much Data Do We Have?</h3>
+            <p>Total file count, folder count, and storage consumed — broken down by top-level folder, file type, and
+                file size range. You'll see at a glance which departments own the most data and what types of files
+                dominate (documents, images, executables, etc.).</p>
+
+            <div class="report-preview">
+                <div class="row"><span class="label">Total Items</span><span class="value">2,045,491</span></div>
+                <div class="row"><span class="label">Total Size</span><span class="value">357.9 GB</span></div>
+                <div class="row"><span class="label">Top file types</span><span class="value">.docx, .xlsx, .pdf, .pptx,
+                        .jpg, .png</span></div>
+            </div>
+
+            <h3>❄️ How Much of It Is Cold (Unused)?</h3>
+            <p>Files are grouped by how recently they were last modified: current (under 1 year), ageing (1–2 years),
+                stale (2–5 years), and archive (5+ years). A colour-coded stacked bar shows the split instantly. Cold
+                data is the single biggest opportunity — <strong>data that nobody has touched in years does not need to
+                    be migrated to premium SharePoint storage</strong>.</p>
+
+            <h3>📋 Are There Duplicates?</h3>
+            <p>The report identifies clusters of files that are likely duplicates (same file type and exact same file
+                size appearing 3 or more times). It calculates the total wasted storage and highlights the worst
+                offenders. When the "Hash file contents" option is ticked, the tool also performs
+                <strong>exact duplicate detection</strong> by computing SHA-256 hashes, confirming which files are
+                truly identical down to the byte.
+            </p>
+
+            <h3>🔒 Is There Unpublished Data?</h3>
+            <p>Not all data on a file server is necessarily shared with users. The report compares the folder structure
+                against SMB shares and DFS links, highlighting any top-level folders that are <strong>not accessible
+                    through any share or DFS path</strong>. This could be orphaned data, backup copies, or folders that
+                were removed from shares but never cleaned up.</p>
+
+            <h3>🔐 How Complex Are the Permissions?</h3>
+            <p>SharePoint handles permissions very differently from NTFS. The report shows how many distinct access
+                control lists exist across folders, flags folders with unusually high complexity (many unique permission
+                entries), and highlights where individual users have been given direct permissions instead of going
+                through groups — a pattern that is hard to migrate cleanly.</p>
+
+            <h3>💚 Are Our AD Groups Healthy?</h3>
+            <p>The report checks every security group referenced in the file server permissions and verifies it against
+                Active Directory. Groups with no enabled members ("dead groups") are flagged — these are groups that
+                appear in permissions but effectively grant access to nobody. Cleaning these up before migration
+                simplifies the permission model significantly.</p>
+
+            <h3>🖧 Share and DFS Overview</h3>
+            <p>A complete inventory of every SMB share (including hidden admin shares) and every DFS link, with their
+                paths and permissions, so you have a full picture of how users currently access the data.</p>
+
+            <h3>🎯 SharePoint Compatibility Check</h3>
+            <p>The report automatically flags files that would <strong>fail to upload to SharePoint</strong>:
+                paths exceeding 400 characters, illegal characters in names (<code># % * : &lt; &gt; ? |</code>),
+                blocked file extensions, and files exceeding 250 GB. Each issue is categorised by severity so
+                remediation can be prioritised.</p>
+
+            <h3>🔓 EFS Encrypted Files &amp; Reparse Points</h3>
+            <p>Files encrypted with NTFS EFS and items with reparse points (symbolic links, junction points) are
+                automatically detected from file attributes. EFS files cannot be migrated without decryption;
+                junctions and symlinks may cause data to be counted twice or create circular references.</p>
+
+            <h3>📡 Migration Bandwidth Estimation</h3>
+            <p>Based on the total data volume, the report estimates migration time at three speeds: LAN (1 Gbps),
+                WAN (100 Mbps), and SharePoint-throttled (~200 Mbps effective). This helps schedule realistic
+                cutover windows.</p>
+
+            <h3>📈 Data Churn &amp; User Activity</h3>
+            <p>The report analyses how recently files were modified (last 30 days, 90 days, 1 year) and provides
+                monthly modification trends. Highly active folders may need a delta-sync migration approach.
+                Where access timestamps are available, the report also shows user activity distribution.</p>
+
+            <h3>🗺️ Permission Mapping Suggestions</h3>
+            <p>For each top-level folder, the report analyses ACL complexity and suggests how it might map to
+                SharePoint permission levels — simple (single group), moderate (2–3 levels), or complex
+                (requiring manual flattening). This gives a starting point for permission planning.</p>
+
+            <h3>🔓 Open Files at Scan Time</h3>
+            <p>When run elevated, the report shows which files were locked/open by users at scan time, along with
+                the username and access type. These files need special handling during migration cutover.</p>
+
+            <h3>Overall Health Score</h3>
+            <p>The report header includes an overall health badge — <span class="tag tag-green">Healthy</span> <span
+                    class="tag tag-amber">Needs Attention</span> or <span class="tag tag-red">Critical</span> — based on
+                the percentage of cold data, duplicate waste, SharePoint compatibility issues, and dead groups found.
+            </p>
+        </div>
+
+        <!-- ============================================================ -->
+        <div class="section">
+            <h2>Key Savings Opportunities</h2>
+            <p>Based on typical file server assessments, the report will help quantify savings in these areas:</p>
+
+            <table>
+                <tr>
+                    <th>Opportunity</th>
+                    <th>Typical Savings</th>
+                    <th>How We Identify It</th>
+                </tr>
+                <tr>
+                    <td><strong>Cold data exclusion</strong></td>
+                    <td>30–60% of total storage</td>
+                    <td>Files not modified in 2+ years — archive or delete instead of migrating to SharePoint</td>
+                </tr>
+                <tr>
+                    <td><strong>Duplicate elimination</strong></td>
+                    <td>5–15% of total storage</td>
+                    <td>Same-size, same-type file clusters appearing across multiple folders</td>
+                </tr>
+                <tr>
+                    <td><strong>Orphaned/unpublished data</strong></td>
+                    <td>Varies</td>
+                    <td>Folders on disk that no user can reach via any share — often forgotten data</td>
+                </tr>
+                <tr>
+                    <td><strong>Permission simplification</strong></td>
+                    <td>Reduced migration effort</td>
+                    <td>Dead groups and direct user ACEs that can be cleaned up before migration</td>
+                </tr>
+                <tr>
+                    <td><strong>Empty files &amp; tiny files</strong></td>
+                    <td>Clutter reduction</td>
+                    <td>Zero-byte files and files under 1 KB that may be temporary or broken</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ============================================================ -->
+        <div class="section">
+            <h2>Safety &amp; Impact on Production</h2>
+
+            <div class="callout callout-green">
+                <strong>✅ What the tool DOES:</strong>
+                <ul style="margin-top:0.3rem;">
+                    <li>Reads file and folder metadata (name, size, dates, attributes) from local disk</li>
+                    <li>Reads NTFS security descriptors (permissions)</li>
+                    <li>Reads SMB share configurations and DFS namespace structures</li>
+                    <li>Queries Active Directory for user and group details (read-only lookups — the only network
+                        traffic)</li>
+                    <li>Detects currently open/locked files via Windows Server APIs (requires running as Administrator)
+                    </li>
+                    <li>Optionally reads file contents to compute hashes for exact duplicate detection</li>
+                    <li>Optionally enumerates NTFS alternate data streams</li>
+                    <li>Stores all findings in a local database and CSV exports on the same server</li>
+                </ul>
+            </div>
+
+            <div class="callout callout-red">
+                <strong>🚫 What the tool DOES NOT do:</strong>
+                <ul style="margin-top:0.3rem;">
+                    <li>Does not modify, move, rename, or delete any file or folder</li>
+                    <li>Does not change any permissions, shares, or DFS configuration</li>
+                    <li>Does not require installation — it is a single portable application</li>
+                    <li>Does not create any files or folders on the data volumes being scanned</li>
+                    <li>Does not lock files or prevent user access</li>
+                    <li>Does not modify Active Directory in any way</li>
+                    <li>Does not send data anywhere — all output is local files</li>
+                </ul>
+            </div>
+
+            <p><strong>Performance impact:</strong> Because the application runs locally, all file enumeration is
+                direct disk I/O with no network overhead. On our test dataset of 2 million files (358 GB), the full
+                inventory completed in under 35 seconds. The optional content hashing feature does read file contents,
+                which will generate sustained disk read activity — this is best scheduled outside business hours on busy
+                servers. All other stages have minimal I/O impact and are safe to run at any time.</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <div class="section">
+            <h2>Advanced Capabilities</h2>
+            <p>In addition to the core inventory, the following advanced analysis features are included and appear
+                automatically in the report:</p>
+
+            <table>
+                <tr>
+                    <th>Capability</th>
+                    <th>What It Does</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td><strong>SharePoint compatibility</strong></td>
+                    <td>Flags files with paths over 400 characters, illegal characters, blocked extensions, and
+                        files over 250 GB — everything that would fail a SharePoint upload.</td>
+                    <td><span class="tag tag-green">Included</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Content-based deduplication</strong></td>
+                    <td>SHA-256 hashing of file contents for exact duplicate detection. Confirms which files are
+                        truly identical, not just same-size. Enabled by ticking a checkbox in the application.</td>
+                    <td><span class="tag tag-green">Included (opt-in)</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Open/locked file detection</strong></td>
+                    <td>Detects files currently open by users at scan time, showing username and lock type.
+                        Helps plan migration cutover for actively-used files. Runs automatically when elevated.</td>
+                    <td><span class="tag tag-green">Included</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Permission mapping suggestions</strong></td>
+                    <td>Analyses ACL complexity per folder and suggests how NTFS permissions could map to
+                        SharePoint permission levels (simple / moderate / complex).</td>
+                    <td><span class="tag tag-green">Included</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Cross-server duplicate detection</strong></td>
+                    <td>After scanning both servers, a built-in comparison identifies files that
+                        are duplicated across servers by comparing content hashes.</td>
+                    <td><span class="tag tag-green">Included</span></td>
+                </tr>
+                <tr>
+                    <td><strong>EFS encrypted files</strong></td>
+                    <td>Automatically flags files with the NTFS encryption attribute set. These cannot be
+                        migrated without decryption by the key holder.</td>
+                    <td><span class="tag tag-green">Included</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Symbolic links &amp; junctions</strong></td>
+                    <td>Detects NTFS reparse points (junctions and symlinks) that could cause data to be
+                        counted twice or create circular references. SharePoint does not support these.</td>
+                    <td><span class="tag tag-green">Included</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Alternate Data Streams</strong></td>
+                    <td>Enumerates hidden NTFS data streams (e.g. Zone.Identifier, macOS resource forks).
+                        These consume space but will be lost during migration. Enabled by ticking a checkbox in the
+                        application.</td>
+                    <td><span class="tag tag-green">Included (opt-in)</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Bandwidth estimation</strong></td>
+                    <td>Estimates migration time at three speeds: LAN (1 Gbps), WAN (100 Mbps), and
+                        SharePoint-throttled (~200 Mbps). Helps schedule realistic cutover windows.</td>
+                    <td><span class="tag tag-green">Included</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Data churn rate</strong></td>
+                    <td>Analyses modification patterns (30-day, 90-day, yearly) with monthly trends.
+                        Highly active folders may need delta-sync migration rather than bulk copy.</td>
+                    <td><span class="tag tag-green">Included</span></td>
+                </tr>
+                <tr>
+                    <td><strong>User activity analysis</strong></td>
+                    <td>Shows access-time distribution when timestamps are available, identifying files
+                        that may be candidates for archiving rather than migration.</td>
+                    <td><span class="tag tag-green">Included</span></td>
+                </tr>
+            </table>
+
+            <div class="callout callout-green">
+                <strong>✅ All previously identified limitations have been addressed.</strong>
+                Every item from the original roadmap is now implemented and appears in the HTML report.
+                Optional features (content hashing, alternate data stream scanning) are enabled by ticking
+                a checkbox in the application, giving full control over scan duration and disk read activity.
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <div class="section">
+            <h2>How It Works in Practice</h2>
+            <ol>
+                <li><strong>We copy the application</strong> onto the file server. It is a single file — no installer,
+                    no dependencies, no .NET or Java runtime required.</li>
+                <li><strong>We right-click and choose "Run as Administrator"</strong> to ensure full
+                    access to NTFS security descriptors and the open-files API. The application opens and
+                    <strong>automatically
+                        detects the local environment</strong>: all fixed drives (C:\, D:\, etc.), the domain
+                    controller,
+                    and DFS namespace paths are pre-filled based on system configuration. No manual data entry is needed
+                    in most cases.
+                </li>
+                <li><strong>We tick any optional features we want</strong> (such as content hashing or alternate data
+                    stream
+                    scanning) and press Start. The scan runs automatically through all stages with a live
+                    progress display. Our test run across 2 million files completed in under 35 seconds. All I/O is
+                    local disk — no network traffic for file enumeration.</li>
+                <li><strong>All data stays on the server.</strong> The scan results (database, CSV exports,
+                    and HTML report) are written to an output folder on the server. We copy them off when done.</li>
+                <li><strong>We open the HTML report</strong> directly from the application, or in any web browser — no
+                    special software needed. The report button is right there on screen once the scan completes.</li>
+                <li><strong>We repeat for each file server</strong> (we have two), then optionally run a cross-server
+                    comparison to find duplicates spanning both servers.</li>
+                <li><strong>We use the findings</strong> to decide what to migrate, what to archive, and what to clean
+                    up — <em>before</em> incurring cloud storage costs.</li>
+            </ol>
+
+            <div class="callout callout-green">
+                <strong>🎯 Zero-Configuration Startup</strong>
+                The application automatically detects your local drives, domain controller, and DFS namespaces
+                on startup, pre-filling the form with sensible defaults. In most cases, you can simply press Start
+                without entering any information manually. Advanced options remain available for custom scenarios.
+            </div>
+
+            <div class="callout callout-amber">
+                <strong>🔑 Administrator Access</strong>
+                The application should be run as Administrator (right-click → "Run as administrator") on
+                each file server. This ensures it can read all NTFS security descriptors regardless of
+                file permissions, and detect which files are currently open by users. Without elevation, the
+                application still works but may miss some permission data and will skip open-file detection.
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <div class="section">
+            <h2>Next Steps</h2>
+            <ol>
+                <li>Approve the tool for read-only scanning of the two production file servers.</li>
+                <li>Schedule a maintenance window or agree to run during business hours (the core scan has minimal
+                    impact; optional content hashing is more I/O-intensive and can be scheduled separately).</li>
+                <li>Log in to each file server with a domain admin or local admin account, copy the application
+                    across, and run it as Administrator. No service account, installation, or special
+                    configuration is needed — it is a single file with a graphical interface.</li>
+                <li>Copy the output (database, CSV exports, and HTML report) off the server for review.</li>
+                <li>Review the reports together and agree on the migration scope, archiving strategy, and cleanup plan.
+                </li>
+            </ol>
+
+            <div class="callout callout-blue">
+                <strong>Questions?</strong>
+                This document is intended as a high-level overview. A full technical specification covering the scan
+                stages, database schema, and output formats is available on request.
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        FSAnalyser — File Server Analysis Tool &bull; Internal Use Only &bull; February 2026
+    </footer>
+
+</body>
+
+</html>
