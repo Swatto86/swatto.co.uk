@@ -286,9 +286,12 @@
                 visibility into file server contents and permissions.</p>
 
             <div class="callout callout-green">
-                <strong>🔒 Safety Guarantee</strong>
+                <strong>🔒 Safety Guarantee — Strictly Read-Only</strong>
                 FSAnalyser operates in <strong>strict read-only mode</strong>. It does not modify, move, delete, or
-                lock any files or folders. It is a single application with a graphical interface — there is
+                lock any files or folders. It does not write anything to the drives being scanned — all output
+                (database, CSV exports, and report) is written to a separate output folder that you choose.
+                The scanned data volumes are never altered in any way.
+                It is a single application with a graphical interface — there is
                 nothing to install and nothing to uninstall afterwards. We simply copy it onto the server, run it,
                 and remove it when finished. Users will not notice it running.
                 It reads the same information that Windows Explorer reads when you browse a folder — just
@@ -367,8 +370,8 @@
                 <div class="grid-item">
                     <div class="icon">📊</div>
                     <div class="title">10. Export Raw Data</div>
-                    <p>Produces CSV files for every dimension (shares, permissions, cold data, etc.) so the data can be
-                        loaded into Excel or Power BI.</p>
+                    <p>Produces up to 17 CSV files covering every dimension of the analysis so the data can be
+                        loaded into Excel or Power BI for further review.</p>
                 </div>
                 <div class="grid-item">
                     <div class="icon">📋</div>
@@ -383,6 +386,103 @@
                 Because the tool runs locally on the file server, all file and folder enumeration is local disk I/O —
                 there is <strong>no SMB network traffic</strong>. The only network traffic is LDAP queries to
                 Active Directory during stages 5–6, which is lightweight (a few MB at most).
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <div class="section">
+            <h2>CSV Exports — Raw Data for Excel &amp; Power BI</h2>
+            <p>In addition to the HTML report, FSAnalyser produces up to 17 individual CSV files containing the
+                full raw data behind every report section. These are designed for import into Excel, Power BI, or
+                any other analytics tool. Only CSVs with data are produced — empty exports are automatically skipped.
+            </p>
+
+            <table>
+                <tr>
+                    <th>CSV File</th>
+                    <th>Contents</th>
+                </tr>
+                <tr>
+                    <td><strong>cold_data_by_folder.csv</strong></td>
+                    <td>Top-level folder breakdown showing file count and size in each age band (current, 1–2 yr, 2–5
+                        yr, 5–7 yr, 7+ yr)</td>
+                </tr>
+                <tr>
+                    <td><strong>stale_files.csv</strong></td>
+                    <td>Individual files not modified in over 2 years — path, size, and last modified date</td>
+                </tr>
+                <tr>
+                    <td><strong>unpublished.csv</strong></td>
+                    <td>Top-level folders that are not accessible through any SMB share or DFS link</td>
+                </tr>
+                <tr>
+                    <td><strong>acl_complexity.csv</strong></td>
+                    <td>Folders ranked by permission complexity — unique ACE count, direct user grants, and inheritance
+                        status</td>
+                </tr>
+                <tr>
+                    <td><strong>principals.csv</strong></td>
+                    <td>Every domain user and group found in NTFS permissions, with AD display name and type</td>
+                </tr>
+                <tr>
+                    <td><strong>group_health.csv</strong></td>
+                    <td>AD group health analysis — total members, enabled members, and whether the group is effectively
+                        dead</td>
+                </tr>
+                <tr>
+                    <td><strong>duplicates.csv</strong></td>
+                    <td>Duplicate file clusters (same hash or same size+type), showing every file path and wasted bytes
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>compressed_files.csv</strong></td>
+                    <td>Every NTFS-compressed file — path, compressed size, and original size</td>
+                </tr>
+                <tr>
+                    <td><strong>file_types.csv</strong></td>
+                    <td>Complete file extension breakdown — extension, file count, and total size per type</td>
+                </tr>
+                <tr>
+                    <td><strong>folder_breakdown.csv</strong></td>
+                    <td>Storage consumed by each top-level folder — file count, folder count, and total size</td>
+                </tr>
+                <tr>
+                    <td><strong>sp_compatibility.csv</strong></td>
+                    <td>Every file that would fail a SharePoint upload — path, issue type (long path, illegal
+                        characters, blocked extension, oversized)</td>
+                </tr>
+                <tr>
+                    <td><strong>efs_files.csv</strong></td>
+                    <td>Every EFS-encrypted file — full path and size</td>
+                </tr>
+                <tr>
+                    <td><strong>reparse_points.csv</strong></td>
+                    <td>All symbolic links and junction points — path, type, and target</td>
+                </tr>
+                <tr>
+                    <td><strong>churn_by_month.csv</strong></td>
+                    <td>Monthly file modification counts and volume for trend analysis</td>
+                </tr>
+                <tr>
+                    <td><strong>permission_mapping.csv</strong></td>
+                    <td>Per-folder permission mapping suggestions for SharePoint migration (simple / moderate / complex)
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>open_files.csv</strong></td>
+                    <td>Files that were open/locked by users at scan time — path, username, and lock type</td>
+                </tr>
+                <tr>
+                    <td><strong>alternate_data_streams.csv</strong></td>
+                    <td>Hidden NTFS alternate data streams — host file path, stream name, and size</td>
+                </tr>
+            </table>
+
+            <div class="callout callout-blue">
+                <strong>💡 Tip</strong>
+                CSV files use UTF-8 encoding with a BOM header for reliable opening in Excel. Each file has
+                column headers in the first row. Files are only created when data exists — you won't see
+                empty CSV files cluttering the output folder.
             </div>
         </div>
 
@@ -475,6 +575,13 @@
                     class="tag tag-amber">Needs Attention</span> or <span class="tag tag-red">Critical</span> — based on
                 the percentage of cold data, duplicate waste, SharePoint compatibility issues, and dead groups found.
             </p>
+
+            <div class="callout callout-blue">
+                <strong>📊 Example Report</strong>
+                See a complete example of the HTML report produced by FSAnalyser:
+                <a href="https://swatto.co.uk/FSAnalyser-ReportExample.html" target="_blank" rel="noopener"
+                    style="color:#0d6efd; font-weight:600;">View Example Report →</a>
+            </div>
         </div>
 
         <!-- ============================================================ -->
@@ -539,13 +646,14 @@
             <div class="callout callout-red">
                 <strong>🚫 What the tool DOES NOT do:</strong>
                 <ul style="margin-top:0.3rem;">
-                    <li>Does not modify, move, rename, or delete any file or folder</li>
+                    <li>Does not modify, move, rename, or delete any file or folder — <strong>100% read-only</strong>
+                    </li>
+                    <li>Does not write anything to the drives being scanned — all output goes to a separate folder</li>
                     <li>Does not change any permissions, shares, or DFS configuration</li>
                     <li>Does not require installation — it is a single portable application</li>
-                    <li>Does not create any files or folders on the data volumes being scanned</li>
                     <li>Does not lock files or prevent user access</li>
-                    <li>Does not modify Active Directory in any way</li>
-                    <li>Does not send data anywhere — all output is local files</li>
+                    <li>Does not modify Active Directory in any way — only read-only LDAP lookups</li>
+                    <li>Does not send data anywhere — all output is local files on the server</li>
                 </ul>
             </div>
 
