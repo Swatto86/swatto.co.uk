@@ -57,7 +57,7 @@ For detailed information about each tool, visit the [live site](https://swatto.c
 |------------|--------|--------|
 | QuickProbe | ✅ | Complete |
 | QuickConnect | ✅ | Complete |
-| EventSleuth | ⚠️ | Missing README |
+| EventSleuth | 📝 | Template Available |
 | DiskSleuth | ✅ | Complete |
 | BitBurn | ✅ | Complete |
 | ChecksumCheck | ✅ | Complete |
@@ -66,11 +66,11 @@ For detailed information about each tool, visit the [live site](https://swatto.c
 | QuickRun | ✅ | Complete |
 | HandleHunter | ✅ | Complete |
 | LockSmith | ✅ | Complete |
-| PSTInsight | ⚠️ | Missing README |
+| PSTInsight | 📝 | Template Available |
 | SwatCrypt | ✅ | Complete |
 | ps-launcher | ✅ | Complete |
 
-**Note**: EventSleuth and PSTInsight repositories require README files to be added.
+**Note**: EventSleuth and PSTInsight have comprehensive README templates available in [`docs/readme-templates/`](docs/readme-templates/) that can be copied to their respective repositories.
 
 ## Local Development
 
