@@ -1099,9 +1099,9 @@
             if (donateBtn && donateBtn.href.includes('YOUR_BUTTON_ID')) {
                 donateBtn.style.opacity = '0.5';
                 donateBtn.style.cursor = 'not-allowed';
+                donateBtn.title = 'PayPal donate button not configured yet. See README for setup instructions.';
                 donateBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    alert('PayPal donate button not configured yet. Please see the README for setup instructions.');
                 });
             }
         });
