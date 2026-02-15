@@ -123,7 +123,7 @@
             border-left: 4px solid #0d6efd;
         }
 
-        .callout strong {
+        .callout>strong:first-child {
             display: block;
             margin-bottom: 0.3rem;
         }
@@ -278,23 +278,22 @@
         <!-- ============================================================ -->
         <div class="section">
             <h2>What Is This?</h2>
-            <p>I built FSAnalyser as a lightweight analysis tool that scans Windows file servers and produces a detailed
-                report showing exactly what data exists, how it's organised, who has access, and where optimization
-                opportunities lie.</p>
-            <p>I position it as a comprehensive inventory and health check. The output provides the facts needed
+            <p>FSAnalyser is a lightweight analysis tool that scans Windows file servers and produces a detailed
+                report showing what data exists, how it is organised, who has access, and where optimization
+                opportunities exist.</p>
+            <p>It functions as a comprehensive inventory and health check. The output provides the evidence needed
                 to plan migrations, security audits, storage optimization, and compliance reviews with complete
                 visibility into file server contents and permissions.</p>
 
             <div class="callout callout-green">
                 <strong>🔒 Safety Guarantee — Strictly Read-Only</strong>
-                I built FSAnalyser to operate in <strong>strict read-only mode</strong>. It does not modify, move,
-                delete, or
+                FSAnalyser operates in <strong>strict read-only mode</strong>. It does not modify, move, delete, or
                 lock any files or folders. It does not write anything to the drives being scanned — all output
                 (database, CSV exports, and report) is written to a separate output folder that you choose.
                 The scanned data volumes are never altered in any way.
                 It is a single application with a graphical interface — there is
-                nothing to install and nothing to uninstall afterwards. I simply copy it onto the server, run it,
-                and remove it when finished. In metadata-only mode the impact is typically low; optional content
+                nothing to install and nothing to uninstall afterwards. In metadata-only mode the impact is typically
+                low; optional content
                 hashing is more I/O intensive and is best scheduled off-peak.
                 It reads the same information that Windows Explorer reads when you browse a folder — just
                 faster and more systematically.
@@ -304,14 +303,13 @@
         <!-- ============================================================ -->
         <div class="section">
             <h2>What Does It Actually Do?</h2>
-            <p>I deliver FSAnalyser as a single application with a point-and-click interface that runs <strong>directly
+            <p>FSAnalyser is delivered as a single application with a point-and-click interface that runs
+                <strong>directly
                     on
                     each file server</strong>. There is no remote scanning, no network overhead for file enumeration,
-                and
-                no agent or software to install. I copy the application onto the server, double-click to open it,
-                and the system <strong>automatically detects</strong> local drives, domain controller, and DFS
-                namespaces — pre-filling
-                the form so I can press Start immediately. The scan runs in up to eleven automated stages:
+                and no agent or software to install. The system <strong>automatically detects</strong> local drives,
+                domain controller, and DFS namespaces — pre-filling the form for immediate execution. The scan runs
+                in up to eleven automated stages:
 
             <div class="grid">
                 <div class="grid-item">
@@ -386,7 +384,7 @@
 
             <div class="callout callout-blue">
                 <strong>💡 Network Traffic</strong>
-                Because my tool runs locally on the file server, all file and folder enumeration is local disk I/O —
+                Because FSAnalyser runs locally on the file server, all file and folder enumeration is local disk I/O —
                 there is <strong>no SMB network traffic</strong>. The only network traffic is LDAP queries to
                 Active Directory during stages 5–6, which is lightweight (a few MB at most).
             </div>
@@ -718,7 +716,7 @@
         <!-- ============================================================ -->
         <div class="section">
             <h2>Estimated Runtime by Data Volume (TB)</h2>
-            <p>For approval planning, the key point is that runtime is driven by <strong>file count and disk
+            <p>The key point is that runtime is driven by <strong>file count and disk
                     throughput</strong>
                 more than TB alone. Many small files take longer than fewer large files, even at the same total TB.</p>
 
@@ -807,9 +805,11 @@
                 </tr>
                 <tr>
                     <td><strong>Cross-server duplicate detection</strong></td>
-                    <td>After scanning both servers, a built-in comparison identifies files that
-                        are duplicated across servers by comparing content hashes.</td>
-                    <td><span class="tag tag-green">Included</span></td>
+                    <td>Compares two completed scan databases and identifies duplicates across servers by matching
+                        content hashes. Available via the CLI <strong>compare-db</strong> command, which generates
+                        <strong>cross_server_duplicates.csv</strong> and <strong>cross_server_duplicates.html</strong>.
+                    </td>
+                    <td><span class="tag tag-green">Included (CLI)</span></td>
                 </tr>
                 <tr>
                     <td><strong>EFS encrypted files</strong></td>
@@ -868,11 +868,11 @@
 
         <!-- ============================================================ -->
         <div class="section">
-            <h2>How I Run It in Practice</h2>
+            <h2>Typical Runtime Workflow</h2>
             <ol>
-                <li><strong>I copy the application</strong> onto the file server. It is a single file — no installer,
+                <li><strong>Copy the application</strong> onto the file server. It is a single file — no installer,
                     no dependencies, no .NET or Java runtime required.</li>
-                <li><strong>I right-click and choose "Run as Administrator"</strong> to ensure full
+                <li><strong>Right-click and choose "Run as Administrator"</strong> to ensure full
                     access to NTFS security descriptors and the open-files API. The application opens and
                     <strong>automatically
                         detects the local environment</strong>: all fixed drives (C:\, D:\, etc.), the domain
@@ -880,7 +880,7 @@
                     and DFS namespace paths are pre-filled based on system configuration. No manual data entry is needed
                     in most cases.
                 </li>
-                <li><strong>I tick any optional features I want</strong> (such as content hashing or alternate data
+                <li><strong>Select any optional features</strong> (such as content hashing or alternate data
                     stream
                     scanning) and press Start. The scan runs automatically through all stages with a live
                     progress display. <strong>Stop</strong> and <strong>Pause</strong> buttons are always available
@@ -895,12 +895,14 @@
                     local disk — no network traffic for file enumeration.
                 </li>
                 <li><strong>All data stays on the server.</strong> The scan results (database, CSV exports,
-                    and HTML report) are written to an output folder on the server. I copy them off when done.</li>
-                <li><strong>I open the HTML report</strong> directly from the application, or in any web browser — no
+                    and HTML report) are written to an output folder on the server for later collection.</li>
+                <li><strong>Open the HTML report</strong> directly from the application, or in any web browser — no
                     special software needed. The report button is right there on screen once the scan completes.</li>
-                <li><strong>I repeat for each file server</strong>, then optionally run a cross-server
-                    comparison to find duplicates spanning environments.</li>
-                <li><strong>I use the findings</strong> to decide what to migrate, what to archive, and what to clean
+                <li><strong>Repeat for each file server</strong>, then optionally run
+                    <strong>compare-db</strong> in the CLI to find duplicates spanning environments.
+                    This generates a dedicated cross-server CSV and HTML report.
+                </li>
+                <li><strong>Use the findings</strong> to decide what to migrate, what to archive, and what to clean
                     up — <em>before</em> incurring cloud storage costs.</li>
             </ol>
 
@@ -924,7 +926,7 @@
         <div class="section">
             <h2>Next Steps</h2>
             <ol>
-                <li>Approve the tool for read-only scanning of production file servers.</li>
+                <li>Identify the file servers to scan and the output folder location for each run.</li>
                 <li>Schedule a maintenance window or agree to run during business hours (the core scan has minimal
                     impact; optional content hashing is more I/O-intensive and can be scheduled separately).</li>
                 <li>Log in to each file server with a domain admin or local admin account, copy the application
