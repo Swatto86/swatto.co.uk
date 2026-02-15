@@ -562,6 +562,32 @@
             margin-bottom: 16px;
         }
 
+        .donate-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: var(--accent);
+            color: var(--bg);
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .donate-button:hover {
+            background: var(--accent-hover);
+            color: var(--bg);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(34, 211, 238, 0.3);
+        }
+
+        .donate-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -1040,6 +1066,15 @@
 
     <footer>
         <div class="container">
+            <!-- PayPal Donate Button
+                 Configured with PayPal.me link: https://paypal.me/swattocouk
+            -->
+            <a href="https://paypal.me/swattocouk" class="donate-button" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                Donate via PayPal
+            </a>
             <div class="footer-links">
                 <a href="https://github.com/Swatto86">GitHub</a>
                 <a href="https://github.com/Swatto86?tab=repositories">All Repositories</a>
@@ -1049,6 +1084,21 @@
             </p>
         </div>
     </footer>
+
+    <script>
+        // Disable donate button if placeholder ID hasn't been replaced
+        document.addEventListener('DOMContentLoaded', function() {
+            const donateBtn = document.querySelector('.donate-button');
+            if (donateBtn && donateBtn.href.includes('YOUR_BUTTON_ID')) {
+                donateBtn.style.opacity = '0.5';
+                donateBtn.style.cursor = 'not-allowed';
+                donateBtn.title = 'PayPal donate button not configured yet. See README for setup instructions.';
+                donateBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

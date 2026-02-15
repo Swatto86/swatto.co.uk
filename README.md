@@ -87,6 +87,31 @@ python -m http.server 8000
 # Then navigate to http://localhost:8000
 ```
 
+## PayPal Donate Button Setup
+
+The site includes a PayPal donate button in the footer. To activate it:
+
+1. **Create a PayPal Donate Button:**
+   - Visit [https://www.paypal.com/donate/buttons](https://www.paypal.com/donate/buttons)
+   - Sign in to your PayPal account
+   - Create a new donate button
+   - Customize the button settings as desired
+
+2. **Get the Button ID:**
+   - After creating the button, PayPal will provide HTML code
+   - Look for the `hosted_button_id` parameter in the generated link
+   - Copy this ID
+
+3. **Update index.html:**
+   - Open `index.html`
+   - Find the donate button link in the footer section
+   - Replace `YOUR_BUTTON_ID` with your actual button ID
+
+**Alternative:** Use PayPal.me link:
+```html
+<a href="https://www.paypal.com/paypalme/YourUsername" class="donate-button" ...>
+```
+
 ## Deployment
 
 Changes pushed to the main branch are automatically deployed to [swatto.co.uk](https://swatto.co.uk) via GitHub Pages.
