@@ -404,12 +404,27 @@
 
         .tool-meta {
             display: flex;
-            align-items: center;
-            gap: 12px;
+            flex-direction: column;
+            gap: 10px;
             margin-top: 16px;
             padding-top: 16px;
             border-top: 1px solid var(--border);
+        }
+
+        .lang-tags {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             flex-wrap: wrap;
+        }
+
+        .lang-tags::before {
+            content: "Built with:";
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .lang-tag {
@@ -450,7 +465,7 @@
         .tool-links {
             display: flex;
             gap: 12px;
-            margin-left: auto;
+            justify-content: center;
         }
 
         .tool-links a {
@@ -677,8 +692,10 @@
                         <h3>QuickProbe</h3>
                         <p>Lightweight desktop app for monitoring Windows and Linux servers. Real-time health probes via WinRM and SSH, one-click RDP launch, Active Directory scanning, and secure credential storage.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
-                            <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                                <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/QuickProbe">GitHub</a>
                                 <a href="https://github.com/Swatto86/QuickProbe/releases">Download</a>
@@ -695,8 +712,10 @@
                         <h3>QuickConnect</h3>
                         <p>Fast RDP connection manager for system administrators. Secure credential storage, Active Directory integration, quick server search, and instant remote desktop connections.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-typescript"><span class="lang-dot"></span> TypeScript</span>
-                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Tauri</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-typescript"><span class="lang-dot"></span> TypeScript</span>
+                                <span class="lang-tag lang-rust"><span class="lang-dot"></span> Tauri</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/QuickConnect">GitHub</a>
                                 <a href="https://github.com/Swatto86/QuickConnect/releases">Download</a>
@@ -713,8 +732,10 @@
                         <h3>EventSleuth</h3>
                         <p>Fast, filterable Windows Event Log viewer &mdash; a modern alternative to Event Viewer. Background-threaded queries, virtual scrolling for 100k+ events, composable filters, and CSV/JSON export.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
-                            <span class="lang-tag" style="color: var(--muted);"><span class="lang-dot" style="background: #22c55e;"></span> egui</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                                <span class="lang-tag" style="color: var(--muted);"><span class="lang-dot" style="background: #22c55e;"></span> egui</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/EventSleuth">GitHub</a>
                                 <a href="https://github.com/Swatto86/EventSleuth/releases">Download</a>
@@ -731,8 +752,10 @@
                         <h3>DiskSleuth</h3>
                         <p>Fast, visual disk space analyser for Windows. Parallel scanning, SpaceSniffer-style treemap, NTFS MFT fast-scan, stale file finder, and top-N largest files &mdash; all in a single portable executable.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
-                            <span class="lang-tag" style="color: var(--muted);"><span class="lang-dot" style="background: #22c55e;"></span> egui</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                                <span class="lang-tag" style="color: var(--muted);"><span class="lang-dot" style="background: #22c55e;"></span> egui</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/DiskSleuth">GitHub</a>
                                 <a href="https://github.com/Swatto86/DiskSleuth/releases">Download</a>
@@ -749,8 +772,10 @@
                         <h3>BitBurn</h3>
                         <p>Secure file and drive wiping utility with industry-standard erasure algorithms. Supports NIST 800-88, Gutmann 35-pass, and custom random passes with Explorer context menu integration.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
-                            <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                                <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/BitBurn">GitHub</a>
                                 <a href="https://github.com/Swatto86/BitBurn/releases">Download</a>
@@ -767,8 +792,10 @@
                         <h3>ChecksumCheck</h3>
                         <p>Cross-platform desktop app for calculating and verifying file checksums. Supports MD5, SHA1, SHA256, and SHA512 with drag-and-drop, one-click copying, and local-only processing.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-typescript"><span class="lang-dot"></span> TypeScript</span>
-                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Tauri</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-typescript"><span class="lang-dot"></span> TypeScript</span>
+                                <span class="lang-tag lang-rust"><span class="lang-dot"></span> Tauri</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/ChecksumCheck">GitHub</a>
                                 <a href="https://github.com/Swatto86/ChecksumCheck/releases">Download</a>
@@ -785,8 +812,10 @@
                         <h3>SwatNotes</h3>
                         <p>Production-grade desktop notes app with rich text editing, reminders, encrypted backups, clipboard image paste, global hotkeys, OneNote import, and 20+ themes. All data stays local.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
-                            <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                                <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/SwatNotes">GitHub</a>
                                 <a href="https://github.com/Swatto86/SwatNotes/releases">Download</a>
@@ -803,8 +832,10 @@
                         <h3>Tea</h3>
                         <p>Cross-platform system tray app that prevents your system from sleeping. Screen control modes for keeping the display on or allowing it to sleep, with start-at-login and minimal resource usage.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
-                            <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                                <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/Tea">GitHub</a>
                                 <a href="https://github.com/Swatto86/Tea/releases">Download</a>
@@ -821,8 +852,10 @@
                         <h3>QuickRun</h3>
                         <p>Lightweight Windows Run-style launcher in the system tray. Global Alt+Space hotkey, PATH resolution, light and dark themes, auto-updates, and transparent borderless window.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
-                            <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                                <span class="lang-tag lang-html"><span class="lang-dot"></span> Tauri</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/QuickRun">GitHub</a>
                                 <a href="https://github.com/Swatto86/QuickRun/releases">Download</a>
@@ -839,7 +872,9 @@
                         <h3>ps-launcher</h3>
                         <p>Minimal, secure PowerShell script launcher under 10KB. Runs scripts silently without console windows &mdash; ideal for Task Scheduler, login scripts, and background automation. Future-proof VBScript replacement.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-cpp"><span class="lang-dot"></span> C</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-cpp"><span class="lang-dot"></span> C</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/ps-launcher">GitHub</a>
                                 <a href="https://github.com/Swatto86/ps-launcher/releases">Download</a>
@@ -856,8 +891,10 @@
                         <h3>SwatCrypt</h3>
                         <p>XChaCha20-Poly1305 file encryption with Argon2id key derivation. Encrypts single or multiple files/folders into a single <code>.swc</code> bundle with optional gzip compression, tamper detection via AEAD, and Explorer context menu integration.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
-                            <span class="lang-tag" style="color: var(--muted);"><span class="lang-dot" style="background: #22c55e;"></span> egui</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                                <span class="lang-tag" style="color: var(--muted);"><span class="lang-dot" style="background: #22c55e;"></span> egui</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/SwatCrypt">GitHub</a>
                                 <a href="https://github.com/Swatto86/SwatCrypt/releases">Download</a>
@@ -874,8 +911,10 @@
                         <h3>LockSmith</h3>
                         <p>Lightweight Windows utility for viewing and managing file locks. Identifies and force-releases file handles to resolve &ldquo;file in use&rdquo; errors, with search, multi-select, sortable columns, and dark/light themes.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
-                            <span class="lang-tag" style="color: var(--muted);"><span class="lang-dot" style="background: #22c55e;"></span> egui</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                                <span class="lang-tag" style="color: var(--muted);"><span class="lang-dot" style="background: #22c55e;"></span> egui</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/LockSmith">GitHub</a>
                                 <a href="https://github.com/Swatto86/LockSmith/releases">Download</a>
@@ -892,7 +931,9 @@
                         <h3>HandleHunter</h3>
                         <p>Lightweight Windows utility for managing file locks, built with pure C and Win32 API. Auto-detects system theme, supports multi-select lock release, real-time search filtering, and DPI-aware rendering at just ~134KB.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-cpp"><span class="lang-dot"></span> C</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-cpp"><span class="lang-dot"></span> C</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/HandleHunter">GitHub</a>
                                 <a href="https://github.com/Swatto86/HandleHunter/releases">Download</a>
@@ -909,7 +950,9 @@
                         <h3>PSTInsight</h3>
                         <p>Desktop application for viewing and exporting emails from Outlook PST files. Built with C# and WPF, featuring a dark theme, folder tree navigation, and email content preview without requiring Outlook installed.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-csharp"><span class="lang-dot"></span> C#</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-csharp"><span class="lang-dot"></span> C#</span>
+                            </div>
                             <div class="tool-links">
                                 <a href="https://github.com/Swatto86/PSTInsight">GitHub</a>
                                 <a href="https://github.com/Swatto86/PSTInsight/releases">Download</a>
@@ -926,8 +969,10 @@
                         <h3>FSAnalyser</h3>
                         <p>File server analysis tool that scans Windows file servers and produces detailed health reports. Covers storage usage, stale data, duplicate detection, permission auditing, and SharePoint migration readiness.</p>
                         <div class="tool-meta">
-                            <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
-                            <span class="private-badge">&#128274; Private</span>
+                            <div class="lang-tags" aria-label="Built with">
+                                <span class="lang-tag lang-rust"><span class="lang-dot"></span> Rust</span>
+                                <span class="private-badge">&#128274; Private</span>
+                            </div>
                         </div>
                     </div>
 
