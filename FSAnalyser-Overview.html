@@ -278,22 +278,24 @@
         <!-- ============================================================ -->
         <div class="section">
             <h2>What Is This?</h2>
-            <p>FSAnalyser is a lightweight analysis tool that scans Windows file servers and produces a detailed
+            <p>I built FSAnalyser as a lightweight analysis tool that scans Windows file servers and produces a detailed
                 report showing exactly what data exists, how it's organised, who has access, and where optimization
                 opportunities lie.</p>
-            <p>Think of it as a comprehensive inventory and health check. The output provides the facts needed
+            <p>I position it as a comprehensive inventory and health check. The output provides the facts needed
                 to plan migrations, security audits, storage optimization, and compliance reviews with complete
                 visibility into file server contents and permissions.</p>
 
             <div class="callout callout-green">
                 <strong>🔒 Safety Guarantee — Strictly Read-Only</strong>
-                FSAnalyser operates in <strong>strict read-only mode</strong>. It does not modify, move, delete, or
+                I built FSAnalyser to operate in <strong>strict read-only mode</strong>. It does not modify, move,
+                delete, or
                 lock any files or folders. It does not write anything to the drives being scanned — all output
                 (database, CSV exports, and report) is written to a separate output folder that you choose.
                 The scanned data volumes are never altered in any way.
                 It is a single application with a graphical interface — there is
-                nothing to install and nothing to uninstall afterwards. We simply copy it onto the server, run it,
-                and remove it when finished. Users will not notice it running.
+                nothing to install and nothing to uninstall afterwards. I simply copy it onto the server, run it,
+                and remove it when finished. In metadata-only mode the impact is typically low; optional content
+                hashing is more I/O intensive and is best scheduled off-peak.
                 It reads the same information that Windows Explorer reads when you browse a folder — just
                 faster and more systematically.
             </div>
@@ -302,13 +304,14 @@
         <!-- ============================================================ -->
         <div class="section">
             <h2>What Does It Actually Do?</h2>
-            <p>FSAnalyser is a single application with a point-and-click interface that runs <strong>directly on
+            <p>I deliver FSAnalyser as a single application with a point-and-click interface that runs <strong>directly
+                    on
                     each file server</strong>. There is no remote scanning, no network overhead for file enumeration,
                 and
-                no agent or software to install. We copy the application onto the server, double-click to open it,
+                no agent or software to install. I copy the application onto the server, double-click to open it,
                 and the system <strong>automatically detects</strong> local drives, domain controller, and DFS
                 namespaces — pre-filling
-                the form so we can press Start immediately. The scan runs in up to eleven automated stages:
+                the form so I can press Start immediately. The scan runs in up to eleven automated stages:
 
             <div class="grid">
                 <div class="grid-item">
@@ -370,7 +373,7 @@
                 <div class="grid-item">
                     <div class="icon">📊</div>
                     <div class="title">10. Export Raw Data</div>
-                    <p>Produces up to 17 CSV files covering every dimension of the analysis so the data can be
+                    <p>Produces up to 21 CSV files covering every dimension of the analysis so the data can be
                         loaded into Excel or Power BI for further review.</p>
                 </div>
                 <div class="grid-item">
@@ -383,7 +386,7 @@
 
             <div class="callout callout-blue">
                 <strong>💡 Network Traffic</strong>
-                Because the tool runs locally on the file server, all file and folder enumeration is local disk I/O —
+                Because my tool runs locally on the file server, all file and folder enumeration is local disk I/O —
                 there is <strong>no SMB network traffic</strong>. The only network traffic is LDAP queries to
                 Active Directory during stages 5–6, which is lightweight (a few MB at most).
             </div>
@@ -391,8 +394,54 @@
 
         <!-- ============================================================ -->
         <div class="section">
-            <h2>CSV Exports — Raw Data for Excel &amp; Power BI</h2>
-            <p>In addition to the HTML report, FSAnalyser produces up to 17 individual CSV files containing the
+            <h2>Scan Control &mdash; Stop, Pause &amp; Resume</h2>
+            <p>FSAnalyser provides full control over long-running scans, making it practical for very large
+                file servers where a complete scan may take minutes or hours:</p>
+
+            <div class="grid">
+                <div class="grid-item">
+                    <div class="icon">&#x23F9;&#xFE0F;</div>
+                    <div class="title">Immediate Stop</div>
+                    <p>The Stop button cancels the scan within seconds. All data collected so far is safely
+                        committed to the database &mdash; nothing is lost. Workers across all parallel threads
+                        respond cooperatively to the cancel signal.</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">&#x23F8;&#xFE0F;</div>
+                    <div class="title">Pause &amp; Resume</div>
+                    <p>The Pause button temporarily suspends all scan activity. Worker threads block safely
+                        until Resume is pressed. Useful for reducing disk I/O during busy periods, then
+                        continuing without restarting.</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">&#x1F504;</div>
+                    <div class="title">Resume on Restart</div>
+                    <p>If the scan is stopped, the application is closed, or the server is rebooted, simply
+                        run the tool again pointing to the same output folder. Completed stages are automatically
+                        skipped, and partially-completed stages (such as content hashing) resume from where
+                        they left off &mdash; files already processed are not re-scanned.</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">&#x2728;</div>
+                    <div class="title">Fresh Scan Option</div>
+                    <p>Tick the &ldquo;Fresh scan&rdquo; checkbox to clear all previous state and start over
+                        from scratch. This removes the stored progress and database, ensuring a completely
+                        clean run.</p>
+                </div>
+            </div>
+
+            <div class="callout callout-green">
+                <strong>&#x1F6E1;&#xFE0F; Safe by Design</strong>
+                All database writes use transactions with idempotent inserts. Stopping or pausing at any point
+                &mdash; even mid-write &mdash; cannot corrupt the database. The scan can always be safely resumed from
+                its last checkpoint.
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <div class="section">
+            <h2>CSV Exports &mdash; Raw Data for Excel &amp; Power BI</h2>
+            <p>In addition to the HTML report, FSAnalyser produces up to 21 individual CSV files containing the
                 full raw data behind every report section. These are designed for import into Excel, Power BI, or
                 any other analytics tool. Only CSVs with data are produced — empty exports are automatically skipped.
             </p>
@@ -530,7 +579,7 @@
                 entries), and highlights where individual users have been given direct permissions instead of going
                 through groups — a pattern that is hard to migrate cleanly.</p>
 
-            <h3>💚 Are Our AD Groups Healthy?</h3>
+            <h3>💚 Are AD Groups Healthy?</h3>
             <p>The report checks every security group referenced in the file server permissions and verifies it against
                 Active Directory. Groups with no enabled members ("dead groups") are flagged — these are groups that
                 appear in permissions but effectively grant access to nobody. Cleaning these up before migration
@@ -658,10 +707,66 @@
             </div>
 
             <p><strong>Performance impact:</strong> Because the application runs locally, all file enumeration is
-                direct disk I/O with no network overhead. On our test dataset of 2 million files (358 GB), the full
-                inventory completed in under 35 seconds. The optional content hashing feature does read file contents,
+                direct disk I/O with no network overhead. In a benchmark dataset of 2 million files (358 GB), the
+                inventory stage completed in under 35 seconds on local NVMe. Real production times vary by file count,
+                storage speed, ACL complexity, and AD responsiveness. The optional content hashing feature does read
+                file contents,
                 which will generate sustained disk read activity — this is best scheduled outside business hours on busy
                 servers. All other stages have minimal I/O impact and are safe to run at any time.</p>
+        </div>
+
+        <!-- ============================================================ -->
+        <div class="section">
+            <h2>Estimated Runtime by Data Volume (TB)</h2>
+            <p>For approval planning, the key point is that runtime is driven by <strong>file count and disk
+                    throughput</strong>
+                more than TB alone. Many small files take longer than fewer large files, even at the same total TB.</p>
+
+            <div class="callout callout-blue">
+                <strong>Planning assumptions</strong>
+                The ranges below are practical planning bands for production servers. They include metadata,
+                permissions,
+                and reporting overhead. Optional content hashing adds substantial extra read time.
+            </div>
+
+            <table>
+                <tr>
+                    <th>Data Volume</th>
+                    <th>Metadata-Only Scan</th>
+                    <th>With Focused Hashing</th>
+                    <th>With Full Hashing</th>
+                </tr>
+                <tr>
+                    <td><strong>1 TB</strong></td>
+                    <td>15–60 minutes</td>
+                    <td>30 minutes – 3 hours</td>
+                    <td>2–8 hours</td>
+                </tr>
+                <tr>
+                    <td><strong>5 TB</strong></td>
+                    <td>1–5 hours</td>
+                    <td>2–12 hours</td>
+                    <td>8–40 hours</td>
+                </tr>
+                <tr>
+                    <td><strong>10 TB</strong></td>
+                    <td>2–10 hours</td>
+                    <td>4–24 hours</td>
+                    <td>16–80 hours</td>
+                </tr>
+            </table>
+
+            <p><strong>Hashing formula (best-effort):</strong> hashing time in hours is approximately total bytes to
+                hash
+                divided by effective read throughput in bytes per second, then divided by 3600.
+                Example: 1 TB at 150 MB/s is about 1.9 hours for content reads alone, before database and report
+                overhead.</p>
+
+            <div class="callout callout-amber">
+                <strong>Recommended execution model</strong>
+                Run metadata-only scans first (fast, low risk), then run focused/full hashing as a second pass during an
+                overnight window if exact duplicate evidence is required.
+            </div>
         </div>
 
         <!-- ============================================================ -->
@@ -743,6 +848,14 @@
                         that may be candidates for archiving rather than migration.</td>
                     <td><span class="tag tag-green">Included</span></td>
                 </tr>
+                <tr>
+                    <td><strong>Scan control (stop/pause/resume)</strong></td>
+                    <td>Stop and Pause buttons provide immediate control over the scan. If interrupted,
+                        the scan resumes from where it left off on the next run — completed stages are
+                        skipped and partially-processed data is not repeated. Safe for very large datasets
+                        that may require multiple sessions to complete.</td>
+                    <td><span class="tag tag-green">Included</span></td>
+                </tr>
             </table>
 
             <div class="callout callout-green">
@@ -755,11 +868,11 @@
 
         <!-- ============================================================ -->
         <div class="section">
-            <h2>How It Works in Practice</h2>
+            <h2>How I Run It in Practice</h2>
             <ol>
-                <li><strong>We copy the application</strong> onto the file server. It is a single file — no installer,
+                <li><strong>I copy the application</strong> onto the file server. It is a single file — no installer,
                     no dependencies, no .NET or Java runtime required.</li>
-                <li><strong>We right-click and choose "Run as Administrator"</strong> to ensure full
+                <li><strong>I right-click and choose "Run as Administrator"</strong> to ensure full
                     access to NTFS security descriptors and the open-files API. The application opens and
                     <strong>automatically
                         detects the local environment</strong>: all fixed drives (C:\, D:\, etc.), the domain
@@ -767,18 +880,27 @@
                     and DFS namespace paths are pre-filled based on system configuration. No manual data entry is needed
                     in most cases.
                 </li>
-                <li><strong>We tick any optional features we want</strong> (such as content hashing or alternate data
+                <li><strong>I tick any optional features I want</strong> (such as content hashing or alternate data
                     stream
                     scanning) and press Start. The scan runs automatically through all stages with a live
-                    progress display. Our test run across 2 million files completed in under 35 seconds. All I/O is
-                    local disk — no network traffic for file enumeration.</li>
+                    progress display. <strong>Stop</strong> and <strong>Pause</strong> buttons are always available
+                    to immediately halt or temporarily suspend the scan at any point — the tool responds within
+                    seconds even during heavy parallel processing.
+                    If the scan is interrupted (stopped, paused, or the application is closed), it can be
+                    <strong>resumed
+                        from where it left off</strong> simply by running it again with the same output folder —
+                    completed stages are automatically skipped and partially-completed work is not repeated.
+                    A benchmark run across 2 million files completed inventory in under 35 seconds on local NVMe.
+                    Production elapsed time varies by file count, storage performance, and selected options. All I/O is
+                    local disk — no network traffic for file enumeration.
+                </li>
                 <li><strong>All data stays on the server.</strong> The scan results (database, CSV exports,
-                    and HTML report) are written to an output folder on the server. We copy them off when done.</li>
-                <li><strong>We open the HTML report</strong> directly from the application, or in any web browser — no
+                    and HTML report) are written to an output folder on the server. I copy them off when done.</li>
+                <li><strong>I open the HTML report</strong> directly from the application, or in any web browser — no
                     special software needed. The report button is right there on screen once the scan completes.</li>
-                <li><strong>We repeat for each file server</strong> (we have two), then optionally run a cross-server
-                    comparison to find duplicates spanning both servers.</li>
-                <li><strong>We use the findings</strong> to decide what to migrate, what to archive, and what to clean
+                <li><strong>I repeat for each file server</strong>, then optionally run a cross-server
+                    comparison to find duplicates spanning environments.</li>
+                <li><strong>I use the findings</strong> to decide what to migrate, what to archive, and what to clean
                     up — <em>before</em> incurring cloud storage costs.</li>
             </ol>
 
@@ -802,7 +924,7 @@
         <div class="section">
             <h2>Next Steps</h2>
             <ol>
-                <li>Approve the tool for read-only scanning of the two production file servers.</li>
+                <li>Approve the tool for read-only scanning of production file servers.</li>
                 <li>Schedule a maintenance window or agree to run during business hours (the core scan has minimal
                     impact; optional content hashing is more I/O-intensive and can be scheduled separately).</li>
                 <li>Log in to each file server with a domain admin or local admin account, copy the application
