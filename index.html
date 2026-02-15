@@ -1091,6 +1091,21 @@
             </p>
         </div>
     </footer>
+
+    <script>
+        // Disable donate button if placeholder ID hasn't been replaced
+        document.addEventListener('DOMContentLoaded', function() {
+            const donateBtn = document.querySelector('.donate-button');
+            if (donateBtn && donateBtn.href.includes('YOUR_BUTTON_ID')) {
+                donateBtn.style.opacity = '0.5';
+                donateBtn.style.cursor = 'not-allowed';
+                donateBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('PayPal donate button not configured yet. Please see the README for setup instructions.');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
