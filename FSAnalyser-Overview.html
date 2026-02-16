@@ -345,16 +345,15 @@
                 </div>
                 <div class="grid-item">
                     <div class="icon">👥</div>
-                    <div class="title">5. Resolve AD Identities</div>
-                    <p>Looks up every user and group found in the permissions against Active Directory to get real names
-                        and group memberships. This is the only stage that generates network traffic (LDAP queries to a
-                        domain controller).</p>
+                    <div class="title">5. Resolve Principals</div>
+                    <p>Resolves every user and group SID found in permissions to readable identities and can expand
+                        nested group membership for access analysis.</p>
                 </div>
                 <div class="grid-item">
                     <div class="icon">💚</div>
-                    <div class="title">6. Check Group Health</div>
-                    <p>Identifies security groups that have no enabled members — "dead groups" that grant access to
-                        nobody but clutter permissions.</p>
+                    <div class="title">6. AD Enrichment &amp; Group Health</div>
+                    <p>Enriches resolved identities from Active Directory (for example display name, department,
+                        manager) and flags groups with no enabled members.</p>
                 </div>
                 <div class="grid-item">
                     <div class="icon">🔓</div>
@@ -393,7 +392,7 @@
                 <strong>💡 Network Traffic</strong>
                 Because FSAnalyser runs locally on the file server, all file and folder enumeration is local disk I/O —
                 there is <strong>no SMB network traffic</strong>. The only network traffic is LDAP queries to
-                Active Directory during stages 5–6, which is lightweight (a few MB at most).
+                Active Directory during identity enrichment (stage 6), which is lightweight (a few MB at most).
             </div>
         </div>
 
