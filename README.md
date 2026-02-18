@@ -48,6 +48,7 @@ The website showcases the following categories of tools:
 
 ### Developer Tools
 - **ps-launcher** - Silent PowerShell script launcher
+- **PSForge** - PowerShell GUI for command execution and management
 
 For detailed information about each tool, visit the [live site](https://swatto.co.uk).
 
@@ -69,6 +70,7 @@ For detailed information about each tool, visit the [live site](https://swatto.c
 | PSTInsight | 📝 | Template Available |
 | SwatCrypt | ✅ | Complete |
 | ps-launcher | ✅ | Complete |
+| PSForge | ✅ | Complete |
 
 **Note**: EventSleuth and PSTInsight have comprehensive README templates available in [`docs/readme-templates/`](docs/readme-templates/) that can be copied to their respective repositories.
 
